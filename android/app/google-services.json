@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "405535222210",
+    "project_id": "stockit-defda",
+    "storage_bucket": "stockit-defda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405535222210:android:24cc0af42f6f46cafc0e5b",
+        "android_client_info": {
+          "package_name": "com.example.stockit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrIhWODDaXJMhKs6PNUNboaHbz6KdjP3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
