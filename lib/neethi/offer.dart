@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stockit/neethi/booklab.dart';
+import 'package:stockit/neethi/neethi3.dart';
 import 'package:stockit/neethi/offerlab.dart';
 import 'package:stockit/neethi/offermedcine.dart';
 
@@ -13,17 +14,19 @@ class offerall extends StatefulWidget {
 }
 
 class _offerallState extends State<offerall> {
-  int _selectedindex = 0;
+  //int _selectedindex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+               Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+              
             )),
         title: Text(
           'Offers',
@@ -39,13 +42,13 @@ class _offerallState extends State<offerall> {
             image: DecorationImage(
                 image: AssetImage('images/pharmacy.png'), fit: BoxFit.cover)),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 25),
+                  padding: const EdgeInsets.only(top: 110, left: 20, right: 20, bottom: 25),
                   child: Container(
                     color:  const Color.fromARGB(178, 233, 231, 231),
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 10,right: 2,left: 2),
+                          padding: const EdgeInsets.only(top: 10,left: 10),
                           child: Row(
                             children: [
                               ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 28, 209, 179))),
@@ -66,7 +69,7 @@ class _offerallState extends State<offerall> {
                          Expanded(child: ListView.builder(itemCount: 5,itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(left: 20,right: 20,bottom: 10),
-                    child: Container(height: 120,width: 300,decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10),border:Border.all(width: 1,color: Colors.black)),
+                    child: Container(height: 130,width: 350,decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10),border:Border.all(width: 1,color: Colors.black)),
                     child:Column(children: [ 
                        Padding(
                          padding: const EdgeInsets.only(right: 60),
@@ -125,53 +128,53 @@ class _offerallState extends State<offerall> {
                   ),
                 ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          showUnselectedLabels: true,
-          elevation: 0,
-          backgroundColor: const Color.fromARGB(139, 255, 255, 255),
-          items: [
-            const BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  size: 35,
-                ),
-                label: ('Home')),
+      // bottomNavigationBar: BottomNavigationBar(
+      //     showUnselectedLabels: true,
+      //     elevation: 0,
+      //     backgroundColor: const Color.fromARGB(139, 255, 255, 255),
+      //     items: [
+      //       const BottomNavigationBarItem(
+      //           icon: Icon(
+      //             Icons.home,
+      //             size: 35,
+      //           ),
+      //           label: ('Home')),
            
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Lab Items.png'),size: 30,
+      //       const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/Lab Items.png'),size: 30,
               
-            ),
-            label: ('Lab Test')),
-             const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/health.png'),size: 30,
+      //       ),
+      //       label: ('Lab Test')),
+      //        const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/health.png'),size: 30,
               
-            ),
-            label: ('Health Care')),
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Discount.png'),size: 30,
+      //       ),
+      //       label: ('Health Care')),
+      //       const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/Discount.png'),size: 30,
               
-            ),
-            label: ('Offer')),
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Cart.png'),size: 30,
+      //       ),
+      //       label: ('Offer')),
+      //       const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/Cart.png'),size: 30,
               
-            ),
-            label: ('Cart')),
+      //       ),
+      //       label: ('Cart')),
              
              
-          ],
-          currentIndex: _selectedindex,
-          selectedItemColor: const Color.fromARGB(255, 196, 145, 6),
-          unselectedItemColor: Colors.black,
-          onTap: (index) {
-            setState(() {
-              _selectedindex = index;
-            });
-          }),
+      //     ],
+      //     currentIndex: _selectedindex,
+      //     selectedItemColor: const Color.fromARGB(255, 196, 145, 6),
+      //     unselectedItemColor: Colors.black,
+      //     onTap: (index) {
+      //       setState(() {
+      //         _selectedindex = index;
+      //       });
+      //     }),
     );
   }
 }

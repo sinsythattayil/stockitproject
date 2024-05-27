@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stockit/common/ratio%20nmenu.dart';
+import 'package:stockit/home/home1.dart';
+import 'package:stockit/home/ration1.dart';
+import 'package:stockit/maveli/maveli.dart';
+import 'package:stockit/user%20supplyco/supply1.dart';
 
 class grocery extends StatefulWidget {
   const grocery({super.key});
@@ -15,11 +20,14 @@ class _groceryState extends State<grocery> {
   Widget build(BuildContext context) {
     return  Scaffold(
      extendBodyBehindAppBar: true,
+     endDrawer:rationmenu(),
      appBar: AppBar( backgroundColor: const Color.fromARGB(149, 255, 255, 255),toolbarHeight: 50,
-    leading: const Icon(Icons.arrow_back_ios,size:35,),
-    actions: [
-    IconButton(onPressed: (){}, icon: const Icon(Icons.menu,size: 35,color: Colors.black,))
-    ],
+    leading: IconButton(onPressed: (){
+       Navigator.pop(context);
+    }, icon: const Icon(Icons.arrow_back_ios,color: Colors.black,))
+    // actions: [
+    // IconButton(onPressed: (){}, icon: const Icon(Icons.menu,size: 35,color: Colors.black,))
+    // ],
     ),
      body:  SingleChildScrollView(
        child: Column(children: [
@@ -31,7 +39,7 @@ class _groceryState extends State<grocery> {
             children: [
               Padding(
                 
-                padding: const EdgeInsets.only(top: 200),
+                padding: const EdgeInsets.only(top: 250),
                 child: ElevatedButton(
                   style: ButtonStyle(
                     //elevation:MaterialStatePropertyAll(8),
@@ -40,7 +48,12 @@ class _groceryState extends State<grocery> {
                     minimumSize:MaterialStatePropertyAll(Size(300,55)) 
                   ),
               
-                  onPressed: (){}, child:Text('Ration Store',style: GoogleFonts.abrilFatface(fontSize:20,color:Colors.black),) ),
+                  onPressed: (){
+                    Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>ration1()));
+                  }, child:Text('Ration Store',style: GoogleFonts.abrilFatface(fontSize:20,color:Colors.black),) ),
               ),
                Padding(
                 
@@ -53,7 +66,12 @@ class _groceryState extends State<grocery> {
                     minimumSize:MaterialStatePropertyAll(Size(300,55)) 
                   ),
               
-                  onPressed: (){}, child:Text('Maveli Store',style: GoogleFonts.abrilFatface(fontSize:20,color:Colors.black),) ),
+                  onPressed: (){
+                     Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>mavelistore()));
+                  }, child:Text('Maveli Store',style: GoogleFonts.abrilFatface(fontSize:20,color:Colors.black),) ),
               ),
                Padding(
                 
@@ -66,7 +84,12 @@ class _groceryState extends State<grocery> {
                     minimumSize:MaterialStatePropertyAll(Size(300,55)) 
                   ),
               
-                  onPressed: (){}, child:Text('Supplyco Store',style: GoogleFonts.abrilFatface(fontSize:20,color:Colors.black),) ),
+                  onPressed: (){
+                    Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>supplyco1()));
+                  }, child:Text('Supplyco Store',style: GoogleFonts.abrilFatface(fontSize:20,color:Colors.black),) ),
               ),
             ],
            ),
@@ -74,21 +97,7 @@ class _groceryState extends State<grocery> {
        ],),
      ),
     extendBody: true,
-     bottomNavigationBar: BottomNavigationBar(elevation: 0,showUnselectedLabels: true,backgroundColor: const Color.fromARGB(103, 255, 255, 255),items: [const BottomNavigationBarItem(icon: Icon(Icons.home,size: 35,),label: ('Home')),
-     const BottomNavigationBarItem(icon: Icon(Icons.library_books_rounded,size: 35,),label: ('Items')),
-     const BottomNavigationBarItem(icon: Icon(Icons.favorite,size: 35,),label:('Favourate Store')),const BottomNavigationBarItem(icon: Icon(Icons.notifications,size: 35,),label: ('Notification'))
-     ],
-     currentIndex:_selectedindex ,
-      selectedItemColor: const Color.fromARGB(255, 100, 74, 1),
-      unselectedItemColor:Colors.black ,
-      onTap:(index){
-        setState(() {
-          _selectedindex=index;
-
-          
-        });
-      }
-        ),
+     
 
     );
   }

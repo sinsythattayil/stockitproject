@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stockit/home/home1.dart';
 import 'package:stockit/neethi/nelocation.dart';
 
 class neethi extends StatefulWidget {
@@ -15,7 +16,9 @@ class _neethiState extends State<neethi> {
     return Scaffold(
       extendBodyBehindAppBar: true,
           appBar: AppBar(
-         leading: IconButton(onPressed: (){}, icon:Icon(Icons.arrow_back_ios_sharp,size: 35,) ),
+         leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+         }, icon:Icon(Icons.arrow_back_ios_sharp,) ),
         title: Text(
           'Pharmecy',
           style: GoogleFonts.inknutAntiqua(fontSize: 30),
@@ -29,7 +32,7 @@ class _neethiState extends State<neethi> {
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage('images/pharmacy.png'),fit: BoxFit.cover)),
         child: Column(children: [
            Padding(
-             padding: const EdgeInsets.only(top:350 ),
+             padding: const EdgeInsets.only(top:360 ),
              child: ElevatedButton(
                     style: ButtonStyle(
                       //elevation:MaterialStatePropertyAll(8),

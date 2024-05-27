@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stockit/neethi/medicineserch.dart';
+import 'package:stockit/neethi/neethi3.dart';
 
 class medicine extends StatefulWidget {
   const medicine({super.key});
@@ -16,10 +18,12 @@ class _medicineState extends State<medicine> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+               Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+              
             )),
         title: Text(
           'Pharmecy',
@@ -39,7 +43,7 @@ class _medicineState extends State<medicine> {
               Row(
                 children: [
                   Padding(
-                      padding: const EdgeInsets.only(top: 130, left: 15),
+                      padding: const EdgeInsets.only(top: 200, left: 15),
                       child: Image.asset(
                         "images/Doctor.png",
                         scale: 1.5,
@@ -67,6 +71,12 @@ class _medicineState extends State<medicine> {
                   height: 60,
                   width: 340,
                   child: TextFormField(
+                    onTap: () {
+                       Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const medicinserch()));
+                    },
                     cursorColor: Colors.black,
                     decoration: InputDecoration(focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.black)) ,
                         fillColor: Color.fromARGB(136, 255, 255, 255),
@@ -130,53 +140,53 @@ class _medicineState extends State<medicine> {
           ),
         ),
       ),
-       bottomNavigationBar: BottomNavigationBar(
-          showUnselectedLabels: true,
-          elevation: 0,
-          backgroundColor: const Color.fromARGB(139, 255, 255, 255),
-          items: [
-            const BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  size: 35,
-                ),
-                label: ('Home')),
+      //  bottomNavigationBar: BottomNavigationBar(
+      //     showUnselectedLabels: true,
+      //     elevation: 0,
+      //     backgroundColor: const Color.fromARGB(139, 255, 255, 255),
+      //     items: [
+      //       const BottomNavigationBarItem(
+      //           icon: Icon(
+      //             Icons.home,
+      //             size: 35,
+      //           ),
+      //           label: ('Home')),
            
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Lab Items.png'),size: 30,
+      //       const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/Lab Items.png'),size: 30,
               
-            ),
-            label: ('Lab Test')),
-             const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/health.png'),size: 30,
+      //       ),
+      //       label: ('Lab Test')),
+      //        const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/health.png'),size: 30,
               
-            ),
-            label: ('Health Care')),
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Discount.png'),size: 30,
+      //       ),
+      //       label: ('Health Care')),
+      //       const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/Discount.png'),size: 30,
               
-            ),
-            label: ('Offer')),
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Cart.png'),size: 30,
+      //       ),
+      //       label: ('Offer')),
+      //       const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/Cart.png'),size: 30,
               
-            ),
-            label: ('Cart')),
+      //       ),
+      //       label: ('Cart')),
              
              
-          ],
-          currentIndex: _selectedindex,
-          selectedItemColor: const Color.fromARGB(255, 196, 145, 6),
-          unselectedItemColor: Colors.black,
-          onTap: (index) {
-            setState(() {
-              _selectedindex = index;
-            });
-          }),
+      //     ],
+      //     currentIndex: _selectedindex,
+      //     selectedItemColor: const Color.fromARGB(255, 196, 145, 6),
+      //     unselectedItemColor: Colors.black,
+      //     onTap: (index) {
+      //       setState(() {
+      //         _selectedindex = index;
+      //       });
+      //     }),
     );
   }
 }

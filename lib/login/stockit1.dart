@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stockit/demo/firstpage.dart';
+import 'package:stockit/home/home1.dart';
+import 'package:stockit/login/logpag.dart';
 import 'package:stockit/login/stockit2.dart';
 
 class stockit1 extends StatefulWidget {
@@ -15,8 +20,21 @@ class _stockit1State extends State<stockit1> {
   void initState(){
     super.initState();
     Future.delayed(const Duration(seconds:3),(){
-      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>stockit2()));
+      Timer(Duration(seconds: 1),()=> check( ));
     });
+  }
+  check()async{
+    SharedPreferences preferences=await SharedPreferences.getInstance();
+    String? name=preferences.getString('isloggin');
+
+    if(name!=null)
+    {
+       Navigator.push(context,MaterialPageRoute(builder: (context) =>  home1()) );
+    }
+    else
+    {
+      Navigator.push(context,MaterialPageRoute(builder: (context) =>  logipage()) );
+    }
   }
   Widget build(BuildContext context) {
     return Scaffold(

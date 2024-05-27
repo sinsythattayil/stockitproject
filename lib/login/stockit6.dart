@@ -26,17 +26,17 @@ class _stock6State extends State<stock6> {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 100,left:150),
+                padding: const EdgeInsets.only(top: 140,left:90),
                 child: Center(child: Text('Enter your OTP',style: GoogleFonts.abrilFatface(fontSize:30),)),
               ),
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(top:150),
+            padding: const EdgeInsets.only(top:45),
             child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left:120),
+                  padding: const EdgeInsets.only(left:50),
                   child: SizedBox(
                      width: 50,
                      height: 50,

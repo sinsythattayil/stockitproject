@@ -1,74 +1,24 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:stockit/admin/adminlogin.dart';
 import 'package:stockit/businesslogic/firebase_options.dart';
-import 'package:stockit/common/appinfo.dart';
-import 'package:stockit/common/feedback.dart';
-import 'package:stockit/common/menu.dart';
-import 'package:stockit/common/notification.dart';
-import 'package:stockit/common/order.dart';
-import 'package:stockit/common/ordercmplt.dart';
-import 'package:stockit/common/profile.dart';
-import 'package:stockit/common/resetpass.dart';
-import 'package:stockit/common/settings.dart';
-import 'package:stockit/common/special.dart';
-import 'package:stockit/demo/demo.dart';
-import 'package:stockit/demo/firstpage.dart';
+import 'package:stockit/home/favoritestre.dart';
 import 'package:stockit/home/home1.dart';
-import 'package:stockit/home/home2.dart';
-import 'package:stockit/home/ration1.dart';
-import 'package:stockit/home/ration2.dart';
-import 'package:stockit/home/ration3.dart';
-import 'package:stockit/home/ration4.dart';
-import 'package:stockit/home/ration5.dart';
 import 'package:stockit/login/logpag.dart';
-import 'package:stockit/maveli/maveli.dart';
-import 'package:stockit/maveli/mavelidetails.dart';
-import 'package:stockit/maveli/mavorder.dart';
-import 'package:stockit/maveli/mavspcial.dart';
-import 'package:stockit/maveli/mproduct.dart';
-import 'package:stockit/myhompage.dart';
-import 'package:stockit/demo/navigation.dart';
-import 'package:stockit/demo/page.dart';
-import 'package:stockit/home/ration6.dart';
 import 'package:stockit/login/stockit1.dart';
-import 'package:stockit/login/stockit2.dart';
-import 'package:stockit/login/stockit3.dart';
 import 'package:stockit/login/stockit4.dart';
-import 'package:stockit/login/stockit5.dart';
-import 'package:stockit/login/stockit6.dart';
-import 'package:stockit/login/stockit7.dart';
-import 'package:stockit/neethi/appinfo.dart';
-import 'package:stockit/neethi/booking.dart';
-import 'package:stockit/neethi/booking.dart';
-import 'package:stockit/neethi/booklab.dart';
-import 'package:stockit/neethi/booksuccss.dart';
-import 'package:stockit/neethi/cart.dart';
-import 'package:stockit/neethi/healthserch.dart';
-import 'package:stockit/neethi/labtest.dart';
-import 'package:stockit/neethi/medicine.dart';
-import 'package:stockit/neethi/medicineserch.dart';
+import 'package:stockit/mavelistore%20module/mlogin.dart';
+import 'package:stockit/mavelistore%20module/mwelcom.dart';
+import 'package:stockit/neethi%20store/nelogin.dart';
 import 'package:stockit/neethi/menunee.dart';
-import 'package:stockit/neethi/neesettings.dart';
 import 'package:stockit/neethi/neethi3.dart';
-import 'package:stockit/neethi/neethihome.dart';
-import 'package:stockit/neethi/nelocation.dart';
-import 'package:stockit/neethi/notificationee.dart';
 import 'package:stockit/neethi/nprofile.dart';
-import 'package:stockit/neethi/offer.dart';
-import 'package:stockit/neethi/offerlab.dart';
-import 'package:stockit/neethi/offermedcine.dart';
-import 'package:stockit/neethi/ordernee.dart';
-import 'package:stockit/neethi/orderprdct.dart';
-import 'package:stockit/neethi/popularlab.dart';
-import 'package:stockit/neethi/product.dart';
-import 'package:stockit/neethi/recmndpkg.dart';
-import 'package:stockit/neethi/reivewNee.dart';
-import 'package:stockit/neethi/topselling.dart';
-import 'package:stockit/supplyco/products.dart';
-import 'package:stockit/supplyco/suporder.dart';
-import 'package:stockit/supplyco/supply1.dart';
-import 'package:stockit/supplyco/supplydetails.dart';
-import 'package:stockit/supplyco/supspecial.dart';
+
+import 'package:stockit/rationstore.dart/rlogin.dart';
+import 'package:stockit/rationstore.dart/rlogin2.dart';
+import 'package:stockit/rationstore.dart/rorder.dart';
+import 'package:stockit/supplycostore.dart/slogin.dart';
+
 
 Future <void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -95,12 +45,15 @@ class MyApp extends StatelessWidget {
       //home: mypage(),
     // home: MyWidget(),
     // home: project(),
-   home: signin(),
-   //home: logipage(),
+ home: stockit1(),
+//home: signin(),
+//home: stockit1(),
+// home: logipage(),
+ //home: favoritestore(),
     //home: forgot(),
-    //home: stock6(),
+  //home: stockit1(),
   // home: reset(),
- // home: home1(),
+// home: home1(),
  //home: grocery(),
   // home: ration2(),
 // home: white(),
@@ -129,10 +82,10 @@ class MyApp extends StatelessWidget {
 //home: mavorder(),
 //home: mavspecial(),
 //home: supspecial(),
- //home:neethi3(),
-// home: nelocation(),
- //home: neethi3(),
- //home: medicine(),
+//home:neethi(),
+//home: nelocation(),
+//home: neethi3(),
+//home: medicine(),
 // home: labtest(),
  //home: popularlab(),
  //home: rcmndpkg(),
@@ -150,12 +103,34 @@ class MyApp extends StatelessWidget {
 //home: sebamade(),
 //home: orderproduct(),
 //home: menuneethi(),
-//home:nprofilr(),
+//home:nprofilr()
 //home:reviewnee(),
 //home: neesettings(),
 //home: appinfoneethi(),
 //home: orderneethi(),
 //home: notificationnee(),
+
+//------ration module-----
+//home: rlogin1(),
+//home: rlogin2(),
+//home: productration(),
+//home: rorder(),
+
+
+//---maveli module---
+//home: mwelcom(),
+ //home: mlogin(),
+
+  //--supplyco module-----
+//home:slogin(),
+
+//---neethi module---
+//home:ordernee(),
+//home: nelogin(),
+
+
+//home:adminlogin()
+
     );
   }
 }
@@ -194,7 +169,51 @@ class MyApp extends StatelessWidget {
 //   }
 
 //   @override
-//   Widget build(BuildContext context) {
+//   Widget build(BuildContext context) {.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 //     print("heloo");
 //     return Scaffold(

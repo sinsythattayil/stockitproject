@@ -2,10 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stockit/home/home1.dart';
 import 'package:stockit/login/stockit4.dart';
 // import 'package:stockit/forgot.dart';
 import 'package:stockit/login/stockit5.dart';
+import 'package:stockit/package.dart';
 
 class logipage extends StatefulWidget {
   logipage({super.key});
@@ -21,20 +23,24 @@ class _logipageState extends State<logipage> {
   String password="",email="";
 
   login() async{
+    SharedPreferences preferences=await SharedPreferences.getInstance();
     try {
   final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: email,
     password: password
   );
+  preferences.setString('islogging', credential.user!.uid);
   ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Login succesfull')));
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => home1(),
+              builder: (context) =>home1()
+              //packages(indexnum: 0,),
 ));
 } on FirebaseAuthException catch (e) {
   if (e.code == 'user-not-found') {
+
     ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('user is not found')));
        
@@ -60,7 +66,7 @@ class _logipageState extends State<logipage> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 70,
+                    height: 150,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 28, left: 28),
@@ -129,7 +135,7 @@ class _logipageState extends State<logipage> {
                               borderRadius: BorderRadius.circular(10)),
                           hintText: ('Enter your Password'),
                           prefixIcon: const Icon(Icons.lock),
-                          suffixIcon: const Icon(Icons.visibility_off),
+                          suffixIcon: IconButton(onPressed: (){}, icon: Icon(Icons.visibility_off)),
                           label: Text('Password',style: TextStyle(color: Colors.black))
                           ),
                           
@@ -174,27 +180,22 @@ class _logipageState extends State<logipage> {
                         'Login',
                         style: GoogleFonts.inknutAntiqua(fontSize: 20),
                       )),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 50),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Container(
-                          height: 1,
-                          color: Colors.black,
-                        )),
-                        Text(
-                          'Or Login With',
-                          style: GoogleFonts.inknutAntiqua(fontSize: 13),
-                        ),
-                        Expanded(
-                            child: Container(
-                          height: 1,
-                          color: Colors.black,
-                        )),
-                      ],
-                    ),
-                  )
+                  Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("Dont have an account? "),
+        TextButton(
+            onPressed: () {
+              Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const signin()));
+            },
+            child: const Text("Sign Up", style: TextStyle(color: Colors.purple),)
+        )
+      ],
+    )
+                
                 ],
               ),
             )),

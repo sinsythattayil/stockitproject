@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stockit/neethi/neethi3.dart';
+import 'package:stockit/neethi/sebamade.dart';
+import 'package:stockit/neethi/topselling.dart';
 
 class healthsearch extends StatefulWidget {
   const healthsearch({super.key});
@@ -16,10 +19,12 @@ class _healthsearchState extends State<healthsearch> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+               Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+             
             )),
         
          backgroundColor: const Color.fromARGB(136, 255, 255, 255),
@@ -35,8 +40,8 @@ class _healthsearchState extends State<healthsearch> {
           child: Column(children: [
             //SizedBox(height: 90,width: 50,),
             Padding(
-              padding: const EdgeInsets.only(top: 70),
-              child: SizedBox(height: 50,width: 325,
+              padding: const EdgeInsets.only(top: 100),
+              child: SizedBox(height: 50,width: 355,
                 child: TextFormField(cursorColor: Colors.black,
                                  decoration: InputDecoration(focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.black)) ,
                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
@@ -46,12 +51,12 @@ class _healthsearchState extends State<healthsearch> {
               ),
             ),
             SizedBox(height: 15,width: 30),
-            Container(height: 525,width: 325,
+            Container(height: 565,width: 355,
             decoration: BoxDecoration(color: const Color.fromARGB(186, 255, 255, 255),borderRadius: BorderRadius.circular(10),border: Border.all(width:1,color: Colors.black)),
              child: Column(children: [
               Padding(
                 padding: const EdgeInsets.only(right: 80),
-                child: Text('Showing suggession for sebamade',style: GoogleFonts.abrilFatface(fontSize:13,color:const Color.fromARGB(175, 0, 0, 0)),),
+                child: Text('Showing suggession for sebamade',style: GoogleFonts.abrilFatface(fontSize:15,color:const Color.fromARGB(175, 0, 0, 0)),),
               ),
               Expanded(child: ListView.builder(itemCount: 8,itemBuilder:(context, index) {
                 return Column(
@@ -62,7 +67,7 @@ class _healthsearchState extends State<healthsearch> {
                           padding: const EdgeInsets.only(left: 10),
                           child: Column(
                             children: [
-                              Text('Sebamade Baby Cleansing Bar-150g',style: GoogleFonts.abrilFatface(fontSize:15),),
+                              Text('Sebamade Baby Cleansing Bar-150g',style: GoogleFonts.abrilFatface(fontSize:15,color:Colors.black),),
                                Padding(
                                  padding: const EdgeInsets.only(right: 140),
                                  child: Text('150g soap in Box',style: GoogleFonts.abrilFatface(fontSize:12),),
@@ -73,8 +78,13 @@ class _healthsearchState extends State<healthsearch> {
                           ),
                         ),
                          Padding(
-                           padding: const EdgeInsets.only(left:15 ),
-                           child: IconButton(onPressed: (){}, icon: Icon(Icons.arrow_forward_ios_rounded,size: 20,)),
+                           padding: const EdgeInsets.only(left:30 ),
+                           child: IconButton(onPressed: (){
+                             Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => sebamade()));
+                           }, icon: Icon(Icons.arrow_forward_ios_rounded,size: 20,)),
                          ),
                          
                       ],

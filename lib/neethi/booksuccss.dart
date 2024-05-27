@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stockit/neethi/labtest.dart';
+import 'package:stockit/neethi/neethi3.dart';
+import 'package:stockit/neethi/nelocation.dart';
 
 class booksuccss extends StatefulWidget {
   const booksuccss({super.key});
@@ -15,7 +17,7 @@ class _booksuccssState extends State<booksuccss> {
   void initState(){
     super.initState();
     Future.delayed(const Duration(seconds:4),(){
-       Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>labtest()));
+       Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>nelocation()));
      });
   }
   Widget build(BuildContext context) {
@@ -24,10 +26,12 @@ class _booksuccssState extends State<booksuccss> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+              
             )),
             title: Text('StockIt',style: GoogleFonts.inknutAntiqua(fontSize: 30),),
         backgroundColor: const Color.fromARGB(136, 255, 255, 255),
@@ -41,7 +45,7 @@ class _booksuccssState extends State<booksuccss> {
                   image: AssetImage('images/pharmacy.png'), fit: BoxFit.cover),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 30),
+              padding: const EdgeInsets.only(top: 100, left: 20, right: 20, bottom: 30),
               child: Container(
                 color: Color.fromARGB(178, 233, 231, 231),
                 child: Column(

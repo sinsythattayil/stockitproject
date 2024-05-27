@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class supspecial extends StatefulWidget {
-  const supspecial({super.key});
+class mavorderview extends StatefulWidget {
+  const mavorderview({super.key});
 
   @override
-  State<supspecial> createState() => _supspecialState();
+  State<mavorderview> createState() => _mavorderviewState();
 }
 
-class _supspecialState extends State<supspecial> {
-  int _selectedindex=0;
+class _mavorderviewState extends State<mavorderview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       extendBodyBehindAppBar: true,
       appBar: AppBar(
-         leading: IconButton(onPressed: (){}, icon:Icon(Icons.arrow_back_ios_sharp) ),
-        title: Text(
-          'Special Items',
-          style: GoogleFonts.inknutAntiqua(fontSize: 30),
-        ),
-        backgroundColor: const Color.fromARGB(136, 255, 255, 255),
+         leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+         }, icon:Icon(Icons.arrow_back_ios_sharp) ),
+         title: Text(
+            'Orders',
+            style: GoogleFonts.abrilFatface(fontSize: 20),
+          ),
+        // ss
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -30,17 +30,17 @@ class _supspecialState extends State<supspecial> {
                 image: AssetImage('images/image 5.png'), fit: BoxFit.cover)),
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 80, bottom: 30, left: 30, right: 30),
+              const EdgeInsets.only( bottom: 30, left: 10, right: 10),
           child: Container(
             color: const Color.fromARGB(181, 12, 12, 12),
             child: Column(
               children: [
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 2,
+                    itemCount: 4,
                       itemBuilder: (context, index) => Padding(
                             padding: const EdgeInsets.only(
-                                top: 20, left: 20, right: 20, bottom: 20),
+                                top: 20, left: 15, right: 15),
                             child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -50,21 +50,21 @@ class _supspecialState extends State<supspecial> {
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           top: 10, bottom: 10, left: 10,),
-                                      child: Image.asset('images/chilli.png'),
+                                      child: Image.asset('images/race.png'),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 20,bottom: 10),
                                       child: Column(
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text('Chilli',
+                                          Text('Rice',
                                               style: GoogleFonts.inknutAntiqua(
                                                   fontSize: 20)),
                                           const Row(
                                             children: [
                                               Icon(Icons.currency_rupee_sharp),
                                               Text(
-                                                '35/Kg',
+                                                '10/Kg',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.w500),
@@ -73,21 +73,27 @@ class _supspecialState extends State<supspecial> {
                                           ),
                                              Padding(
                                                padding: const EdgeInsets.only(left: 8),
-                                               child: Text('1Kg',
+                                               child: Text('2 Kg/Person',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.w500)),
                                              ),
-                                                 Row(
-                                                   children: [
-                                                     ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.black),foregroundColor: MaterialStatePropertyAll(Colors.white)),
-                                                      onPressed: (){}, child: Text('Choose',style: TextStyle(fontSize: 10,),)),
-                                                      Padding(
-                                                        padding: const EdgeInsets.only(left: 5),
-                                                        child: Text('Available',style: GoogleFonts.abyssinicaSil(fontSize:15,color:Color.fromARGB(255, 41, 175, 45)),),
-                                                      )
-                                                   ],
-                                                 )  
+                                               Padding(
+                                               padding: const EdgeInsets.only(left: 8),
+                                               child: Text('Date:',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w500)),
+                                             ),  
+                                             Padding(
+                                               padding: const EdgeInsets.only(left: 60),
+                                               child: Row(
+                                                 children: [
+                                                   IconButton(onPressed: (){}, icon: Icon(Icons.cancel,color: Colors.red,size: 30,)),
+                                                   IconButton(onPressed: (){}, icon: Icon(Icons.verified,color: Colors.green,size: 30,))
+                                                 ],
+                                               ),
+                                             )  
                                         ],
                                       ),
                                     )
@@ -102,39 +108,6 @@ class _supspecialState extends State<supspecial> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          showUnselectedLabels: true,
-          elevation: 0,
-          backgroundColor: const Color.fromARGB(139, 255, 255, 255),
-          items: [
-            const BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  size: 35,
-                ),
-                label: ('Home')),
-            const BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.library_books_rounded,
-                  size: 35,
-                ),
-                label: ('Items')),
-            const BottomNavigationBarItem(
-                icon: Icon(Icons.production_quantity_limits_rounded, size: 35),
-                label: ('Orders')),
-                const BottomNavigationBarItem(
-                icon: Icon(Icons.local_offer, size: 35),
-                label: ('Special item')),
-          ],
-          currentIndex: _selectedindex,
-          selectedItemColor: const Color.fromARGB(255, 100, 74, 1),
-          unselectedItemColor: Colors.black,
-          onTap: (index) {
-            setState(() {
-              _selectedindex = index;
-            });
-          }),
-
     );
   }
 }

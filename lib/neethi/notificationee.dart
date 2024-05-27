@@ -16,15 +16,15 @@ class _notificationneeState extends State<notificationnee> {
        extendBodyBehindAppBar: true,
       appBar: AppBar(backgroundColor: Color.fromARGB(136, 255, 255, 255),
       leading: IconButton(onPressed: (){
-         Navigator.push(context, MaterialPageRoute(builder: (context) => menuneethi(),));
-      }, icon: Icon(Icons.arrow_back_ios_sharp)),
+         Navigator.pop(context);
+      }, icon: Icon(Icons.arrow_back_ios_sharp,)),
       title: Text('Notification',style: GoogleFonts.abrilFatface(fontSize:30),),),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage('images/pharmacy.png'),fit: BoxFit.cover)),
         child: Padding(
-          padding: const EdgeInsets.only(top: 60,left:5,right: 5,bottom: 20),
+          padding: const EdgeInsets.only(top: 100,left:5,right: 5,bottom: 20),
           child: Container(color: Color.fromARGB(214, 0, 0, 0),
           child: Column(children: [
             Expanded(child: ListView.builder(itemCount: 3,itemBuilder: (context, index) {

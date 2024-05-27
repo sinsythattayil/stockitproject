@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stockit/neethi/booksuccss.dart';
-import 'package:stockit/neethi/medicine.dart';
+import 'package:stockit/neethi/labtest.dart';
+ 
 
 class booklab extends StatefulWidget {
   const booklab({super.key});
@@ -36,10 +37,12 @@ class _booklabState extends State<booklab> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+               Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+             
             )),
         backgroundColor: const Color.fromARGB(136, 255, 255, 255),
       ),
@@ -52,7 +55,7 @@ class _booklabState extends State<booklab> {
                   image: AssetImage('images/pharmacy.png'), fit: BoxFit.cover),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 30),
+              padding: const EdgeInsets.only(top: 100, left: 20, right: 20, bottom: 30),
               child: Container(
                 color: const Color.fromARGB(178, 233, 231, 231),
                 child: Form(

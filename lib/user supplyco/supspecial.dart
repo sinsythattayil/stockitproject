@@ -1,29 +1,30 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class product extends StatefulWidget {
-  const product({super.key});
+class supspecial extends StatefulWidget {
+  const supspecial({super.key});
 
   @override
-  State<product> createState() => _productState();
+  State<supspecial> createState() => _supspecialState();
 }
 
-class _productState extends State<product> {
-  int _selectedindex = 0;
+class _supspecialState extends State<supspecial> {
+  int _selectedindex=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-                extendBodyBehindAppBar: true,
+       extendBodyBehindAppBar: true,
       appBar: AppBar(
-         leading: IconButton(onPressed: (){}, icon:const Icon(Icons.arrow_back_ios_sharp) ),
+         leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+         }, icon:Icon(Icons.arrow_back_ios_sharp) ),
         title: Text(
-          'Products',
-          style:GoogleFonts.inknutAntiqua(fontSize: 30),
+          'Special Items',
+          style: GoogleFonts.inknutAntiqua(fontSize: 30),
         ),
         backgroundColor: const Color.fromARGB(136, 255, 255, 255),
       ),
-       body: Container(
+      body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
@@ -38,7 +39,7 @@ class _productState extends State<product> {
               children: [
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 4,
+                    itemCount: 2,
                       itemBuilder: (context, index) => Padding(
                             padding: const EdgeInsets.only(
                                 top: 20, left: 20, right: 20, bottom: 20),
@@ -51,44 +52,44 @@ class _productState extends State<product> {
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           top: 10, bottom: 10, left: 10,),
-                                      child: Image.asset('images/image 6.png'),
+                                      child: Image.asset('images/chilli.png'),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 20,bottom: 10),
                                       child: Column(
                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text('Suger',
+                                          Text('Chilli',
                                               style: GoogleFonts.inknutAntiqua(
                                                   fontSize: 20)),
                                           const Row(
                                             children: [
                                               Icon(Icons.currency_rupee_sharp),
                                               Text(
-                                                '22/Kg',
+                                                '35/Kg',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.w500),
                                               )
                                             ],
                                           ),
-                                             const Padding(
-                                               padding: EdgeInsets.only(left: 8),
-                                               child: Text('1 kg',
+                                             Padding(
+                                               padding: const EdgeInsets.only(left: 8),
+                                               child: Text('1Kg',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.w500)),
                                              ),
-                                                  Row(
-                                                    children: [
-                                                      ElevatedButton(style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.black),foregroundColor: MaterialStatePropertyAll(Colors.white)),
-                                                      onPressed: (){}, child: const Text('Choose',style: TextStyle(fontSize: 15,),)),
+                                                 Row(
+                                                   children: [
+                                                     ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.black),foregroundColor: MaterialStatePropertyAll(Colors.white)),
+                                                      onPressed: (){}, child: Text('Choose',style: TextStyle(fontSize: 10,),)),
                                                       Padding(
-                                                        padding: const EdgeInsets.only(left: 10),
-                                                        child: Text('Available',style: GoogleFonts.abyssinicaSil(fontSize:20,color:Colors.green),),
+                                                        padding: const EdgeInsets.only(left: 5),
+                                                        child: Text('Available',style: GoogleFonts.abyssinicaSil(fontSize:15,color:Color.fromARGB(255, 41, 175, 45)),),
                                                       )
-                                                    ],
-                                                  )
+                                                   ],
+                                                 )  
                                         ],
                                       ),
                                     )
@@ -96,22 +97,13 @@ class _productState extends State<product> {
                                 )),
                           )),
                 ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 65),
-                          child: SizedBox(
-                            height: 40,
-                            width: 130,
-                            child: ElevatedButton(style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 227, 131, 52)),foregroundColor: MaterialStatePropertyAll(Colors.black)),
-                              onPressed: (){}, child: Text('Order',style: GoogleFonts.inknutAntiqua(fontSize:20),)),
-                          ),
-                        )
+                        
               ],
             ),
                   
           ),
         ),
       ),
-       extendBody: true,
       bottomNavigationBar: BottomNavigationBar(
           showUnselectedLabels: true,
           elevation: 0,
@@ -144,6 +136,7 @@ class _productState extends State<product> {
               _selectedindex = index;
             });
           }),
+
     );
   }
 }

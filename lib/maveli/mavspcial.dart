@@ -15,7 +15,9 @@ class _mavspecialState extends State<mavspecial> {
     return Scaffold(
        extendBodyBehindAppBar: true,
       appBar: AppBar(
-         leading: IconButton(onPressed: (){}, icon:Icon(Icons.arrow_back_ios_sharp) ),
+         leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+         }, icon:Icon(Icons.arrow_back_ios_sharp) ),
         title: Text(
           'Special Items',
           style: GoogleFonts.inknutAntiqua(fontSize: 30),

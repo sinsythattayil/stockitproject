@@ -16,14 +16,16 @@ class _settingsState extends State<settings> {
       extendBodyBehindAppBar: true,
      appBar: 
      AppBar(backgroundColor: Color.fromARGB(136, 255, 255, 255),
-             leading: IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios_new_sharp,size: 35,)),
+             leading: IconButton(onPressed: (){
+              Navigator.pop(context);
+             }, icon: Icon(Icons.arrow_back_ios_new_sharp)),
              ),
     body: Container(
          height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
              decoration: BoxDecoration(image: DecorationImage(image: AssetImage('images/image 5.png'),fit: BoxFit.cover,)),
             child: Padding(
-              padding: const EdgeInsets.only(top: 60,bottom: 20,left: 5,right: 5),
+              padding: const EdgeInsets.only(top: 100,bottom: 20,left: 5,right: 5),
               child: Container(
                 color: Color.fromARGB(232, 14, 14, 14),
                 child: Column(children: [

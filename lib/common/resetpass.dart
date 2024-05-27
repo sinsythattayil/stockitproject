@@ -16,7 +16,9 @@ class _resetpassState extends State<resetpass> {
       extendBodyBehindAppBar: true,
       appBar:AppBar(
         backgroundColor: Color.fromARGB(136, 255, 255, 255),
-             leading: IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back_ios_new_sharp,size: 35,)),
+             leading: IconButton(onPressed: (){
+              Navigator.pop(context);
+             }, icon: Icon(Icons.arrow_back_ios_new_sharp,size: 35,)),
 
       ) ,
       body: Container(

@@ -17,7 +17,9 @@ class _mdetailsState extends State<mdetails> {
     return Scaffold(
        extendBodyBehindAppBar: true,
         appBar: AppBar(
-           leading: IconButton(onPressed: (){}, icon:const Icon(Icons.arrow_back_ios_sharp) ),
+           leading: IconButton(onPressed: (){
+            Navigator.pop(context);
+           }, icon:const Icon(Icons.arrow_back_ios_sharp) ),
         title: Text('Maveli Store',style: GoogleFonts.inknutAntiqua(fontSize:25),),backgroundColor: const Color.fromARGB(136, 255, 255, 255),
         ),
        body: SingleChildScrollView(

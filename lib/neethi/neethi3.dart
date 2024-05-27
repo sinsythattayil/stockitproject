@@ -2,38 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stockit/neethi/labtest.dart';
 import 'package:stockit/neethi/medicine.dart';
+import 'package:stockit/neethi/menunee.dart';
+import 'package:stockit/neethi/nelocation.dart';
+import 'package:stockit/package.dart';
 
 class neethi3 extends StatefulWidget {
-  const neethi3({super.key});
+    neethi3({super.key});
 
   @override
   State<neethi3> createState() => _neethi3State();
 }
 
 class _neethi3State extends State<neethi3> {
+   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+ 
+
+     
+    
   int _selectedindex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      endDrawer:menuneethi(),
+       endDrawerEnableOpenDragGesture: false,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+               Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+              
             )),
         title: Text(
           'Pharmecy',
           style: GoogleFonts.inknutAntiqua(fontSize: 30),
         ),
-        actions: [
-         Builder(builder:(context) {
-           return IconButton(onPressed: (){
-            Scaffold.of(context).openDrawer();
-           }, icon:  Icon(Icons.menu,size: 35,color: Colors.black,));
-         },)
-        ],
+         
         backgroundColor: const Color.fromARGB(136, 255, 255, 255),
       ),
       body: Container(
@@ -45,7 +51,7 @@ class _neethi3State extends State<neethi3> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 250),
+              padding: const EdgeInsets.only(top: 300),
               child: ElevatedButton(
                   style: ButtonStyle(
                       //elevation:MaterialStatePropertyAll(8),
@@ -59,7 +65,7 @@ class _neethi3State extends State<neethi3> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const medicine()));
+                            builder: (context) =>  medicine()));
                   },
                   child: Text(
                     'Order Medicine',
@@ -93,53 +99,53 @@ class _neethi3State extends State<neethi3> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          showUnselectedLabels: true,
-          elevation: 0,
-          backgroundColor: const Color.fromARGB(139, 255, 255, 255),
-          items: [
-            const BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  size: 35,
-                ),
-                label: ('Home')),
+      // bottomNavigationBar: BottomNavigationBar(
+      //     showUnselectedLabels: true,
+      //     elevation: 0,
+      //     backgroundColor: const Color.fromARGB(139, 255, 255, 255),
+      //     items: [
+      //       const BottomNavigationBarItem(
+      //           icon: Icon(
+      //             Icons.home,
+      //             size: 35,
+      //           ),
+      //           label: ('Home')),
            
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Lab Items.png'),size: 30,
+      //       const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/Lab Items.png'),size: 30,
               
-            ),
-            label: ('Lab Test')),
-             const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/health.png'),size: 30,
+      //       ),
+      //       label: ('Lab Test')),
+      //        const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/health.png'),size: 30,
               
-            ),
-            label: ('Health Care')),
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Discount.png'),size: 30,
+      //       ),
+      //       label: ('Health Care')),
+      //       const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/Discount.png'),size: 30,
               
-            ),
-            label: ('Offer')),
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Cart.png'),size: 30,
+      //       ),
+      //       label: ('Offer')),
+      //       const BottomNavigationBarItem(
+      //           icon: ImageIcon(
+      //         AssetImage('images/Cart.png'),size: 30,
               
-            ),
-            label: ('Cart')),
+      //       ),
+      //       label: ('Cart')),
              
              
-          ],
-          currentIndex: _selectedindex,
-          selectedItemColor: const Color.fromARGB(255, 196, 145, 6),
-          unselectedItemColor: Colors.black,
-          onTap: (index) {
-            setState(() {
-              _selectedindex = index;
-            });
-          }),
+      //     ],
+      //     currentIndex: _selectedindex,
+      //     selectedItemColor: const Color.fromARGB(255, 196, 145, 6),
+      //     unselectedItemColor: Colors.black,
+      //     onTap: (index) {
+      //       setState(() {
+      //         _selectedindex = index;
+      //       });
+      //     }),
     );
   }
 }

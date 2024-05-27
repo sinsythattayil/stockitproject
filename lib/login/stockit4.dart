@@ -1,12 +1,15 @@
-import 'dart:html';
-
+ 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:random_string/random_string.dart';
 import 'package:stockit/home/home1.dart';
+import 'package:stockit/login/logpag.dart';
+import 'package:stockit/package.dart';
 
 class signin extends StatefulWidget {
   const signin({super.key});
@@ -16,34 +19,96 @@ class signin extends StatefulWidget {
 }
 
 class _signinState extends State<signin> {
+  final _auth=FirebaseAuth.instance;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final _usenameController=TextEditingController();
   final _passWordController = TextEditingController();
   final _conformpassWordController = TextEditingController();
   final _emailController = TextEditingController();
+  final _addressController=TextEditingController();
   
-   String email="",password=""; 
+   String email="",password="";
+    Future <void> addfirebase(Map<String,dynamic>registereinfomap,String userid)async{
+      try{
+      await FirebaseFirestore.instance
+      .collection('firebase')
+    .doc(userid)
+
+    .set(registereinfomap);
+      }
+      catch(e){
+        print("error adding document:$e");
+        throw e;
+      }
+    
+    
+  }
+  String ?_password;
+  String?_confirm;
+
    
   registration()async{
-    if(password!=null){
-      try{
-        UserCredential userCredential=await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email, password: password);
-        ScaffoldMessenger.of(context).showSnackBar(
+    // if(password!=null){
+    //   try{
+    //     UserCredential userCredential=await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    //       email: email, password: password);
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text("Sign up Success"))
+    //     );
+    //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>home1()));
+    //   }
+    //   on FirebaseAuthException catch(e){
+    //    if(e.code=='weak-password') {
+    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("weak password")));
+    //    }
+    //    else if(e.code=='email-already-in-use'){
+    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("email already in use")));
+    //    }
+
+    //   }
+    // }
+    try {
+  final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    email: email,
+    password: password,
+  );
+   ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Sign up Success"))
         );
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>home1()));
-      }
-      on FirebaseAuthException catch(e){
-       if(e.code=='weak-password') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("weak password")));
-       }
-       else if(e.code=='email-already-in-use'){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("email already in use")));
-       }
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>home1()
+              // packages(indexnum: 0,),
+            ));
+            //String registered_user_id = randomString(10);
+            String uid =_auth.currentUser!.uid;
+            Map<String,dynamic> registereinfomap = {
+              "name": _usenameController.text,
+              "email": _emailController.text,
+              "password" : _conformpassWordController.text,
+              "id":  uid ,
+              "address":_addressController.text,
+              "image":""
+            };
+            await addfirebase(registereinfomap,  uid );
+            const SnackBar(content: Text("Details added to firebase Succesfully"));
 
-      }
-    }
+} on FirebaseAuthException catch (e) {
+  if (e.code == 'weak-password') {
+     ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Password is weak"))
+        );
+  } else if (e.code == 'email-already-in-use') {
+    ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Email is already in use"))
+        );
+    // print('The account already exists for that email.');
+  }
+} catch (e) {
+  print(e);
+}
+    
   }
 
   @override
@@ -61,12 +126,12 @@ class _signinState extends State<signin> {
            children: [
            
             Padding(
-              padding: const EdgeInsets.only(top: 40,left: 60),
+              padding: const EdgeInsets.only(top: 60,left: 60),
               child: Center(child: Text("Hello! Register to get started.",style: GoogleFonts.abrilFatface(fontSize:35),)),
             ),
-             SizedBox(height: 50,width: 50,),
+             SizedBox(height: 30,),
             SizedBox(height: 80,
-            width: 350,
+            width: 325,
               child: TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _usenameController,
@@ -89,9 +154,32 @@ class _signinState extends State<signin> {
                 
               ),
             ),
+            SizedBox(height: 80,width: 325,
+              child: TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                 controller: _addressController,
+                  validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please Enter Your address';
+                          }
+                           
+                          
+                          return null;
+                        },
+                        keyboardType:TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                     focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black)),
+                    fillColor: const Color.fromARGB(217, 255, 255,255),filled: true,
+                    border: OutlineInputBorder(borderSide:const BorderSide(color: Colors.black),borderRadius: BorderRadius.circular(10) ),
+                    hintText: ('Address'),prefixIcon: const Icon(Icons.location_history_rounded),
+                  label: Text('Address',style: TextStyle(color: Colors.black))
+                  ),
+              ),
+            ),
             SizedBox(
               height: 80,
-              width: 350,
+              width: 325,
               child: TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _emailController,
@@ -120,8 +208,8 @@ class _signinState extends State<signin> {
             ),
             SizedBox(
               height: 80,
-              width: 350,
-              child: TextFormField(
+              width: 325,
+              child: TextFormField(autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _passWordController,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -142,7 +230,7 @@ class _signinState extends State<signin> {
               ),
             ),
             SizedBox(height:80 ,
-            width: 350,
+            width: 325,
               child: TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _conformpassWordController,
@@ -182,20 +270,22 @@ class _signinState extends State<signin> {
                          registration();
                         }
               }, child: Text('Sign Up',style: GoogleFonts.inknutAntiqua(fontSize:15),)),
-               Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                 Expanded(child: Container(
-                  height: 1,color: Colors.black,
-                 )),
-                 Text('Or log with',style: GoogleFonts.inknutAntiqua(fontSize:13),),
-                 Expanded(child: Container(height: 1,color: Colors.black,))
-                    
-                  ],
-                  
-                ),
-              )
+              
+              Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("Already have an account?"),
+        TextButton(
+            onPressed: () {
+              Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>  logipage()));
+            },
+            child: const Text("Login", style: TextStyle(color: Colors.purple),)
+        )
+      ],
+    )
            ],
            
                 

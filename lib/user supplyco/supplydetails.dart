@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stockit/supplyco/products.dart';
+import 'package:stockit/user%20supplyco/products.dart';
 
 class details extends StatefulWidget {
   const details({super.key});

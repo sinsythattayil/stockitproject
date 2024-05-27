@@ -16,10 +16,9 @@ class _yellowState extends State<yellow> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back_ios_sharp,
-          size: 35,
-        ),
+        leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+         }, icon:Icon(Icons.arrow_back_ios_sharp) ),
         title: Text(
           'Yellow',
           style: GoogleFonts.inknutAntiqua(fontSize: 30),

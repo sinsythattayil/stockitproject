@@ -17,11 +17,11 @@ class _orderneethiState extends State<orderneethi> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-               Navigator.push(context, MaterialPageRoute(builder: (context) =>menuneethi(),));
+               Navigator.pop(context);
             },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+              
             )),
         
          backgroundColor: const Color.fromARGB(136, 255, 255, 255),
@@ -33,9 +33,9 @@ class _orderneethiState extends State<orderneethi> {
         image: DecorationImage(image: AssetImage('images/pharmacy.png'),fit: BoxFit.cover)
       ),
       child: Padding(
-                padding: const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 15),
-                child: Container(
-                  color: Color.fromARGB(232, 14, 14, 14),
+                padding: const EdgeInsets.only(top: 100, left: 10, right: 10, bottom: 15),
+                child: Container(decoration: BoxDecoration(color: Color.fromARGB(232, 14, 14, 14),borderRadius: BorderRadius.circular(10)),
+                  
                   child: Column(
                     children: [
                       Padding(

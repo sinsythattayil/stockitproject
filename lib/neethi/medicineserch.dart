@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stockit/neethi/medicine.dart';
+import 'package:stockit/neethi/orderprdct.dart';
 
 class medicinserch extends StatefulWidget {
   const medicinserch({super.key});
@@ -17,10 +19,12 @@ class _medicinserchState extends State<medicinserch> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+               Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+              
             )),
         title: Text(
           'Medicines',
@@ -39,7 +43,7 @@ class _medicinserchState extends State<medicinserch> {
           child: Column(children: [
             //SizedBox(height: 90,width: 50,),
             Padding(
-              padding: const EdgeInsets.only(top: 70),
+              padding: const EdgeInsets.only(top:100),
               child: SizedBox(height: 50,width: 325,
                 child: TextFormField(cursorColor: Colors.black,
                                  decoration: InputDecoration(focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.black)) ,
@@ -49,8 +53,8 @@ class _medicinserchState extends State<medicinserch> {
                                  ),
               ),
             ),
-            SizedBox(height: 15,width: 30),
-            Container(height: 525,width: 325,
+            SizedBox(height: 15),
+            Container(height: 550,width: 325,
             decoration: BoxDecoration(color: const Color.fromARGB(186, 255, 255, 255),borderRadius: BorderRadius.circular(10),border: Border.all(width:1,color: Colors.black)),
              child: Column(children: [
               Expanded(child: ListView.builder(itemCount: 8,itemBuilder:(context, index) {
@@ -81,10 +85,13 @@ class _medicinserchState extends State<medicinserch> {
                             ],
                           ),
                         ),
-                         Padding(
-                           padding: const EdgeInsets.only(left: 46),
-                           child: IconButton(onPressed: (){}, icon: Icon(Icons.arrow_forward_ios_rounded,size: 20,)),
-                         ),
+                        SizedBox(width: 30,),
+                         IconButton(onPressed: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const orderproduct()));
+                         }, icon: Icon(Icons.arrow_forward_ios_rounded,size: 20,)),
                          
                       ],
                     ),

@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stockit/home/home2.dart';
+import 'package:stockit/home/ration2.dart';
+import 'package:stockit/home/rationstoks.dart';
 
 class ration1 extends StatefulWidget {
   const ration1({super.key});
@@ -24,32 +27,35 @@ class _ration1State extends State<ration1> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(139, 255, 255, 255),toolbarHeight: 50,
-        title: Text('Ration Store',style: GoogleFonts.inknutAntiqua(fontSize:25),),leading: const Icon(Icons.arrow_back_ios,size:35,),
+        title: Text('Ration Store',style: GoogleFonts.inknutAntiqua(fontSize:25),),
+        leading: IconButton(onPressed: (){
+       Navigator.pop(context, );
+                             
+                              
+    }, icon: const Icon(Icons.arrow_back_ios,color: Colors.black,))
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-        Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('images/image 5.png'),fit: BoxFit.cover)),
-          child: Column(children: [
-             Padding(
-               padding: const EdgeInsets.only(top:80),
-               child: SizedBox(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('images/image 5.png'),fit: BoxFit.cover)),
+            child: Column(children: [
+              SizedBox(height: 90,),
+               SizedBox(
                          height: 60,
-                         width: 460,
-                          child: TextField(
-                           decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                         width:350,
+                          child: TextFormField(cursorColor: Colors.black,
+                           decoration: InputDecoration(focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)),border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                            fillColor: Color.fromARGB(255, 255, 255, 255),filled: true,prefixIcon: Icon(Icons.search,size: 35,),hintText: ('Search location')),
                            ),
                         ),
-                        
-             ),
-             
-             Expanded(child: ListView.builder(itemCount: 7,itemBuilder: (context, index) {
-              return Container(color: Color.fromARGB(139,255 , 255, 255),
-                child: Padding(
+               
+               Expanded(child: ListView.builder(itemCount: 7,itemBuilder: (context, index) {
+                return Padding(
                   padding: EdgeInsets.only(top: 20,left: 20,right: 20),
                   child: Container(
                     padding: EdgeInsets.all(10),
@@ -64,28 +70,39 @@ class _ration1State extends State<ration1> {
                       Expanded(
                         child: SizedBox(
                           
-                          child: Text('Ration Store Munduparamba,Eranad Thaluk,676509,Malappuram(Dt),Malappuram-Manjeri Rod',style: GoogleFonts.abyssinicaSil(fontSize:15),)),
+                          child: Text('Ration Store Munduparamba,Eranad Thaluk, 676509,Malappuram(Dt),Malappuram-Manjeri Rod',style: GoogleFonts.abyssinicaSil(fontSize:15),)),
                       ),
-                      ElevatedButton(style: ButtonStyle(
-                      //elevation:MaterialStatePropertyAll(8),
-                      backgroundColor: MaterialStatePropertyAll(Color.fromARGB(233, 135, 133, 133)),
-                      shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),side: BorderSide(color: Colors.black))),
-                     // minimumSize:MaterialStatePropertyAll(Size(10,10)) 
-                    ),
-                        onPressed: (){}, child: Text("select",style: GoogleFonts.abyssinicaSil(fontSize:18,color:Colors.black),))
+                      Column(
+                        children: [
+                          ElevatedButton(style: ButtonStyle(
+                          //elevation:MaterialStatePropertyAll(8),
+                          backgroundColor: MaterialStatePropertyAll(Color.fromARGB(233, 135, 133, 133)),
+                          shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),side: BorderSide(color: Colors.black))),
+                                                   // minimumSize:MaterialStatePropertyAll(Size(10,10)) 
+                                                  ),
+                            onPressed: (){
+                               Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>ration2()));
+                            }, child: Text("select",style: GoogleFonts.abyssinicaSil(fontSize:18,color:Colors.black),)),
+                        IconButton(onPressed: (){}, icon: Icon(Icons.favorite,color: Color.fromARGB(255, 242, 146, 37),size: 25,))
+                        ],
+                      ),
+                       
                     ],
                   ),
                   ),
-                ),
-              );
-                
-
-             }))
-          ],),
-          
-        ),
-         
-      ],),
+                );
+                  
+        
+               }))
+            ],),
+            
+          ),
+           
+        ],),
+      ),
       extendBody: true,
     //  bottomNavigationBar: BottomNavigationBar(showUnselectedLabels: true,elevation: 0,
     //  backgroundColor: const Color.fromARGB(139,255, 255, 255),

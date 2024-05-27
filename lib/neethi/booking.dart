@@ -32,10 +32,12 @@ class _bookingdetlsState extends State<bookingdetls> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+             
             )),
         backgroundColor: const Color.fromARGB(136, 255, 255, 255),
       ),

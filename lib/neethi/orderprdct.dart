@@ -34,10 +34,12 @@ class _orderproductState extends State<orderproduct> {
 extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+              
             )),
         backgroundColor: const Color.fromARGB(136, 255, 255, 255),
       ),
@@ -50,7 +52,7 @@ extendBodyBehindAppBar: true,
                   image: AssetImage('images/pharmacy.png'), fit: BoxFit.cover),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 30),
+              padding: const EdgeInsets.only(top: 100, left: 20, right: 20, bottom: 30),
               child: Container(
                 color: const Color.fromARGB(178, 233, 231, 231),
                 child: Form(
@@ -96,7 +98,7 @@ extendBodyBehindAppBar: true,
                         SizedBox(
                         height: 80,
                         width: 300,
-                        child: TextFormField(inputFormatters: [FilteringTextInputFormatter.digitsOnly,],
+                        child: TextFormField(inputFormatters: [FilteringTextInputFormatter.digitsOnly,],keyboardType: TextInputType.number,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller:_bookingController,
                   
@@ -122,7 +124,7 @@ extendBodyBehindAppBar: true,
                       ),
                        
                       Padding(
-                        padding: const EdgeInsets.only(left: 20),
+                        padding: const EdgeInsets.only(left: 30),
                         child: Row(
                           children: [
                            SizedBox(

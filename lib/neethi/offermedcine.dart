@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stockit/neethi/booklab.dart';
+import 'package:stockit/neethi/neethi3.dart';
 import 'package:stockit/neethi/offer.dart';
 import 'package:stockit/neethi/offerlab.dart';
 
@@ -20,10 +21,12 @@ class _offermedicineState extends State<offermedicine> {
        extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+               Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+             
             )),
         title: Text(
           'Offers',
@@ -39,13 +42,13 @@ class _offermedicineState extends State<offermedicine> {
             image: DecorationImage(
                 image: AssetImage('images/pharmacy.png'), fit: BoxFit.cover)),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 70, left: 20, right: 20, bottom: 25),
+                  padding: const EdgeInsets.only(top: 110, left: 20, right: 20, bottom: 25),
                   child: Container(
                     color:  const Color.fromARGB(178, 233, 231, 231),
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 10,right: 2,left: 2),
+                          padding: const EdgeInsets.only(top: 10,left: 10,),
                           child: Row(
                             children: [
                               ElevatedButton(onPressed: (){
@@ -67,7 +70,7 @@ class _offermedicineState extends State<offermedicine> {
                          Expanded(child: ListView.builder(itemCount: 5,itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(left: 20,right: 20,bottom: 10),
-                    child: Container(height: 120,width: 300,decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10),border:Border.all(width: 1,color: Colors.black)),
+                    child: Container(height: 130,width: 350,decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10),border:Border.all(width: 1,color: Colors.black)),
                     child:Column(children: [ 
                        Row(
                          children: [

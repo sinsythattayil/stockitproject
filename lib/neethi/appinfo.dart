@@ -16,14 +16,14 @@ class _appinfoneethiState extends State<appinfoneethi> {
       extendBodyBehindAppBar: true,
        appBar: AppBar(backgroundColor: Color.fromARGB(136, 255, 255, 255),
        leading: IconButton(onPressed: (){
-         Navigator.push(context, MaterialPageRoute(builder: (context) => menuneethi(),));
-       }, icon:Icon(Icons.arrow_back_ios_sharp,size: 35,)),),
+         Navigator.pop(context);
+       }, icon:Icon(Icons.arrow_back_ios_sharp,)),),
        body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage('images/pharmacy.png'),fit: BoxFit.cover)),
         child: Padding(
-          padding: const EdgeInsets.only(top: 60,left: 5,right: 5,bottom: 20),
+          padding: const EdgeInsets.only(top: 100,left: 5,right: 5,bottom: 20),
           child: Container(decoration: BoxDecoration(color: Color.fromARGB(232, 14, 14, 14),borderRadius: BorderRadius.circular(10)),
             
             child:SingleChildScrollView(

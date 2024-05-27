@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stockit/neethi/booklab.dart';
+import 'package:stockit/neethi/labtest.dart';
+import 'package:stockit/neethi/recmndpkg.dart';
 
 class popularlab extends StatefulWidget {
   const popularlab({super.key});
@@ -15,10 +18,13 @@ class _popularlabState extends State<popularlab> {
        extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+               Navigator.pop(context);
+                              
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+            
             )),
         title: Text(
           'Lab Test',
@@ -37,7 +43,7 @@ class _popularlabState extends State<popularlab> {
           child: Column(children: [
             //SizedBox(height: 90,width: 50,),
             Padding(
-              padding: const EdgeInsets.only(top: 70),
+              padding: const EdgeInsets.only(top: 100),
               child: SizedBox(height: 50,width: 325,
                 child: TextFormField(cursorColor: Colors.black,
                                  decoration: InputDecoration(focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.black)) ,
@@ -47,7 +53,7 @@ class _popularlabState extends State<popularlab> {
               ),
             ),
             SizedBox(height: 15,width: 30),
-            Container(height: 525,width: 325,
+            Container(height: 565,width: 325,
             decoration: BoxDecoration(color: const Color.fromARGB(186, 255, 255, 255),borderRadius: BorderRadius.circular(10),border: Border.all(width:1,color: Colors.black)),
              child: Column(children: [
               Row(
@@ -66,7 +72,12 @@ class _popularlabState extends State<popularlab> {
                           padding: const EdgeInsets.only(left: 10),
                           child: Text('Fasting Blood Suger(FBS) Test',style: GoogleFonts.inknutAntiqua(fontSize:15),),
                         ),
-                         IconButton(onPressed: (){}, icon: Icon(Icons.arrow_forward_ios_rounded,size: 20,)),
+                         IconButton(onPressed: (){
+                           Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => rcmndpkg()));
+                         }, icon: Icon(Icons.arrow_forward_ios_rounded,size: 20,)),
                          
                       ],
                     ),

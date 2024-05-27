@@ -15,7 +15,9 @@ class _suporderState extends State<suporder> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-         leading: IconButton(onPressed: (){}, icon:Icon(Icons.arrow_back_ios_sharp) ),
+         leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+         }, icon:Icon(Icons.arrow_back_ios_sharp) ),
         title: Text(
           'Orders',
           style: GoogleFonts.inknutAntiqua(fontSize: 30),

@@ -22,28 +22,26 @@ class _resetState extends State<reset> {
           children: [
           
             Padding(
-              padding: EdgeInsets.only(top: 100),
-              child: Text('Reset Your Password',style: GoogleFonts.abrilFatface(fontSize:30),)
+              padding: EdgeInsets.only(top: 80),
+              child: Text('Reset Your Password',style: GoogleFonts.abrilFatface(fontSize:25),)
             ),
 
             Image(image: AssetImage('images/images 1.png') ),
-            Padding(
-              padding: const EdgeInsets.only(top:5),
-              child: SizedBox(
-                height:50 ,
-                width: 400,
-                child: TextField(obscureText: true,
-                  decoration: InputDecoration(fillColor: Color.fromARGB(168, 255,255, 255),filled: true,
-                  border:OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: BorderSide(color: Colors.black)),
-                  hintText: ('New password'),prefixIcon:Icon(Icons.lock),suffixIcon: Icon(Icons.visibility_off) ),
-                ),
+          
+            SizedBox(
+              height:50 ,
+              width: 350,
+              child: TextField(obscureText: true,
+                decoration: InputDecoration(fillColor: Color.fromARGB(168, 255,255, 255),filled: true,
+                border:OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: BorderSide(color: Colors.black)),
+                hintText: ('New password'),prefixIcon:Icon(Icons.lock),suffixIcon: Icon(Icons.visibility_off) ),
               ),
             ),
              Padding(
               padding: const EdgeInsets.only(top: 20),
               child: SizedBox(
                 height:50 ,
-                width: 400,
+                width: 350,
                 child: TextField(obscureText: true,
                   decoration: InputDecoration(fillColor: Color.fromARGB(168, 255,255, 255),filled: true,
                   border:OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: BorderSide(color: Colors.black)),
@@ -56,7 +54,7 @@ class _resetState extends State<reset> {
           child: ElevatedButton(style: ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(Colors.black),foregroundColor: MaterialStatePropertyAll(Colors.white),
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-            minimumSize: MaterialStatePropertyAll(Size(400,55))
+            minimumSize: MaterialStatePropertyAll(Size(350,55))
           ),
            onPressed: (){
              Navigator.push(context, MaterialPageRoute(builder: (context)=>const reset()));

@@ -25,10 +25,10 @@ class _ordercompltState extends State<ordercomplt> {
       appBar: AppBar(
         elevation: 0,
         
-        leading: const Icon(
-          Icons.arrow_back_ios_sharp,
-          size: 35,
-        ),
+        
+        //  leading: IconButton(onPressed: (){
+        //   Navigator.pop(context);
+        //  }, icon:Icon(Icons.arrow_back_ios_sharp) ),
         title: Text(
           'StockIt',
           style: GoogleFonts.inknutAntiqua(fontSize: 30),
@@ -39,7 +39,7 @@ class _ordercompltState extends State<ordercomplt> {
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(image: DecorationImage(image: AssetImage('images/image 5.png'),fit: BoxFit.cover)),
             child: Padding(
-              padding: const EdgeInsets.only(top: 80,left: 40,right: 40,bottom: 40),
+              padding: const EdgeInsets.only(top: 100,left: 25,right: 25,bottom: 40),
               child: Container(
                 color: Color.fromARGB(135, 255, 255, 255),
                 child: Column(children: [

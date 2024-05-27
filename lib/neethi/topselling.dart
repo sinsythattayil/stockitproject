@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stockit/neethi/healthserch.dart';
+import 'package:stockit/neethi/neethi3.dart';
+import 'package:stockit/neethi/nelocation.dart';
 
 class topsellind extends StatefulWidget {
   const topsellind({super.key});
@@ -12,16 +14,19 @@ class topsellind extends StatefulWidget {
 }
 
 class _topsellindState extends State<topsellind> {
-  int _selectedindex=0;
+ // int _selectedindex=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+               Navigator.pop(context);
+
+            },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              size: 35,
+             
             )),
         title: Text(
           'Health Care',
@@ -38,9 +43,9 @@ class _topsellindState extends State<topsellind> {
         child: Column(
           children: [
             SizedBox(
-              height: 70,
+              height: 120,
             ),
-             SizedBox(height: 50,width: 335,
+             SizedBox(height: 50,width: 345,
                child: TextFormField(cursorColor: Colors.black,onTap: () {
                   Navigator.push(context,
              MaterialPageRoute(builder:(context)=> healthsearch()),);
@@ -52,7 +57,7 @@ class _topsellindState extends State<topsellind> {
              ),
              SizedBox(height: 15,),
              Container(
-              height: 450,width: 335,
+              height: 520,width: 345,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Color.fromARGB(215, 0, 0, 0),),
               child: Padding(
                 padding: const EdgeInsets.only(top: 8,left: 17),
@@ -176,53 +181,53 @@ class _topsellindState extends State<topsellind> {
           ],
         ),
          ),
-          bottomNavigationBar: BottomNavigationBar(
-          showUnselectedLabels: true,
-          elevation: 0,
-          backgroundColor: const Color.fromARGB(139, 255, 255, 255),
-          items: [
-            const BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  size: 35,
-                ),
-                label: ('Home')),
+          // bottomNavigationBar: BottomNavigationBar(
+          // showUnselectedLabels: true,
+          // elevation: 0,
+          // backgroundColor: const Color.fromARGB(139, 255, 255, 255),
+          // items: [
+          //   const BottomNavigationBarItem(
+          //       icon: Icon(
+          //         Icons.home,
+          //         size: 35,
+          //       ),
+          //       label: ('Home')),
            
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Lab Items.png'),size: 30,
+          //   const BottomNavigationBarItem(
+          //       icon: ImageIcon(
+          //     AssetImage('images/Lab Items.png'),size: 30,
               
-            ),
-            label: ('Lab Test')),
-             const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/health.png'),size: 30,
+          //   ),
+          //   label: ('Lab Test')),
+          //    const BottomNavigationBarItem(
+          //       icon: ImageIcon(
+          //     AssetImage('images/health.png'),size: 30,
               
-            ),
-            label: ('Health Care')),
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Discount.png'),size: 30,
+          //   ),
+          //   label: ('Health Care')),
+          //   const BottomNavigationBarItem(
+          //       icon: ImageIcon(
+          //     AssetImage('images/Discount.png'),size: 30,
               
-            ),
-            label: ('Offer')),
-            const BottomNavigationBarItem(
-                icon: ImageIcon(
-              AssetImage('images/Cart.png'),size: 30,
+          //   ),
+          //   label: ('Offer')),
+          //   const BottomNavigationBarItem(
+          //       icon: ImageIcon(
+          //     AssetImage('images/Cart.png'),size: 30,
               
-            ),
-            label: ('Cart')),
+          //   ),
+          //   label: ('Cart')),
              
              
-          ],
-          currentIndex: _selectedindex,
-          selectedItemColor: const Color.fromARGB(255, 196, 145, 6),
-          unselectedItemColor: Colors.black,
-          onTap: (index) {
-            setState(() {
-              _selectedindex = index;
-            });
-          }),
+          // ],
+          // currentIndex: _selectedindex,
+          // selectedItemColor: const Color.fromARGB(255, 196, 145, 6),
+          // unselectedItemColor: Colors.black,
+          // onTap: (index) {
+          //   setState(() {
+          //     _selectedindex = index;
+          //   });
+          // }),
     );
   }
 }
