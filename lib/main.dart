@@ -1,136 +1,40 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:stockit/admin/adminlogin.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/businesslogic/firebase_options.dart';
-import 'package:stockit/home/favoritestre.dart';
-import 'package:stockit/home/home1.dart';
-import 'package:stockit/login/logpag.dart';
-import 'package:stockit/login/stockit1.dart';
-import 'package:stockit/login/stockit4.dart';
-import 'package:stockit/mavelistore%20module/mlogin.dart';
-import 'package:stockit/mavelistore%20module/mwelcom.dart';
-import 'package:stockit/neethi%20store/nelogin.dart';
-import 'package:stockit/neethi/menunee.dart';
-import 'package:stockit/neethi/neethi3.dart';
-import 'package:stockit/neethi/nprofile.dart';
+import 'package:stockit/data/firebase/database/db_controller.dart';
+import 'package:stockit/data/provider/controller.dart';
+import 'package:stockit/spashscreen.dart';
 
-import 'package:stockit/rationstore.dart/rlogin.dart';
-import 'package:stockit/rationstore.dart/rlogin2.dart';
-import 'package:stockit/rationstore.dart/rorder.dart';
-import 'package:stockit/supplycostore.dart/slogin.dart';
-
-
-Future <void> main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        
-        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 91, 12, 226)),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<DbController>(create: (_) => DbController()),
+                ChangeNotifierProvider<Controller>(create: (_) => Controller())
+
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 91, 12, 226)),
+          useMaterial3: true,
+        ),
+        home: SplashScreen(),
       ),
-      //home: mypage(),
-    // home: MyWidget(),
-    // home: project(),
- home: stockit1(),
-//home: signin(),
-//home: stockit1(),
-// home: logipage(),
- //home: favoritestore(),
-    //home: forgot(),
-  //home: stockit1(),
-  // home: reset(),
-// home: home1(),
- //home: grocery(),
-  // home: ration2(),
-// home: white(),
-// home: blue(),
- //home: pink(),
-//home: yellow(),
-//home: ordercomplt(),
-//home: menu(),
- //home: supplyco1(),
-  // home: NavigationPage(),
- //home: feedback(),
- //home: settings()
- //home: resetpass(),
- //home: appinfo(),
- // home: profile(),
-//home: ration1(),
-//home: orders(),
-//home: specialitem(),
-//home: notification(),
-//home:details(),
-//home: mavelistore(),
-//home: mdetails(),s
-//home: product(),
-//home: mproduct(),
-//home: suporder(),
-//home: mavorder(),
-//home: mavspecial(),
-//home: supspecial(),
-//home:neethi(),
-//home: nelocation(),
-//home: neethi3(),
-//home: medicine(),
-// home: labtest(),
- //home: popularlab(),
- //home: rcmndpkg(),
-//home: bookingdetls() not,
-//home: booklab(),
-//home: ration2(),
-//home:booksuccss(),
-//home:offerall(),
-//home: offerlab(),
-//home:offermedicine(),
-//home: medicinserch(),
-//home: cart(),
-//home: topsellind(),
-//home: healthsearch(),
-//home: sebamade(),
-//home: orderproduct(),
-//home: menuneethi(),
-//home:nprofilr()
-//home:reviewnee(),
-//home: neesettings(),
-//home: appinfoneethi(),
-//home: orderneethi(),
-//home: notificationnee(),
-
-//------ration module-----
-//home: rlogin1(),
-//home: rlogin2(),
-//home: productration(),
-//home: rorder(),
-
-
-//---maveli module---
-//home: mwelcom(),
- //home: mlogin(),
-
-  //--supplyco module-----
-//home:slogin(),
-
-//---neethi module---
-//home:ordernee(),
-//home: nelogin(),
-
-
-//home:adminlogin()
-
     );
   }
 }
