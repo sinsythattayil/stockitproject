@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stockit/presentation/common/order.dart';
 import 'package:stockit/presentation/common/profile.dart';
-import 'package:stockit/presentation/common/special.dart';
+import 'package:stockit/presentation/modules/user_module/home/ration_special_stock.dart';
 //import 'package:stockit/home/home2.dart';
 import 'package:stockit/presentation/modules/user_module/package.dart';
 import 'package:stockit/presentation/modules/rationstore.dart/product.dart';

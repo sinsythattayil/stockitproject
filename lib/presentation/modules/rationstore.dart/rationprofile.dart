@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:stockit/data/firebase/database/db_controller.dart';
 
 class rationprofile extends StatelessWidget {
   const rationprofile({super.key});
 
   @override
   Widget build(BuildContext context) {
+   final storeProfile= Provider.of<DbController>(context,listen: false).storeModel;
     return Scaffold(
       extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -68,12 +71,13 @@ class rationprofile extends StatelessWidget {
                   ),
                 ),
 
-                                    Text('Name',style: GoogleFonts.abrilFatface(
+                                    Text(storeProfile!.name,style: GoogleFonts.abrilFatface(
                       fontSize: 20, color: Colors.white)),
-                                    Text('Address',style: GoogleFonts.abrilFatface(
+                       Text('Store Id : ${storeProfile.storeId}',style: GoogleFonts.abrilFatface(
                       fontSize: 20, color: Colors.white)),
-                                    Text('Email Id',style: GoogleFonts.abrilFatface(
-                      fontSize: 20, color: Colors.white))
+                                    Text('${storeProfile.branch},Pin:${storeProfile.pin}\nPh:${storeProfile.phoneNumber}',style: GoogleFonts.abrilFatface(
+                      fontSize: 20, color: Colors.white)),
+                                   
               ],
             ),
           ),

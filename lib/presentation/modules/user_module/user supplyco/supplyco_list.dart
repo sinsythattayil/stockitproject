@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -139,7 +141,7 @@ class _SupplycoListViewState extends State<SupplycoListView> {
                                                             MaterialPageRoute(
                                                                 builder:
                                                                     (context) =>
-                                                                        const supplycostocks()));
+                                                                         supplycostocks(storeID: data.storeId,)));
                                                       },
                                                       child: Text(
                                                         "select",
@@ -149,14 +151,41 @@ class _SupplycoListViewState extends State<SupplycoListView> {
                                                                 color: Colors
                                                                     .black),
                                                       )),
-                                                  IconButton(
-                                                      onPressed: () {},
-                                                      icon: Icon(
-                                                        Icons.favorite,
-                                                        color: Color.fromARGB(
-                                                            255, 242, 146, 37),
-                                                        size: 25,
-                                                      ))
+                                                  StreamBuilder<DocumentSnapshot>(
+                                                      stream: DbController().checkProductisLikedORNot(FirebaseAuth.instance.currentUser!.uid, data.storeId,),
+                                                      builder: (context, snapshot) {
+                                                        if(snapshot.connectionState==ConnectionState.waiting){
+                                                          return const SizedBox();
+                                                        }
+                                                      //  final snap=;
+                                                       if(snapshot.hasData){
+                                                        return IconButton(
+                                                            onPressed: () {
+                                                              // log(
+
+                                                               DbController().likeMyProduct(FirebaseAuth.instance.currentUser!.uid, data.storeId, data);
+                                                            },
+                                                            icon: Icon(
+                                                              Icons.favorite,
+                                                              color: snapshot.data!.exists?const Color.fromARGB(
+                                                                  255,
+                                                                  242,
+                                                                  146,
+                                                                  37): const Color
+                                                                      .fromARGB(
+                                                                          233,
+                                                                          135,
+                                                                          133,
+                                                                          133),
+                                                              size: 25,
+                                                            ));
+
+                                                       }else{
+                                                        return const SizedBox();
+                                                       }
+                                                        
+                                                      }
+                                                    )
                                                 ],
                                               )
                                             ],

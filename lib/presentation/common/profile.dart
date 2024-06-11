@@ -52,6 +52,9 @@ class _profileState extends State<profile> {
               StreamBuilder(
                 stream: _firestore.collection('firebase').doc(id).snapshots(),
                 builder: (context, snapshot) {
+                  if(snapshot.connectionState==ConnectionState.waiting){
+                    return Center(child: CircularProgressIndicator(),);
+                  }
                   DocumentSnapshot data = snapshot.data!;
                   return Container(
                     height: MediaQuery.of(context).size.height,

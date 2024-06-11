@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stockit/presentation/modules/user_module/login/stockit7.dart';
+import 'package:stockit/presentation/modules/user_module/login/reset_forgetpass.dart';
 
 class stock6 extends StatefulWidget {
   const stock6({super.key});

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:stockit/data/model/add_product_store.dart';
 
 class Controller with ChangeNotifier {
   File? fileImage;
@@ -19,15 +20,55 @@ class Controller with ChangeNotifier {
     }
   }
 
- Future<String> storeImage(File file) async {
+ Future<String> storeImage(File file,String path) async {
   print("object");
     SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
     final stamp = DateTime.timestamp();
     UploadTask uploadTask =
-        storage.ref().child("storeimage/$stamp").putFile(file, metadata);
+        storage.ref().child("$path/$stamp").putFile(file, metadata);
           log("object");
 
     TaskSnapshot snapshot = await uploadTask;
     return await snapshot.ref.getDownloadURL();
   }
+
+String radioValue="Genaral";
+  chanegeRadioButtonvalues(value){
+    radioValue=value;
+    notifyListeners();
+
+  }
+
+   List<StoreProductModel> choosedList = [];
+
+  Future addToList(StoreProductModel item) async{
+    if (choosedList.isEmpty) {
+      choosedList.add(item);
+    } else {
+      if (choosedList.contains(item)) {
+        choosedList.remove(item);
+      } else {
+        choosedList.add(item);
+      }
+    }
+
+    log(choosedList.length.toString());
+    // setState(() {
+      
+    // });
+    notifyListeners();
+  }
+clearList(){
+  choosedList.clear();
+  // notifyListeners();
+}
+
+
+String selectedItem="Male";
+
+chanageItem(value){
+  selectedItem=value;
+  notifyListeners();
+}
+
 }

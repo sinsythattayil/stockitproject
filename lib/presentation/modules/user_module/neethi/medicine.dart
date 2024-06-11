@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:stockit/data/firebase/database/db_controller.dart';
+import 'package:stockit/data/helper/service.dart';
+import 'package:stockit/data/provider/controller.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/medicineserch.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/neethi3.dart';
 
@@ -105,32 +109,49 @@ class _medicineState extends State<medicine> {
                     // Container(
                     //   height: 20,
                     // ),
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
+                    Consumer<Controller>(
+                      builder: (context,controler,child) {
+                        return Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10,top: 15),
-                              child: Text(
-                                'Upload the prescription photo',
-                                style: GoogleFonts.inknutAntiqua(
-                                    fontSize: 14,
-                                    color: const Color.fromARGB(177, 0, 0, 0)),
-                              ),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10,top: 15),
+                                  child: Text(
+                                    'Upload the prescription photo',
+                                    style: GoogleFonts.inknutAntiqua(
+                                        fontSize: 14,
+                                        color: const Color.fromARGB(177, 0, 0, 0)),
+                                  ),
+                                ),
+                                SizedBox(height: 15,),
+                                ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(const Color.fromARGB(205, 0, 0, 0))),
+                                    onPressed: () {
+                                      controler.pickeImageFromGallery().then((value) {
+                                        controler.storeImage(controler.fileImage!, "Prescription").then((url) {
+                                        DbController().uploadPrescription(url).then((value) {
+                                            Services.successMessage(context, "Prescription send to Neethi store!");
+                                          Navigator.pop(context);
+                                          controler.fileImage=null; 
+                                        });
+                                        });
+                                        
+                                
+                                      });
+                                      
+                                    }, child: Text('Upload',style: GoogleFonts.inknutAntiqua(fontSize:15,color:Colors.white),))
+                              ],
                             ),
-                            SizedBox(height: 15,),
-                            ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(const Color.fromARGB(205, 0, 0, 0))),
-                                onPressed: () {}, child: Text('Upload',style: GoogleFonts.inknutAntiqua(fontSize:15,color:Colors.white),))
+                            // Image.asset(
+                            //   'images/Prescription.png',
+                            //   scale: 1.2,
+                            // )
+                            Container(height: 100,width: 80,color: Color.fromARGB(224, 191, 233, 226),
+                            child:controler.fileImage!=null?Image.file(controler.fileImage!): Image.asset('images/Prescription.png',fit: BoxFit.cover,),)
                           ],
-                        ),
-                        // Image.asset(
-                        //   'images/Prescription.png',
-                        //   scale: 1.2,
-                        // )
-                        Container(height: 100,width: 80,color: Color.fromARGB(224, 191, 233, 226),
-                        child: Image.asset('images/Prescription.png',fit: BoxFit.cover,),)
-                      ],
+                        );
+                      }
                     ),
                     //ElevatedButton(onPressed: (){}, child: Text('Upload'))
                   ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stockit/presentation/common/order.dart';
 import 'package:stockit/presentation/common/ordergrocery.dart';
 import 'package:stockit/presentation/common/profile.dart';
-import 'package:stockit/presentation/common/special.dart';
+import 'package:stockit/presentation/modules/user_module/home/ration_special_stock.dart';
 import 'package:stockit/presentation/modules/user_module/home/favoritestre.dart';
 import 'package:stockit/presentation/modules/user_module/home/grocery.dart';
 //import 'package:stockit/home/home2.dart';
@@ -10,7 +10,7 @@ import 'package:stockit/presentation/modules/user_module/home/ration_list.dart';
 import 'package:stockit/presentation/modules/user_module/home/specialitemall.dart';
 
 import 'package:stockit/presentation/modules/user_module/neethi/cart.dart';
-import 'package:stockit/presentation/modules/user_module/neethi/healthserch.dart';
+import 'package:stockit/presentation/modules/user_module/neethi/serch_result_product.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/labtest.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/neethi3.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/offer.dart';

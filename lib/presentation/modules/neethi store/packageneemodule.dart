@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stockit/presentation/modules/neethi%20store/neethihome.dart';
+import 'package:stockit/presentation/modules/neethi%20store/neethi_home.dart';
 import 'package:stockit/presentation/modules/neethi%20store/neethioffer.dart';
 import 'package:stockit/presentation/modules/neethi%20store/nehealthcare.dart';
 import 'package:stockit/presentation/modules/neethi%20store/nelabtest.dart';
@@ -26,7 +26,7 @@ class _packageneemoduleState extends State<packageneemodule> {
    neethihome(),
     const nelabtest(),
     const nehealthcare(),
-    const neethioffer(),
+   
     const ordernee()
     
   ];
@@ -82,13 +82,7 @@ Widget mynav({
               
             ),
             label: ('Health Care')),
-            const BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-                icon: ImageIcon(
-              AssetImage('images/Discount.png'),size: 30,
-              
-            ),
-            label: ('Offer')),
+          
             const BottomNavigationBarItem(
               backgroundColor: Colors.white,
                 icon: ImageIcon(

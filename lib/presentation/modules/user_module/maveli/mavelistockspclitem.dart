@@ -2,12 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stockit/presentation/common/special.dart';
+import 'package:stockit/presentation/common/special_stock_supplyco_and_maveli.dart';
+import 'package:stockit/presentation/modules/user_module/home/ration_special_stock.dart';
 import 'package:stockit/presentation/modules/user_module/maveli/maveli_list.dart';
-import 'package:stockit/presentation/modules/user_module/maveli/mproduct.dart';
+import 'package:stockit/presentation/modules/user_module/maveli/maveli_stoc_view.dart';
 
 class mavelistocks extends StatefulWidget {
-  const mavelistocks({super.key});
+  String storeId;
+   mavelistocks({super.key,required this.storeId});
 
   @override
   State<mavelistocks> createState() => _mavelistocksState();
@@ -43,8 +45,8 @@ class _mavelistocksState extends State<mavelistocks> {
           backgroundColor: const Color.fromARGB(136, 255, 255, 255),
         ),
         body: TabBarView(children: [
-        mproduct(),
-        specialitem(),
+        MaveliStockview(storeId: widget.storeId,),
+       SpecialStockOFMaveliAndSupplyco(collection: "Maveli Products", storeId:widget. storeId)
         
           
         ],),

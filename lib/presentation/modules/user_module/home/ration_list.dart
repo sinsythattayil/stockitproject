@@ -1,14 +1,17 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
+import 'package:stockit/data/model/add_product_store.dart';
 import 'package:stockit/data/model/store_model.dart';
 //import 'package:stockit/home/home2.dart';
-import 'package:stockit/presentation/modules/user_module/home/ration2.dart';
-import 'package:stockit/presentation/modules/user_module/home/rationstoks.dart';
+import 'package:stockit/presentation/modules/user_module/home/ration_detail_adding_page.dart';
+import 'package:stockit/presentation/modules/user_module/home/stock_view_page.dart';
 
 class RationViewList extends StatefulWidget {
   const RationViewList({super.key});
@@ -99,7 +102,7 @@ class _RationViewListState extends State<RationViewList> {
                                   : ListView.builder(
                                       itemCount: listOfData.length,
                                       itemBuilder: (context, index) {
-                                        final data=listOfData[index];
+                                        final data = listOfData[index];
                                         return Padding(
                                           padding: const EdgeInsets.only(
                                               top: 20, left: 20, right: 20),
@@ -119,7 +122,7 @@ class _RationViewListState extends State<RationViewList> {
                                                 Expanded(
                                                   child: SizedBox(
                                                       child: Text(
-'Ration Store\n${data.branch}, Pin: ${data.pin}\nPh:${data.phoneNumber}',
+                                                    'Ration Store\n${data.branch}, Pin: ${data.pin}\nPh:${data.phoneNumber}',
                                                     style: GoogleFonts
                                                         .abyssinicaSil(
                                                             fontSize: 15),
@@ -154,7 +157,10 @@ class _RationViewListState extends State<RationViewList> {
                                                               MaterialPageRoute(
                                                                   builder:
                                                                       (context) =>
-                                                                          const ration2()));
+                                                                          RationDetailAddingPage(
+                                                                            storeId:
+                                                                                data.storeId,
+                                                                          )));
                                                         },
                                                         child: Text(
                                                           "select",
@@ -164,17 +170,61 @@ class _RationViewListState extends State<RationViewList> {
                                                                   color: Colors
                                                                       .black),
                                                         )),
-                                                    IconButton(
-                                                        onPressed: () {},
-                                                        icon: const Icon(
-                                                          Icons.favorite,
-                                                          color: Color.fromARGB(
-                                                              255,
-                                                              242,
-                                                              146,
-                                                              37),
-                                                          size: 25,
-                                                        ))
+                                                    StreamBuilder<
+                                                            DocumentSnapshot>(
+                                                        stream: DbController()
+                                                            .checkProductisLikedORNot(
+                                                          FirebaseAuth.instance
+                                                              .currentUser!.uid,
+                                                          data.storeId,
+                                                        ),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          if (snapshot
+                                                                  .connectionState ==
+                                                              ConnectionState
+                                                                  .waiting) {
+                                                            return const SizedBox();
+                                                          }
+                                                          //  final snap=;
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            return IconButton(
+                                                                onPressed: () {
+                                                                  // log(
+
+                                                                  DbController().likeMyProduct(
+                                                                      FirebaseAuth
+                                                                          .instance
+                                                                          .currentUser!
+                                                                          .uid,
+                                                                      data.storeId,
+                                                                      data);
+                                                                },
+                                                                icon: Icon(
+                                                                  Icons
+                                                                      .favorite,
+                                                                  color: snapshot
+                                                                          .data!
+                                                                          .exists
+                                                                      ? const Color
+                                                                          .fromARGB(
+                                                                          255,
+                                                                          242,
+                                                                          146,
+                                                                          37)
+                                                                      : const Color
+                                                                          .fromARGB(
+                                                                          233,
+                                                                          135,
+                                                                          133,
+                                                                          133),
+                                                                  size: 25,
+                                                                ));
+                                                          } else {
+                                                            return const SizedBox();
+                                                          }
+                                                        })
                                                   ],
                                                 ),
                                               ],
@@ -211,4 +261,6 @@ class _RationViewListState extends State<RationViewList> {
       //  ),
     );
   }
+
+ 
 }

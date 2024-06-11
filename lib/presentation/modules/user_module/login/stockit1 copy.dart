@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stockit/presentation/modules/user_module/home/home1.dart';
 import 'package:stockit/presentation/modules/user_module/login/user_login.dart';
-import 'package:stockit/presentation/modules/user_module/login/stockit2.dart';
+//import 'package:stockit/presentation/modules/user_module/login/stockit2.dart';
 
 class stockit1 extends StatefulWidget {
   const stockit1({super.key});

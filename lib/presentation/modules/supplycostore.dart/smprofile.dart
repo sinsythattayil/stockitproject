@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/presentation/modules/supplycostore.dart/smenu.dart';
 
 class smprofile extends StatefulWidget {
@@ -12,6 +14,8 @@ class smprofile extends StatefulWidget {
 class _smprofileState extends State<smprofile> {
   @override
   Widget build(BuildContext context) {
+       final storeProfile= Provider.of<DbController>(context,listen: false).storeModel;
+
     return Scaffold(
       drawer: smenu(),
        extendBodyBehindAppBar: true,
@@ -78,12 +82,13 @@ class _smprofileState extends State<smprofile> {
                   ),
                 ),
 
-                                    Text('Name',style: GoogleFonts.abrilFatface(
+                                 
+                                    Text(storeProfile!.name,style: GoogleFonts.abrilFatface(
                       fontSize: 20, color: Colors.white)),
-                                    Text('Address',style: GoogleFonts.abrilFatface(
+                       Text('Store Id : ${storeProfile.storeId}',style: GoogleFonts.abrilFatface(
                       fontSize: 20, color: Colors.white)),
-                                    Text('Email Id',style: GoogleFonts.abrilFatface(
-                      fontSize: 20, color: Colors.white))
+                                    Text('${storeProfile.branch},Pin:${storeProfile.pin}\nPh:${storeProfile.phoneNumber}',style: GoogleFonts.abrilFatface(
+                      fontSize: 20, color: Colors.white)),
               ],
             ),
           ),

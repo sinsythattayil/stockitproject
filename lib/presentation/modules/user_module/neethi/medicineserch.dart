@@ -44,7 +44,7 @@ class _medicinserchState extends State<medicinserch> {
             //SizedBox(height: 90,width: 50,),
             Padding(
               padding: const EdgeInsets.only(top:100),
-              child: SizedBox(height: 50,width: 325,
+              child: SizedBox(height: 60,width: 375,
                 child: TextFormField(cursorColor: Colors.black,
                                  decoration: InputDecoration(focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.black)) ,
                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
@@ -54,7 +54,7 @@ class _medicinserchState extends State<medicinserch> {
               ),
             ),
             SizedBox(height: 15),
-            Container(height: 550,width: 325,
+            Container(height: 580,width: 375,
             decoration: BoxDecoration(color: const Color.fromARGB(186, 255, 255, 255),borderRadius: BorderRadius.circular(10),border: Border.all(width:1,color: Colors.black)),
              child: Column(children: [
               Expanded(child: ListView.builder(itemCount: 8,itemBuilder:(context, index) {
@@ -64,24 +64,29 @@ class _medicinserchState extends State<medicinserch> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 10),
-                          child: Column(
+                          child: Row(
                             children: [
-                              Text('Ecosprin 75g Strip Of 14 Tablets',style: GoogleFonts.abrilFatface(fontSize:15),),
-                              Row(
+                              Container(height: 40,width: 40,decoration: BoxDecoration(color: Colors.black),),
+                              Column(
                                 children: [
-                                  Icon(Icons.currency_rupee,size: 14,),
-                                   Text('4.72',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),),
-                           SizedBox(width:10,),
-                           Icon(Icons.currency_rupee,size: 13,color: Colors.grey[400],),
-                           Text('40.23',style: TextStyle(decorationColor: Colors.grey[400],
-                           decoration: TextDecoration.lineThrough,
-                            fontSize:13,fontWeight: FontWeight.bold,color: Colors.grey[400]),
-                            ),
-                             SizedBox(width:20),
-                           Text('14%OFF',style: TextStyle(color: Colors.red,fontSize: 14,fontWeight: FontWeight.bold),),
+                                  Text('Ecosprin 75g Strip Of 14 Tablets',style: GoogleFonts.abrilFatface(fontSize:15),),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.currency_rupee,size: 14,),
+                                       Text('4.72',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),),
+                               SizedBox(width:10,),
+                               Icon(Icons.currency_rupee,size: 13,color: Colors.grey[400],),
+                               Text('40.23',style: TextStyle(decorationColor: Colors.grey[400],
+                               decoration: TextDecoration.lineThrough,
+                                fontSize:13,fontWeight: FontWeight.bold,color: Colors.grey[400]),
+                                ),
+                                 SizedBox(width:20),
+                               Text('14%OFF',style: TextStyle(color: Colors.red,fontSize: 14,fontWeight: FontWeight.bold),),
+                                    ],
+                                  ),
+                              
                                 ],
                               ),
-                          
                             ],
                           ),
                         ),

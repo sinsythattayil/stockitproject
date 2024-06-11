@@ -35,33 +35,36 @@ class _rationmenuState extends State<rationmenu> {
             builder: (context, snapshot) {
               
               if(snapshot.connectionState == ConnectionState.waiting){
-    return Center(child: CircularProgressIndicator(),);
+    return const Center(child: CircularProgressIndicator(),);
 
    }
 
               DocumentSnapshot data = snapshot.data!;
               return ListView(
                 children: [
-                  const Padding(
+                   const Padding(
                     padding: EdgeInsets.only(right: 180, top: 20),
-                    child: const CircleAvatar(
+                    child: CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white,
-                      child: CircleAvatar(
+                      child: Stack(children: [ CircleAvatar(
                         radius: 45,
                         backgroundImage: AssetImage('images/circleavathar.png'),
                       ),
+                     // IconButton(onPressed: (){}, icon: Icon(Icons.camera_alt,color: Colors.black,))
+                      ],),
+                      
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 10, left: 30),
+                    padding: const EdgeInsets.only(top: 10, left: 30),
                     child: Text(
                       '${data['name']}',
                       style: GoogleFonts.abrilFatface(
                           fontSize: 20, color: Colors.white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   ListTile(
@@ -69,7 +72,7 @@ class _rationmenuState extends State<rationmenu> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => profile(),
+                            builder: (context) => const profile(),
                           ));
                     },
                     leading: Image.asset(
@@ -80,13 +83,13 @@ class _rationmenuState extends State<rationmenu> {
                         style: GoogleFonts.abhayaLibre(
                             fontSize: 15, color: Colors.white)),
                   ),
-                  Divider(),
+                  const Divider(),
                   ListTile(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => feedback(),
+                            builder: (context) => const feedback(),
                           ));
                     },
                     leading: Image.asset(
@@ -97,13 +100,13 @@ class _rationmenuState extends State<rationmenu> {
                         style: GoogleFonts.abhayaLibre(
                             fontSize: 15, color: Colors.white)),
                   ),
-                  Divider(),
+                  const Divider(),
                   ListTile(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => settings(),
+                            builder: (context) => const settings(),
                           ));
                     },
                     leading: Image.asset(
@@ -114,13 +117,13 @@ class _rationmenuState extends State<rationmenu> {
                         style: GoogleFonts.abhayaLibre(
                             fontSize: 15, color: Colors.white)),
                   ),
-                  Divider(),
+                  const Divider(),
                   ListTile(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => appinfo(),
+                            builder: (context) => const appinfo(),
                           ));
                     },
                     leading: Image.asset(
@@ -131,20 +134,20 @@ class _rationmenuState extends State<rationmenu> {
                         style: GoogleFonts.abhayaLibre(
                             fontSize: 15, color: Colors.white)),
                   ),
-                  Divider(),
+                  const Divider(),
                   ListTile(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ordergrocery(),
+                            builder: (context) => const ordergrocery(),
                           ));
                     },
                     leading: Container(
                       height: 35,
                       width: 35,
-                      decoration: BoxDecoration(color: Colors.black),
-                      child: Image(
+                      decoration: const BoxDecoration(color: Colors.black),
+                      child: const Image(
                         image: AssetImage('images/orderbasket.png'),
                         fit: BoxFit.cover,
                       ),
@@ -154,13 +157,13 @@ class _rationmenuState extends State<rationmenu> {
                             fontSize: 15, color: Colors.white)),
                   ),
                   
-                  Divider(),
+                  const Divider(),
                   ListTile(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => notification(),
+                            builder: (context) => const notification(),
                           ));
                     },
                     leading: Image.asset(
@@ -171,7 +174,7 @@ class _rationmenuState extends State<rationmenu> {
                         style: GoogleFonts.abhayaLibre(
                             fontSize: 15, color: Colors.white)),
                   ),
-                  Divider(),
+                  const Divider(),
                   ListTile(
                     onTap: () async {
                       SharedPreferences preferences =
@@ -189,7 +192,7 @@ class _rationmenuState extends State<rationmenu> {
                         style: GoogleFonts.abhayaLibre(
                             fontSize: 15, color: Colors.white)),
                   ),
-                  Divider(),
+                  const Divider(),
                 ],
               );
             }));

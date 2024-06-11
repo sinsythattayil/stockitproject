@@ -53,11 +53,11 @@ class _SuplycoLoginState extends State<SuplycoLogin> {
                         if (value!.isEmpty) {
                           return 'Please Enter value';
                         }
-                        RegExp emailRegExp = RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                        if (!emailRegExp.hasMatch(value)) {
-                          return 'Please Enter valid Email';
-                        }
+                        // RegExp emailRegExp = RegExp(
+                        //     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                        // if (!emailRegExp.hasMatch(value)) {
+                        //   return 'Please Enter valid Email';
+                        // }
                         return null;
                       },
                       keyboardType: TextInputType.emailAddress,
@@ -70,7 +70,7 @@ class _SuplycoLoginState extends State<SuplycoLogin> {
                           border: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.black),
                               borderRadius: BorderRadius.circular(10)),
-                          hintText: ('Enter your Email id'),
+                          hintText: ('Enter your store id'),
                           prefixIcon: const Icon(Icons.email),
                           label: Text('Email ID',style: TextStyle(color: Colors.black))
                                         
@@ -122,7 +122,7 @@ class _SuplycoLoginState extends State<SuplycoLogin> {
                             "Supplyco",
                             _emailController.text,
                             _passWordController.text,
-                           pacakagesupplyco(indexnum:0),
+                            (indexnum:0),
                             context);
                         // if (_formkey.currentState!.validate()) {
                         //   setState(() {

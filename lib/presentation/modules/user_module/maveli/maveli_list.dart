@@ -1,11 +1,16 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/store_model.dart';
 //import 'package:stockit/home/home2.dart';
 import 'package:stockit/presentation/modules/user_module/maveli/mavelistockspclitem.dart';
-import 'package:stockit/presentation/modules/user_module/maveli/mproduct.dart';
+import 'package:stockit/presentation/modules/user_module/maveli/maveli_stoc_view.dart';
 
 class MavelistoreListView extends StatefulWidget {
   const MavelistoreListView({super.key});
@@ -54,13 +59,13 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                       width: 350,
                       child: TextFormField(
                         decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.black)),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            fillColor: Color.fromARGB(255, 255, 255, 255),
+                            fillColor: const Color.fromARGB(255, 255, 255, 255),
                             filled: true,
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.search,
                               size: 35,
                             ),
@@ -92,10 +97,10 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
 
                                         final data=listOfData[index];
                                         return Padding(
-                                          padding: EdgeInsets.only(
+                                          padding: const EdgeInsets.only(
                                               top: 20, left: 20, right: 20),
                                           child: Container(
-                                            padding: EdgeInsets.all(10),
+                                            padding: const EdgeInsets.all(10),
                                             width: width,
                                             decoration: BoxDecoration(
                                                 border: Border.all(
@@ -122,7 +127,7 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                                                         style: ButtonStyle(
                                                           //elevation:MaterialStatePropertyAll(8),
                                                           backgroundColor:
-                                                              MaterialStatePropertyAll(
+                                                              const MaterialStatePropertyAll(
                                                                   Color
                                                                       .fromARGB(
                                                                           233,
@@ -134,7 +139,7 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                                                                   BorderRadius
                                                                       .circular(
                                                                           10),
-                                                              side: BorderSide(
+                                                              side: const BorderSide(
                                                                   color: Colors
                                                                       .black))),
                                                           // minimumSize:MaterialStatePropertyAll(Size(10,10))
@@ -145,7 +150,7 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                                                               MaterialPageRoute(
                                                                   builder:
                                                                       (context) =>
-                                                                          mavelistocks()));
+                                                                          mavelistocks(storeId: data.storeId,)));
                                                         },
                                                         child: Text(
                                                           "select",
@@ -155,17 +160,41 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                                                                   color: Colors
                                                                       .black),
                                                         )),
-                                                    IconButton(
-                                                        onPressed: () {},
-                                                        icon: Icon(
-                                                          Icons.favorite,
-                                                          color: Color.fromARGB(
-                                                              255,
-                                                              242,
-                                                              146,
-                                                              37),
-                                                          size: 25,
-                                                        ))
+                                                    StreamBuilder<DocumentSnapshot>(
+                                                      stream: DbController().checkProductisLikedORNot(FirebaseAuth.instance.currentUser!.uid, data.storeId,),
+                                                      builder: (context, snapshot) {
+                                                        if(snapshot.connectionState==ConnectionState.waiting){
+                                                          return const SizedBox();
+                                                        }
+                                                      //  final snap=;
+                                                       if(snapshot.hasData){
+                                                        return IconButton(
+                                                            onPressed: () {
+                                                              // log(
+
+                                                               DbController().likeMyProduct(FirebaseAuth.instance.currentUser!.uid, data.storeId, data);
+                                                            },
+                                                            icon: Icon(
+                                                              Icons.favorite,
+                                                              color: snapshot.data!.exists?const Color.fromARGB(
+                                                                  255,
+                                                                  242,
+                                                                  146,
+                                                                  37): const Color
+                                                                      .fromARGB(
+                                                                          233,
+                                                                          135,
+                                                                          133,
+                                                                          133),
+                                                              size: 25,
+                                                            ));
+
+                                                       }else{
+                                                        return const SizedBox();
+                                                       }
+                                                        
+                                                      }
+                                                    )
                                                   ],
                                                 )
                                               ],
@@ -174,7 +203,7 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                                         );
                                       });
                             } else {
-                              return SizedBox();
+                              return const SizedBox();
                             }
                           }))
                 ],

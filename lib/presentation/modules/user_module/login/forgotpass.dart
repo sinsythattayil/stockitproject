@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stockit/presentation/modules/user_module/login/stockit6.dart';
+import 'package:stockit/presentation/modules/user_module/login/forgotpass_otp.dart';
 
 class forgot extends StatefulWidget {
   const forgot({super.key});

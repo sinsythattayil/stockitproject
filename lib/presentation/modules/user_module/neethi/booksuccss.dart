@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/labtest.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/neethi3.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/neethi_list.dart';
+import 'package:stockit/presentation/modules/user_module/package.dart';
 
 class booksuccss extends StatefulWidget {
   const booksuccss({super.key});
@@ -17,7 +18,7 @@ class _booksuccssState extends State<booksuccss> {
   void initState(){
     super.initState();
     Future.delayed(const Duration(seconds:4),(){
-       Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>NeethiListView()));
+       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>packages(indexnum: 0)), (route) => false);
      });
   }
   Widget build(BuildContext context) {

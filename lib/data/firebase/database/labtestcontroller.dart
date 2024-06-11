@@ -3,18 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:stockit/data/model/neethilabtestmodel.dart';
+import 'package:stockit/data/model/labtest_model.dart';
 import 'package:stockit/data/model/neethimedcinemodel.dart';
 // import 'package:terra_treasures/model/user_model.dart';
 
 class LabtestController {
   final db = FirebaseFirestore.instance;
 
-  Future<void> addLabtest(Labtestmodel labtestmodel, String uid) async {
-    final docRef = db.collection("labtesttype").doc(uid);
-    await docRef.set(labtestmodel.toMap());
-    fetchAllLabtest();
-  }
+
 
   Future<void> create(String productname, String description, String mrp,String offer, String price) async {
     final collectionRef = FirebaseFirestore.instance.collection('labtesttype');
@@ -30,20 +26,20 @@ class LabtestController {
     
   }
 
-  List<Labtestmodel> listOfData = [];
+  List<LabtestModel> listOfData = [];
 
-  Future<List<Labtestmodel>> fetchAllLabtest() async {
-    final snapshot = await db.collection("labtesttype").get();
-    listOfData = snapshot.docs.map((e) => Labtestmodel.fromMap(e.data())).toList();
-    print(listOfData);
-    return listOfData;
-  }
+  // Future<List<LabtestModel>> fetchAllLabtest() async {
+  //   final snapshot = await db.collection("labtesttype").get();
+  //   listOfData = snapshot.docs.map((e) => LabtestModel.fromMap(e.data())).toList();
+  //   print(listOfData);
+  //   return listOfData;
+  // }
 
-  Labtestmodel? singlelabtestData;
+  LabtestModel? singlelabtestData;
 
   Future<void> fetchSinglelabtestData(String id) async {
     final snapshot = await db.collection("labtesttype").doc(id).get();
-    singlelabtestData = Labtestmodel.fromMap(snapshot.data()!);
+    singlelabtestData = LabtestModel.fromMap(snapshot.data()!);
   }
 
 //  Future<XFile?> pickImage() async {

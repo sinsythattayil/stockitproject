@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:stockit/presentation/modules/user_module/neethi/cart.dart';
-import 'package:stockit/presentation/modules/user_module/neethi/healthserch.dart';
+import 'package:stockit/presentation/modules/user_module/neethi/serch_result_product.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/labtest.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/neethi3.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/offer.dart';
@@ -22,7 +22,7 @@ class _packagesState extends State<packages> {
     const labtest(),
     const topsellind(),
     const offerall(),
-    const cart()
+    // const cart()
   ];
 
   @override
@@ -84,13 +84,13 @@ Widget mynav({
               
             ),
             label: ('Offer')),
-            const BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-                icon: ImageIcon(
-              AssetImage('images/Cart.png'),size: 30,
+            // const BottomNavigationBarItem(
+            //   backgroundColor: Colors.white,
+            //     icon: ImageIcon(
+            //   AssetImage('images/Cart.png'),size: 30,
               
-            ),
-            label: ('Cart')),
+            // ),
+            // label: ('Cart')),
     ]);
     
 

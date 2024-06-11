@@ -13,15 +13,36 @@ class InitialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Customebutton(pageCustructor:AdminLogin() , title: "Admin"),
-          Customebutton(pageCustructor:UserLogin() , title: "User"),
-          Customebutton(pageCustructor: RationLogin(), title: "Ration"),
-          Customebutton(pageCustructor: MaveliLogin(), title: "Maveli"),
-          Customebutton(pageCustructor:SuplycoLogin() , title: "Supplyco"),
-          Customebutton(pageCustructor:NeethiLogin() , title: "Neethi"),
-        ],
+     
+      appBar: AppBar(
+
+        actions: [IconButton(onPressed: (){
+          
+        }, icon: Icon(Icons.motion_photos_auto_rounded))],),
+      body: Container(
+       height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(image: DecorationImage(image: AssetImage('images/login.png'),fit: BoxFit.cover,)),
+        child: Stack(
+          children: [ Center(
+            child: Container(
+             height: 500,width: 500,
+               decoration: BoxDecoration(
+                image: DecorationImage(image: AssetImage('images/image 29.png'),fit: BoxFit.cover,)),
+              child: Column(
+                
+                children: [
+                  SizedBox(height: 60,width: 170,child: Customebutton(pageCustructor:AdminLogin() , title: "Admin")),
+                  SizedBox(height: 60,width: 170,child: Customebutton(pageCustructor:UserLogin() , title: "User")),
+                  SizedBox(height: 60,width: 170,child: Customebutton(pageCustructor: RationLogin(), title: "Ration")),
+                  SizedBox(height: 60,width: 170,child: Customebutton(pageCustructor: MaveliLogin(), title: "Maveli")),
+                  SizedBox(height: 60,width: 170,child: Customebutton(pageCustructor:SuplycoLogin() , title: "Supplyco")),
+                  SizedBox(height: 60,width: 170,child: Customebutton(pageCustructor:NeethiLogin() , title: "Neethi")),
+                ],
+              ),
+            ),
+          ),]
+        ),
       ),
     );
   }

@@ -11,7 +11,7 @@ import 'package:stockit/data/helper/service.dart';
 import 'package:stockit/presentation/modules/user_module/home/home1.dart';
 import 'package:stockit/presentation/modules/user_module/login/sign_up.dart';
 // import 'package:stockit/forgot.dart';
-import 'package:stockit/presentation/modules/user_module/login/stockit5.dart';
+import 'package:stockit/presentation/modules/user_module/login/forgotpass.dart';
 import 'package:stockit/presentation/modules/user_module/package.dart';
 
 class UserLogin extends StatefulWidget {

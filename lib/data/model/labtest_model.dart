@@ -1,12 +1,14 @@
-class Labtestmodel {
+class LabtestModel {
   String productname;
   String description;
   String mrp;
   String offer;
   String price;
+  String category;
   String? id;
 
-  Labtestmodel({
+  LabtestModel({
+    required this.category,
     required this.productname,
     required this.description,
     required this.mrp,
@@ -17,18 +19,20 @@ class Labtestmodel {
   });
 
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap(ids) => {
+    "category":category,
         "productname": productname,
         "description": description,
-        "id": id,
+        "id": ids,
         "mrp": mrp,
         "offer":offer,
         "price":price,
         
       };
 
-  factory Labtestmodel.fromMap(Map<String, dynamic> data) {
-    return Labtestmodel(
+  factory LabtestModel.fromMap(Map<String, dynamic> data) {
+    return LabtestModel(
+      category:data["category"],
       productname: data["productname"],
       description: data["description"],
       mrp: data["mrp"],

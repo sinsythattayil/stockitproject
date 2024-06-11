@@ -541,7 +541,7 @@ class _adminhomeState extends State<adminhome> {
                                         if(value==false){
                                           if (imageFile != null) {
                                         // log("message");
-                                      await  Controller().storeImage(imageFile!).then((url) {
+                                      await  Controller().storeImage(imageFile!,"storeimage").then((url) {
                                           DbController().addNewStore(StoreModel(
                                             latitude: 0,
                                             longitude: 0,

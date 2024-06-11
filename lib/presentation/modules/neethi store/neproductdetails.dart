@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stockit/presentation/modules/user_module/neethi/booklab.dart';
+import 'package:stockit/data/model/product_neethi_model.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/cart.dart';
 
 class neproductdetails extends StatefulWidget {
-  const neproductdetails({super.key});
+  ProductNeethiModel model;
+   neproductdetails({super.key,required this.model});
 
   @override
   State<neproductdetails> createState() => _neproductdetailsState();
@@ -45,19 +46,19 @@ class _neproductdetailsState extends State<neproductdetails> {
                     width: 350,
                     color: Colors.white,
                     child: Image(
-                      image: AssetImage('images/sebamade.png'),
+                      image: NetworkImage(widget.model.imageUrl),
                       fit: BoxFit.cover,
                     )),
                 Padding(
                   padding: const EdgeInsets.only(right: 40, top: 25),
                   child: Text(
-                    'Sebamade Baby Cleansing Bar-150g',
+                    widget.model.prodName,
                     style: GoogleFonts.abrilFatface(fontSize: 17),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 210, top: 5),
-                  child: Text('100g soap in Box',
+                  child: Text(widget.model.description,
                       style: GoogleFonts.abrilFatface(fontSize: 14)),
                 ),
                 SizedBox(
@@ -81,7 +82,7 @@ class _neproductdetailsState extends State<neproductdetails> {
                       color: Colors.grey,
                     ),
                     Text(
-                      '300',
+                      widget.model.mrp,
                       style: TextStyle(
                           decorationColor: Colors.grey,
                           decoration: TextDecoration.lineThrough,
@@ -95,7 +96,7 @@ class _neproductdetailsState extends State<neproductdetails> {
                     Padding(
                       padding: const EdgeInsets.only(top: 25),
                       child: Text(
-                        '15%OFF',
+                        '${widget.model.offer}%OFF',
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -114,7 +115,7 @@ class _neproductdetailsState extends State<neproductdetails> {
                       size: 28,
                     ),
                     Text(
-                      '256',
+                      widget.model.price,
                       style: TextStyle(
                           fontSize: 26, fontWeight: FontWeight.bold),
                     ),

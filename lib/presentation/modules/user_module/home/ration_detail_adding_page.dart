@@ -3,63 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stockit/presentation/modules/user_module/home/ration_list.dart';
-import 'package:stockit/presentation/modules/user_module/home/ration3.dart';
+import 'package:stockit/presentation/modules/user_module/home/ration_stock.dart';
 import 'package:stockit/presentation/modules/user_module/home/ration4.dart';
-import 'package:stockit/presentation/modules/user_module/home/rationstockpink.dart';
-import 'package:stockit/presentation/modules/user_module/home/rationstocksblue.dart';
-import 'package:stockit/presentation/modules/user_module/home/rationstockyellow.dart';
-import 'package:stockit/presentation/modules/user_module/home/rationstoks.dart';
 
-class ration2 extends StatefulWidget {
-  const ration2({super.key});
+import 'package:stockit/presentation/modules/user_module/home/stock_view_page.dart';
+
+class RationDetailAddingPage extends StatefulWidget {
+  String storeId;
+   RationDetailAddingPage({super.key,required this.storeId});
 
   @override
-  State<ration2> createState() => _ration2State();
+  State<RationDetailAddingPage> createState() => _RationDetailAddingPageState();
 }
 
-class _ration2State extends State<ration2> {
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+class _RationDetailAddingPageState extends State<RationDetailAddingPage> {
   final __nameController = TextEditingController();
   final _cardnumberController = TextEditingController();
   final _memberController = TextEditingController();
   // String? card;
-  int _selectedValue = 1;
-  void _handleRadioValueChanged(int value) {
+  String _selectedValue = "White";
+  void _handleRadioValueChanged(String value) {
     setState(() {
       _selectedValue = value;
     });
   }
 
-  void _navigateToPage(BuildContext context) {
-    switch (_selectedValue) {
-      case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => rationstocks()),
-        );
-        break;
-      case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => rationstockblue()),
-        );
-        break;
-        case 3:
-         Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => rationstockpink()),
-        );
-        break;
-         case 4:
-         Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>rationstockyellow()),
-        );
-        break;
-
-
-    }
-  }
+  final _formKey=GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -70,12 +39,12 @@ class _ration2State extends State<ration2> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back_ios_sharp)),
+            icon: const Icon(Icons.arrow_back_ios_sharp)),
         title: Text(
           'Ration Store',
           style: GoogleFonts.inknutAntiqua(fontSize: 25),
         ),
-        backgroundColor: Color.fromARGB(136, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(136, 255, 255, 255),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -83,7 +52,7 @@ class _ration2State extends State<ration2> {
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('images/image 5.png'),
                       fit: BoxFit.cover)),
@@ -91,9 +60,9 @@ class _ration2State extends State<ration2> {
                 padding: const EdgeInsets.only(
                     top: 100, left: 10, right: 10, bottom: 30),
                 child: Container(
-                  color: Color.fromARGB(135, 255, 255, 255),
+                  color: const Color.fromARGB(135, 255, 255, 255),
                   child: Form(
-                    key: _formkey,
+                    key: _formKey,
                     child: Column(
                       children: [
                         Text(
@@ -118,14 +87,14 @@ class _ration2State extends State<ration2> {
                                 return null;
                               },
                               decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.black)),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide:
-                                          BorderSide(color: Colors.black)),
-                                  fillColor: Color.fromARGB(177, 255, 255, 255),
+                                          const BorderSide(color: Colors.black)),
+                                  fillColor: const Color.fromARGB(177, 255, 255, 255),
                                   filled: true,
                                   hintText: ('Enter your Name')),
                             ),
@@ -153,14 +122,14 @@ class _ration2State extends State<ration2> {
                                 FilteringTextInputFormatter.digitsOnly
                               ],
                               decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.black)),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide:
-                                          BorderSide(color: Colors.black)),
-                                  fillColor: Color.fromARGB(177, 255, 255, 255),
+                                          const BorderSide(color: Colors.black)),
+                                  fillColor: const Color.fromARGB(177, 255, 255, 255),
                                   filled: true,
                                   hintText: ('Ration card Number')),
                             ),
@@ -182,9 +151,9 @@ class _ration2State extends State<ration2> {
                             width: 340,
                             child: Column(
                               children: [
-                                Padding(
+                                const Padding(
                                   padding:
-                                      const EdgeInsets.only(right: 70, top: 10),
+                                      EdgeInsets.only(right: 70, top: 10),
                                   child: Text(
                                     "Select Card color:",
                                     style: TextStyle(
@@ -198,13 +167,13 @@ class _ration2State extends State<ration2> {
                                     Row(
                                       //mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Radio<int>(
-                                          value: 1,
+                                        Radio<String>(
+                                          value: "White",
                                           groupValue: _selectedValue,
                                           onChanged: (value) =>
                                               _handleRadioValueChanged(value!),
                                         ),
-                                        Text('White'),
+                                        const Text('White'),
                                       ],
                                     ),
                                   ],
@@ -212,88 +181,40 @@ class _ration2State extends State<ration2> {
                                 Row(
                                  // mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Radio<int>(
-                                      value: 2,
+                                    Radio<String>(
+                                      value: "Blue",
                                       groupValue: _selectedValue,
                                       onChanged: (value) =>
                                           _handleRadioValueChanged(value!),
                                     ),
-                                    Text('Blue'),
+                                    const Text('Blue'),
                                   ],
                                 ),
                                  Row(
                                  // mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Radio<int>(
-                                      value: 3,
+                                    Radio<String>(
+                                      value: "Pink",
                                       groupValue: _selectedValue,
                                       onChanged: (value) =>
                                           _handleRadioValueChanged(value!),
                                     ),
-                                    Text('Pink'),
+                                    const Text('Pink'),
                                   ],
                                 ),
                                 Row(
                                  // mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Radio<int>(
-                                      value: 4,
+                                    Radio<String>(
+                                      value: "Yellow",
                                       groupValue: _selectedValue,
                                       onChanged: (value) =>
                                           _handleRadioValueChanged(value!),
                                     ),
-                                    Text('Yello'),
+                                    const Text('Yellow'),
                                   ],
                                 ),
-                                // ElevatedButton(
-                                //   onPressed: () => _navigateToPage(context),
-                                //   child: Text('Submit'),
-                                // ),
-
-                                // ListTile(
-                                //   title: Text('White'),
-                                //   leading: Radio(
-                                //       value: 'white',
-                                //       groupValue: card,
-                                //       onChanged: (value) {
-                                //         setState(() {
-                                //           card = value;
-                                //         });
-                                //       }),
-                                // ),
-                                // ListTile(
-                                //   title: Text('Blue'),
-                                //   leading: Radio(
-                                //       value: 'Blue',
-                                //       groupValue: card,
-                                //       onChanged: (value) {
-                                //         setState(() {
-                                //           card = value;
-                                //         });
-                                //       }),
-                                // ),
-                                // ListTile(
-                                //   title: Text('Pink'),
-                                //   leading: Radio(
-                                //       value: 'Pink',
-                                //       groupValue: card,
-                                //       onChanged: (value) {
-                                //         setState(() {
-                                //           card = value;
-                                //         });
-                                //       }),
-                                // ),
-                                // ListTile(
-                                //   title: Text('Yellow'),
-                                //   leading: Radio(
-                                //       value: 'Yellow',
-                                //       groupValue: card,
-                                //       onChanged: (value) {
-                                //         setState(() {
-                                //           card = value;
-                                //         });
-                                //       }),
-                                // ),
+                             
                               ],
                             ),
                           ),
@@ -311,7 +232,7 @@ class _ration2State extends State<ration2> {
                                 if (value!.isEmpty) {
                                   return 'Please Enter value';
                                 }
-
+        
                                 return null;
                               },
                               cursorColor: Colors.black,
@@ -321,14 +242,14 @@ class _ration2State extends State<ration2> {
                                 FilteringTextInputFormatter.digitsOnly
                               ],
                               decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.black)),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide:
-                                          BorderSide(color: Colors.black)),
-                                  fillColor: Color.fromARGB(177, 255, 255, 255),
+                                          const BorderSide(color: Colors.black)),
+                                  fillColor: const Color.fromARGB(177, 255, 255, 255),
                                   filled: true,
                                   hintText: ('Number of members')),
                             ),
@@ -340,12 +261,29 @@ class _ration2State extends State<ration2> {
                             height: 50,
                             width: 150,
                             child: ElevatedButton(
-                                style: ButtonStyle(
+                                style: const ButtonStyle(
                                     backgroundColor:
                                         MaterialStatePropertyAll(Colors.black),
                                     foregroundColor:
                                         MaterialStatePropertyAll(Colors.white)),
-                                        onPressed: () => _navigateToPage(context),
+                                        onPressed: (){
+          //                              
+        if(_formKey.currentState!.validate()){
+              Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => RationStockViewPage(
+            cardColor: _selectedValue,
+            cardNumber: _cardnumberController.text,
+            name: __nameController.text,
+            number: int.parse(_memberController.text,),
+            card: _selectedValue,
+            storeId:widget.storeId ,
+          )),
+        );
+          
+        
+        }
+                                        }
                                 // onPressed: () {
                                 //   if (_formkey.currentState!.validate()) {
                                 //     Navigator.push(
@@ -355,7 +293,7 @@ class _ration2State extends State<ration2> {
                                 //     );
                                 //   }
                                 // },
-                                child: Text(
+                             ,   child: const Text(
                                   'Submit',
                                   style: TextStyle(fontSize: 18),
                                 )),

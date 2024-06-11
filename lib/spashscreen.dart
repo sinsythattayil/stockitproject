@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/helper/login_preference.dart';
@@ -50,6 +52,10 @@ class _SplashScreenState extends State<SplashScreen> {
               (route) => false);
         } else {
           final type = await LoginPreference().getStoreTypeForLogin(loginData);
+      final obj=     Provider.of<DbController>(context,listen: false);
+    obj     .getCurrentStoreData(loginData);
+    log(obj.storeId.toString());
+
           switch (type) {
             case "Ration":
               {
