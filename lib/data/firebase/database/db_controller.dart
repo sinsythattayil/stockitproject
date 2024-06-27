@@ -3,8 +3,8 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:stockit/data/helper/login_preference.dart';
 import 'package:stockit/data/helper/service.dart';
 import 'package:stockit/data/model/add_product_store.dart';
@@ -17,10 +17,10 @@ import 'package:stockit/data/model/notification_model.dart';
 import 'package:stockit/data/model/order_model.dart';
 import 'package:stockit/data/model/product_neethi_model.dart';
 import 'package:stockit/data/model/store_model.dart';
-import 'package:stockit/presentation/modules/user_module/neethi/notificationee.dart';
+import 'package:stockit/presentation/common/profile.dart';
 
 class DbController with ChangeNotifier {
- static List<String> labTest = [
+  static List<String> labTest = [
     "Women",
     "Cancer Screening",
     "Fever",
@@ -49,7 +49,23 @@ class DbController with ChangeNotifier {
   final db = FirebaseFirestore.instance;
 //----------------------------------CREATE
   Future addNewStore(StoreModel storeModel) async {
-    db.collection("Store").doc(storeModel.storeId).set(storeModel.toJson());
+    await locationFromAddress(storeModel.branch).then((value) {
+      final data = value[0];
+
+      StoreModel model = StoreModel(
+          branch: storeModel.branch,
+          latitude: data.latitude,
+          longitude: data.longitude,
+          imageUrl: storeModel.imageUrl,
+          name: storeModel.name,
+          password: storeModel.password,
+          phoneNumber: storeModel.phoneNumber,
+          pin: storeModel.pin,
+          storeId: storeModel.storeId,
+          storeType: storeModel.storeType);
+
+      db.collection("Store").doc(storeModel.storeId).set(model.toJson());
+    });
   }
 
 //-----------------------------------DELETE
@@ -108,8 +124,36 @@ class DbController with ChangeNotifier {
         .snapshots();
   }
 
-  Future<DocumentSnapshot> getSelectedStore(id) {
-    return db.collection("Store").doc(id).get();
+  List<StoreModel> storeForSearch = [];
+  getAllStoreForSearch(String storeType) async {
+    final snapshot = await db
+        .collection("Store")
+        .where('storeType', isEqualTo: storeType)
+        .get();
+
+    storeForSearch =
+        snapshot.docs.map((e) => StoreModel.fromjson(e.data())).toList();
+  }
+
+//========ration search
+  List<StoreModel> storeSearchResult = [];
+
+  searchStore(String key) {
+    storeSearchResult = List.from(storeForSearch);
+
+    storeSearchResult = storeForSearch
+        .where((element) =>
+            element.branch.toLowerCase().contains(key.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
+
+//========maveli earch
+
+//==========supplyu search
+
+  Future<DocumentSnapshot> getSelectedStore(id) async {
+    return await db.collection("Store").doc(id).get();
   }
   //---------------------------USER USER USER......................
 
@@ -188,10 +232,21 @@ class DbController with ChangeNotifier {
 
 // }
 
-Stream<QuerySnapshot> getNeethiProductByCategory(selectedCategory){
-  print(selectedCategory);
- return db.collection("Lab Test").where("category",isEqualTo: selectedCategory).snapshots();
-}
+  Stream<QuerySnapshot> getSelectedNeethiProductByCategory(
+      selectedCategory, storeId) {
+    print(selectedCategory);
+    return db
+        .collection("Lab Test")
+        .where("storeId", isEqualTo: storeId)
+        .where("category", isEqualTo: selectedCategory)
+        .snapshots();
+  }
+
+  String? currentStoreid;
+  getStorId(id) {
+    currentStoreid = id;
+    log(currentStoreid.toString());
+  }
 
 //---------------Ration........................
   Future addProductToRationStore(StoreProductModel productModel) async {
@@ -200,18 +255,19 @@ Stream<QuerySnapshot> getNeethiProductByCategory(selectedCategory){
   }
 
   //........
-  Stream<QuerySnapshot> getRationProduct(card) {
+  Stream<QuerySnapshot> getRationProduct(card, storeID) {
+    log(storeID.toString());
     return db
         .collection("Ration Products")
-        .where("storeId", isEqualTo: storeId)
+        .where("storeId", isEqualTo: storeID)
         .where("category", isEqualTo: card)
         .snapshots();
   }
 
-  getSpecialRationProducts() {
+  getSpecialRationProducts(storeID) {
     return db
         .collection("Ration Products")
-        .where("storeId", isEqualTo: storeId)
+        .where("storeId", isEqualTo: storeID)
         .where("isItSpecial", isEqualTo: "Special")
         .snapshots();
   }
@@ -223,17 +279,17 @@ Stream<QuerySnapshot> getNeethiProductByCategory(selectedCategory){
     docs.set(productModel.tojson(docs.id));
   }
 
-  Stream<QuerySnapshot> getMaveliProduct() {
+  Stream<QuerySnapshot> getMaveliProduct(storeID) {
     return db
         .collection("Maveli Products")
-        .where("storeId", isEqualTo: storeId)
+        .where("storeId", isEqualTo: storeID)
         .snapshots();
   }
 
-  getSpecialMaveliProducts() {
+  getSpecialMaveliProducts(storeID) {
     return db
         .collection("Maveli Products")
-        .where("storeId", isEqualTo: storeId)
+        .where("storeId", isEqualTo: storeID)
         .where("isItSpecial", isEqualTo: "Special")
         .snapshots();
   }
@@ -245,17 +301,17 @@ Stream<QuerySnapshot> getNeethiProductByCategory(selectedCategory){
     docs.set(productModel.tojson(docs.id));
   }
 
-  Stream<QuerySnapshot> getSupplycoProduct() {
+  Stream<QuerySnapshot> getSupplycoProduct(storeIDs) {
     return db
         .collection("Supplyco Products")
-        .where("storeId", isEqualTo: storeId)
+        .where("storeId", isEqualTo: storeIDs)
         .snapshots();
   }
 
-  getSpecialSupplycoProducts() {
+  getSpecialSupplycoProducts(storeID) {
     return db
         .collection("Supplyco Products")
-        .where("storeId", isEqualTo: storeId)
+        .where("storeId", isEqualTo: storeID)
         .where("isItSpecial", isEqualTo: "Special")
         .snapshots();
   }
@@ -272,6 +328,7 @@ Stream<QuerySnapshot> getNeethiProductByCategory(selectedCategory){
     return db
         .collection("Orders")
         .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where("orderStatus", isEqualTo: "Confirmed")
         .snapshots();
   }
 
@@ -281,6 +338,10 @@ Stream<QuerySnapshot> getNeethiProductByCategory(selectedCategory){
         .collection("Orders")
         .where("storeId", isEqualTo: storid)
         .snapshots();
+  }
+
+  deleteMyOrder(id) {
+    db.collection("Orders").doc(id).delete();
   }
 
   Stream<DocumentSnapshot> getSelectedOrderInStore(orderID) {
@@ -334,111 +395,348 @@ Stream<QuerySnapshot> getNeethiProductByCategory(selectedCategory){
 
 //=====================FEEDBACk
 
- Future  addToFeedBAck(FeedbackModel feedbackModel) async {
+  Future addToFeedBAck(FeedbackModel feedbackModel) async {
     final doc = db.collection("Feedback").doc();
     doc.set(feedbackModel.toJosn(doc.id));
   }
   //
   //===========================================NEETHI STORE
 
-
-  addNewMedicine(MedicineModel medicineModel)async{
-   final doc= db.collection("Medicine").doc();
-   doc.set(medicineModel.toJson(doc.id));
+  addNewMedicine(MedicineModel medicineModel) async {
+    final doc = db.collection("Medicine").doc();
+    doc.set(medicineModel.toJson(doc.id));
   }
 
-  Stream<QuerySnapshot>getAllMedicines(){
-    return db.collection("Medicine").snapshots();
+  Stream<QuerySnapshot> getAllMedicines(id) {
+    return db
+        .collection("Medicine")
+        .where("storeid", isEqualTo: id)
+        .snapshots();
   }
 
-    Future<void> addLabtest(LabtestModel labtestmodel,) async {
+  Stream<QuerySnapshot> getSelectedStoreMedicineMedicines(storeID) {
+    return db
+        .collection("Medicine")
+        .where("storeID", isEqualTo: storeID)
+        .snapshots();
+  }
+
+  Future deleteSelectedMedicine(id) async {
+    await db.collection("Medicine").doc(id).delete();
+  }
+
+  List<MedicineModel> listOfMedicine = [];
+  getMyMedicineForSearch(storeID) async {
+    final snapshot = await db
+        .collection("Medicine")
+        .where("storeID", isEqualTo: storeID)
+        .get();
+
+    listOfMedicine =
+        snapshot.docs.map((e) => MedicineModel.fromJson(e.data())).toList();
+  }
+
+  List<MedicineModel> searchResulOfMedicines = [];
+
+  searchMedicineForStore(String key) {
+    searchResulOfMedicines = List.from(listOfMedicine);
+    searchResulOfMedicines = listOfMedicine
+        .where((element) =>
+            element.medName.toLowerCase().contains(key.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
+
+  cleaMedicineData() {
+    listOfMedicine.clear();
+  }
+
+  ///////////////////////
+
+  Future<void> addLabtest(
+    LabtestModel labtestmodel,
+  ) async {
     final docRef = db.collection("Lab Test").doc();
     await docRef.set(labtestmodel.toMap(docRef.id));
     // fetchAllLabtest();
   }
-Stream<QuerySnapshot> getAllLapTest(){
-   return db.collection("Lab Test").snapshots();
 
+  Stream<QuerySnapshot> getSelectedStoreAllLapTest(storeid) {
+    return db
+        .collection("Lab Test")
+        .where("storeId", isEqualTo: storeid)
+        .snapshots();
   }
 
-  addProduct(ProductNeethiModel productNeethiModel)async{
+  List<LabtestModel> listOFLabTest = [];
+  getAllLabTestForSearch(storeid) async {
+    final snapshot = await db
+        .collection("Lab Test")
+        .where("storeId", isEqualTo: storeid)
+        .get();
+    listOFLabTest =
+        snapshot.docs.map((e) => LabtestModel.fromMap(e.data())).toList();
+  }
+
+  List<LabtestModel> resultOfLabtestsearch = [];
+
+  searchLabtest(String key) {
+    resultOfLabtestsearch = listOFLabTest;
+    resultOfLabtestsearch = listOFLabTest
+        .where((element) =>
+            element.productname.toLowerCase().contains(key.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
+
+  Stream<QuerySnapshot> getSelectedStoreLapTest(storeId) {
+    return db
+        .collection("Lab Test")
+        .where("storeId", isEqualTo: storeId)
+        .snapshots();
+  }
+
+  deleteSelectedLabTest(id) {
+    db.collection("Lab Test").doc(id).delete();
+  }
+
+  List<LabtestModel> labTestList = [];
+
+  getMyLabTest(storeI) async {
+    final snapshot = await db
+        .collection("Lab Test")
+        .where("storeId", isEqualTo: storeI)
+        .get();
+
+    labTestList =
+        snapshot.docs.map((e) => LabtestModel.fromMap(e.data())).toList();
+  }
+
+  List<LabtestModel> labTestSearchResult = [];
+  searchlabTest(
+    String key,
+  ) {
+    labTestSearchResult = List.from(labTestList);
+
+    labTestSearchResult = labTestList
+        .where((element) => element.productname
+            .toLowerCase()
+            .contains(key.toString().toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
+
+  cleaLabTestData() {
+    labTestList.clear();
+    // labTestSearchResult=[];
+  }
+
+//////////////////////////////////////
+  addProduct(ProductNeethiModel productNeethiModel) async {
     final docRef = db.collection("Neethi Products").doc();
     await docRef.set(productNeethiModel.toJson(docRef.id));
-
   }
 
-  Stream<QuerySnapshot> getAllNeethiProducts(){
-   return db.collection("Neethi Products").snapshots();
-
+  Stream<QuerySnapshot> getAllNeethiProducts(id) {
+    return db
+        .collection("Neethi Products")
+        .where("storeid", isEqualTo: id)
+        .snapshots();
   }
 
+  List<ProductNeethiModel> listOFneethoiProductForSeach = [];
+  getNeethiProducForSearch(id) async {
+    final snapshot = await db
+        .collection("Neethi Products")
+        .where("storeid", isEqualTo: id)
+        .get();
+    listOFneethoiProductForSeach = snapshot.docs
+        .map((e) => ProductNeethiModel.fromJson(e.data()))
+        .toList();
+  }
+
+  List<ProductNeethiModel> searchResultOfNeethiProduct = [];
+
+  searchNeethiProdut(String key) {
+    searchResultOfNeethiProduct = List.from(listOFneethoiProductForSeach);
+    searchResultOfNeethiProduct = listOFneethoiProductForSeach
+        .where((element) =>
+            element.prodName.toLowerCase().contains(key.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
+
+  Stream<QuerySnapshot> getSelectedNeethiProducts(id) {
+    return db
+        .collection("Neethi Products")
+        .where("storeId", isEqualTo: id)
+        .snapshots();
+  }
+
+  List<ProductNeethiModel> listOfNethiproductForSearch = [];
+  getNeethiProdutForSearch(id) async {
+    final snapshot = await db
+        .collection("Neethi Products")
+        .where("storeId", isEqualTo: id)
+        .get();
+    listOfNethiproductForSearch = snapshot.docs
+        .map((e) => ProductNeethiModel.fromJson(e.data()))
+        .toList();
+  }
+
+  List<ProductNeethiModel> searchResultofNeethiProduct = [];
+
+  seachNeethiproduct(String key) {
+    searchResultofNeethiProduct = List.from(listOfNethiproductForSearch);
+
+    searchResultofNeethiProduct = listOfNethiproductForSearch
+        .where((element) =>
+            element.prodName.toLowerCase().contains(key.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
+
+  Stream<QuerySnapshot> getAllMedicineOFSellectedNeethi(storeId) {
+    return db
+        .collection("Medicine")
+        .where("storeID", isEqualTo: storeId)
+        .snapshots();
+  }
+
+  List<MedicineModel> listofMEdiceForSearch = [];
+  getAllMedicineOFSellectedNeethiForSearch(storeids)async {
+  final snapshot=await  db.collection("Medicine").where("storeID", isEqualTo: storeids).get();
+    listofMEdiceForSearch=snapshot.docs.map((e) =>MedicineModel.fromJson(e.data()) ).toList();
+  }
+
+  List<MedicineModel> resultOfMedicn = [];
+  sarchmedince(String key) {
+    resultOfMedicn = List.from(listofMEdiceForSearch);
+    resultOfMedicn = listofMEdiceForSearch
+        .where((element) =>
+            element.medName.toLowerCase().contains(key.toLowerCase()))
+        .toList();
+        notifyListeners();
+  }
 
   //==========================================================
   //==========================================================
- Future bookOrder(BookingModel bookingModel)async{
-  final doc=  db.collection("Booking").doc();
-  doc.set(bookingModel.toJosn(doc.id));
+  Future bookOrder(BookingModel bookingModel) async {
+    final doc = db.collection("Booking").doc();
+    doc.set(bookingModel.toJosn(doc.id));
   }
 
-
-    Stream<QuerySnapshot>fetchMyCompletdOrderOfNethi(){
-   return db.collection("Booking").where("uid",isEqualTo: FirebaseAuth.instance.currentUser!.uid).where("status",isEqualTo: "Completed").snapshots();
-
+  Stream<QuerySnapshot> fetchMyCompletdOrderOfNethi() {
+    return db
+        .collection("Booking")
+        .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where("status", isEqualTo: "Completed")
+        .snapshots();
   }
 
   //=====Neeethi Order Notifiation
 
+  Future sendNotificationToUserbookingStatusOFUser(
+      toID, NotificationModelForNethiOrder model) async {
+    final docs = db
+        .collection("firebase")
+        .doc(toID)
+        .collection("Notification From Nethi")
+        .doc();
 
- Future sendNotificationToUserbookingStatusOFUser(toID,NotificationModelForNethiOrder model)async{
-   final docs= db.collection("firebase").doc(toID).collection("Notification From Nethi").doc();
-
-   docs.set(model.toJson(docs.id));
+    docs.set(model.toJson(docs.id));
   }
 
-   Stream<QuerySnapshot> fetchMyNethiNotifcaition(){
-    return db.collection("firebase").doc(FirebaseAuth.instance.currentUser!.uid).collection("Notification From Nethi").snapshots();
-
+  Stream<QuerySnapshot> fetchMyNethiNotifcaition() {
+    return db
+        .collection("firebase")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("Notification From Nethi")
+        .snapshots();
   }
 
-
- Stream<QuerySnapshot>  getMedAndProdctOrderFornethiModule(){
-   return db.collection("Booking").where("typeOfOrder",isNotEqualTo:"Lab Test" ).snapshots();
-
-  }
-  Stream<QuerySnapshot>  getLabTestFornethiModule(){
-   return db.collection("Booking").where("typeOfOrder",isEqualTo:"Lab Test" ).snapshots();
-
+  Stream<QuerySnapshot> getMedAndProdctOrderFornethiModule() {
+    return db
+        .collection("Booking")
+        .where("typeOfOrder", isNotEqualTo: "Lab Test")
+        .snapshots();
   }
 
-Future<DocumentSnapshot>  fetchSelectedItem(collection,id){
- return db.collection(collection).doc(id).get();
+  Stream<QuerySnapshot> getLabTestFornethiModule() {
+    return db
+        .collection("Booking")
+        .where("typeOfOrder", isEqualTo: "Lab Test")
+        .snapshots();
+  }
 
+  Future<DocumentSnapshot> fetchSelectedItem(collection, id) {
+    return db.collection(collection).doc(id).get();
   }
 
   //----------------ploadPrescription
 
- Future  uploadPrescription(url)async{
-
-  final data=db.collection("Prescription").doc();
-  data.set({
-"id":data.id,
-    "uid":FirebaseAuth.instance.currentUser!.uid,
-    "prescription":url
-  });
-
+  Future uploadPrescription(url) async {
+    final data = db.collection("Prescription").doc();
+    data.set({
+      "id": data.id,
+      "uid": FirebaseAuth.instance.currentUser!.uid,
+      "prescription": url
+    });
   }
 
- Stream<QuerySnapshot> fetchAllPrescrion(){
+  Stream<QuerySnapshot> fetchAllPrescrion() {
     return db.collection("Prescription").snapshots();
-
   }
 
- Future deletePrescription(id)async{
+  Future deletePrescription(id) async {
     db.collection("Prescription").doc(id).delete();
   }
 
+  deleteBooking(id){
+    db.collection("Booking").doc(id).delete();
 
- Future  deleteSelectedProductByOrderConfirmation(collection,id)async{
+  }
+
+  Future deleteSelectedProductByOrderConfirmation(collection, id) async {
     db.collection(collection).doc(id).delete();
+  }
+
+  Stream<QuerySnapshot> getAllFeddback() {
+    return db.collection("Feedback").snapshots();
+  }
+
+  ///----------------------------------D E L E T E -----------------------------------
+  ///
+  ///
+  // _getDeletionorderdeleteOrder(productId,storeId)async{
+
+  //  final snapshot=await db.collection("Orders").where("storeId",isEqualTo: storeId).get();
+
+  //  List<OrderModel>listOFOrders=snapshot.docs.map((e) => OrderModel.fromJosn(e.data())).toList();
+
+  //  for(var i in listOFOrders){
+  // for(var j in i.storeProductModel){
+  //       String deleteingproductId=j.productId;
+
+  //       if(deleteingproductId==productId){
+  //         _deleteSelectedOrderOrder(i)
+
+  //       }
+
+  // }
+
+  //  }
+
+  // }
+  _deleteSelectedOrderOrder(id) async {
+    db.collection("Orders").doc(id).delete();
+  }
+
+  deleteProductOfCurrentStore(storeproductCollection, productId) async {
+    db
+        .collection(storeproductCollection)
+        .doc(productId)
+        .delete()
+        .then((value) {});
   }
 }

@@ -10,7 +10,7 @@ import 'package:stockit/data/model/booking_model.dart';
 import 'package:stockit/data/provider/controller.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/booksuccss.dart';
 
-class BookingDetaiPage extends StatefulWidget {
+class BookingDetaiPage extends StatefulWidget { 
   String type;
   String productId;
   BookingDetaiPage({super.key, required this.productId, required this.type});
@@ -82,7 +82,7 @@ class _BookingDetaiPageState extends State<BookingDetaiPage> {
                         height: 25,
                       ),
                       SizedBox(
-                        height: 50,
+                        height: 65,
                         width: 300,
                         child: TextFormField(
                           controller: name,
@@ -107,7 +107,7 @@ class _BookingDetaiPageState extends State<BookingDetaiPage> {
                         height: 25,
                       ),
                       Container(
-                        height: 50,
+                        height: 65,
                         width: 300,
                         decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 237, 234, 234),
@@ -182,7 +182,7 @@ class _BookingDetaiPageState extends State<BookingDetaiPage> {
                         height: 25,
                       ),
                       SizedBox(
-                        height: 60,
+                        height: 65,
                         width: 300,
                         child: TextFormField(
                           controller: bookingDetails,
@@ -214,7 +214,7 @@ class _BookingDetaiPageState extends State<BookingDetaiPage> {
                             width: 5,
                           ),
                           SizedBox(
-                            height: 50,
+                            height: 65,
                             width: 60,
                             child: TextFormField(
                               controller: age,
@@ -243,7 +243,7 @@ class _BookingDetaiPageState extends State<BookingDetaiPage> {
                             width: 10,
                           ),
                           SizedBox(
-                            height: 50,
+                            height: 65,
                             width: 120,
                             child: TextFormField(
                               controller: date,
@@ -287,7 +287,7 @@ class _BookingDetaiPageState extends State<BookingDetaiPage> {
                             width: 10,
                           ),
                           SizedBox(
-                            height: 50,
+                            height: 65,
                             width: 120,
                             child: TextFormField(
                               controller: time,
@@ -333,6 +333,7 @@ class _BookingDetaiPageState extends State<BookingDetaiPage> {
                               if (_formKey.currentState!.validate()) {
                                 DbController()
                                     .bookOrder(BookingModel(
+                                      storeId: "",
                                       status:"Pending",
                                         age: age.text,
                                         date: date.text,

@@ -42,14 +42,14 @@ class _rationmenuState extends State<rationmenu> {
               DocumentSnapshot data = snapshot.data!;
               return ListView(
                 children: [
-                   const Padding(
+                    Padding(
                     padding: EdgeInsets.only(right: 180, top: 20),
                     child: CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white,
                       child: Stack(children: [ CircleAvatar(
                         radius: 45,
-                        backgroundImage: AssetImage('images/circleavathar.png'),
+                        backgroundImage: data["image"]==""?AssetImage('images/circleavathar.png') as ImageProvider:NetworkImage(data["image"]),
                       ),
                      // IconButton(onPressed: (){}, icon: Icon(Icons.camera_alt,color: Colors.black,))
                       ],),
@@ -83,40 +83,8 @@ class _rationmenuState extends State<rationmenu> {
                         style: GoogleFonts.abhayaLibre(
                             fontSize: 15, color: Colors.white)),
                   ),
-                  const Divider(),
-                  ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const feedback(),
-                          ));
-                    },
-                    leading: Image.asset(
-                      'images/review.png',
-                      scale: 1,
-                    ),
-                    title: Text('Review/Feedback',
-                        style: GoogleFonts.abhayaLibre(
-                            fontSize: 15, color: Colors.white)),
-                  ),
-                  const Divider(),
-                  ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const settings(),
-                          ));
-                    },
-                    leading: Image.asset(
-                      'images/Settings.png',
-                      scale: 1,
-                    ),
-                    title: Text('Settings',
-                        style: GoogleFonts.abhayaLibre(
-                            fontSize: 15, color: Colors.white)),
-                  ),
+                 
+                  
                   const Divider(),
                   ListTile(
                     onTap: () {

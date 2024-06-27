@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/add_product_store.dart';
 import 'package:stockit/presentation/modules/mavelistore%20module/mavelimenu.dart';
@@ -19,6 +20,41 @@ class mavmodulestocks extends StatefulWidget {
 
 class _mavmodulestocksState extends State<mavmodulestocks> {
   File? selectedImage;
+   void _showDeleteConfirmationDialog(BuildContext context,productId) {
+    // Create an alert dialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Confirm Delete"),
+      content: const Text("Are you sure you want to delete?"),
+      actions: [
+        TextButton(
+          child: const Text("Cancel"),
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+        TextButton(
+          child: const Text(
+            "Delete",
+            style: TextStyle(color: Colors.red),
+          ),
+          onPressed: () {
+            DbController().deleteProductOfCurrentStore("Maveli Products", productId);
+            // Perform deletion logic here
+            //  e.g., remove item from list, call an API
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+      ],
+    );
+
+    // Show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final __nameController = TextEditingController();
@@ -38,7 +74,7 @@ class _mavmodulestocksState extends State<mavmodulestocks> {
     }
 
     return Scaffold(
-      drawer: mavelimenu(),
+      drawer: const mavelimenu(),
       appBar: AppBar(
         leading: Builder(
           builder: (context) {
@@ -46,7 +82,7 @@ class _mavmodulestocksState extends State<mavmodulestocks> {
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.menu,
                   color: Colors.black,
                 ));
@@ -70,10 +106,10 @@ class _mavmodulestocksState extends State<mavmodulestocks> {
             children: [
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: DbController().getMaveliProduct(),
+                  stream: DbController().getMaveliProduct( Provider.of<DbController>(context,listen: false).storeId),
                   builder: (context, snapshot) {
                     if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: CircularProgressIndicator(),);
+                      return const Center(child: CircularProgressIndicator(),);
 
                     }
 List<StoreProductModel>list=[];
@@ -82,7 +118,7 @@ list=snapshot.data!.docs.map((e) => StoreProductModel.fromJson(e.data() as Map<S
 
                     if(snapshot.hasData){
 
-                      return list.isEmpty?Center(child: Text("No Products",style: TextStyle(color: Colors.white),),) :ListView.builder(
+                      return list.isEmpty?const Center(child: Text("No Products",style: TextStyle(color: Colors.white),),) :ListView.builder(
                         itemCount: list.length,
                         itemBuilder: (context, index) => Column(
                               children: [
@@ -91,7 +127,7 @@ list=snapshot.data!.docs.map((e) => StoreProductModel.fromJson(e.data() as Map<S
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
                                             width: 1, color: Colors.black),
-                                        color: Color.fromARGB(206, 255, 255, 255)),
+                                        color: const Color.fromARGB(206, 255, 255, 255)),
                                     child: Row(
                                       children: [
                                         Padding(
@@ -119,24 +155,30 @@ list=snapshot.data!.docs.map((e) => StoreProductModel.fromJson(e.data() as Map<S
                                                       fontSize: 20)),
                                                Row(
                                                 children: [
-                                                  Icon(Icons.currency_rupee_sharp),
+                                                  const Icon(Icons.currency_rupee_sharp),
                                                   Text(
                                                     '${list[index].price}/Kg',
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
                                                             FontWeight.w500),
                                                   )
                                                 ],
                                               ),
-                                               Padding(
-                                                padding: EdgeInsets.only(left: 8),
-                                                child: Text('${list[index].qty} Kg/Person',
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.w500)),
-                                              ),
+                                               Row(
+                                                 children: [
+                                                   Padding(
+                                                    padding: const EdgeInsets.only(left: 8),
+                                                    child: Text('${list[index].qty} Kg/Person',
+                                                        style: const TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight.w500)),
+                                                                                                 ),
+                                                                                                  IconButton(onPressed: ()=>_showDeleteConfirmationDialog(context,list[index].productId), 
+                                      icon: Icon(Icons.delete,size: 20,color: Colors.amber[700],))
+                                                 ],
+                                               ),
                                               // ElevatedButton(style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.black),foregroundColor: MaterialStatePropertyAll(Colors.white)),
                                               // onPressed: (){}, child: const Text('Choose',style: TextStyle(fontSize: 15,),))
                                             ],
@@ -144,13 +186,13 @@ list=snapshot.data!.docs.map((e) => StoreProductModel.fromJson(e.data() as Map<S
                                         )
                                       ],
                                     )),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 )
                               ],
                             ));
                     }else{
-                      return SizedBox();
+                      return const SizedBox();
                     }
                     
                   }
@@ -176,7 +218,7 @@ list=snapshot.data!.docs.map((e) => StoreProductModel.fromJson(e.data() as Map<S
               selectedImage: selectedImage,
               module: "Maveli");
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

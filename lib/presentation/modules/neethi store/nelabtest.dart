@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
-import 'package:stockit/data/firebase/database/labtestcontroller.dart';
 import 'package:stockit/data/helper/service.dart';
 import 'package:stockit/data/model/labtest_model.dart';
 import 'package:stockit/presentation/modules/neethi%20store/neethimenu.dart';
@@ -22,7 +22,6 @@ class nelabtest extends StatefulWidget {
 }
 
 class _nelabtestState extends State<nelabtest> {
-  LabtestController labtestController = LabtestController();
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
   final __testnameController = TextEditingController();
@@ -32,10 +31,49 @@ class _nelabtestState extends State<nelabtest> {
   final _mrpController = TextEditingController();
   final _categoryController = TextEditingController();
   final _formkey = GlobalKey<FormState>();
+
   String? _selectedCategory;
+  void _showDeleteConfirmationDialog(BuildContext context, id) {
+    // Create an alert dialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm Delete"),
+      content: Text("Are you sure you want to delete?"),
+      actions: [
+        TextButton(
+          child: Text("Cancel"),
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+        TextButton(
+          child: Text(
+            "Delete",
+            style: TextStyle(color: Colors.red),
+          ),
+          onPressed: () {
+            DbController().deleteSelectedLabTest(id);
+            // Perform deletion logic here
+            //  e.g., remove item from list, call an API
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+      ],
+    );
+
+    // Show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    // Provider.of<DbController>(context,listen: true).cleaLabTestData();
+    // DbController().cleaLabTestData();
     // String id = _auth.currentUser!.uid;
     return Scaffold(
       drawer: const neethimenu(),
@@ -75,21 +113,34 @@ class _nelabtestState extends State<nelabtest> {
                     child: SizedBox(
                       height: 50,
                       width: 355,
-                      child: TextFormField(
-                        cursorColor: Colors.black,
-                        decoration: InputDecoration(
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black)),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            fillColor: const Color.fromARGB(186, 255, 255, 255),
-                            filled: true,
-                            prefixIcon: const Icon(
-                              Icons.search,
-                              size: 35,
-                            ),
-                            hintText: ('Search for test and pakages')),
-                      ),
+                      child: Consumer<DbController>(
+                          builder: (context, seracher, child) {
+                        // if( seracher.labTestSearchResult.isEmpty){
+                        //   listOfData=;
+                        // }
+                        return TextFormField(
+                          onTap: () {
+                            seracher.getMyLabTest(Provider.of<DbController>(context,listen: false).storeId!);
+                          },
+                          onChanged: (value) {
+                            seracher.searchlabTest(value);
+                          },
+                          cursorColor: Colors.black,
+                          decoration: InputDecoration(
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black)),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              fillColor:
+                                  const Color.fromARGB(186, 255, 255, 255),
+                              filled: true,
+                              prefixIcon: const Icon(
+                                Icons.search,
+                                size: 35,
+                              ),
+                              hintText: ('Search for test and pakages')),
+                        );
+                      }),
                     ),
                   ),
                   const SizedBox(height: 15, width: 30),
@@ -117,118 +168,171 @@ class _nelabtestState extends State<nelabtest> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Expanded(
-                            child: StreamBuilder<QuerySnapshot>(
-                                stream: DbController().getAllLapTest(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-                                  List<LabtestModel> listOfData = snapshot
-                                      .data!.docs
-                                      .map((e) => LabtestModel.fromMap(
-                                          e.data() as Map<String, dynamic>))
-                                      .toList();
-                                  if (snapshot.hasData) {
-                                    return ListView.builder(
-                                      itemCount: listOfData.length,
-                                      itemBuilder: (context, index) {
-                                        var data = listOfData[index];
+                        Consumer<DbController>(
+                            builder: (context, searcher, child) {
+                          return Expanded(
+                              child: StreamBuilder<QuerySnapshot>(
+                                  stream: DbController()
+                                      .getSelectedStoreLapTest(
+                                          Provider.of<DbController>(context,
+                                                  listen: false)
+                                              .storeId!),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                    List<LabtestModel> listOfData = [];
 
-                                        return Column(
-                                          children: [
-                                            Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 10),
-                                                  child: Text(
-                                                    data.productname,
-                                                    style: GoogleFonts
-                                                        .inknutAntiqua(
-                                                            fontSize: 18),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 10),
-                                                  child: Text(
-                                                    data.description,
-                                                    style: GoogleFonts
-                                                        .inknutAntiqua(
-                                                            color: Colors.grey,
-                                                            fontSize: 15),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 30),
-                                                  child: Row(children: [
-                                                    const Icon(
-                                                      Icons.currency_rupee,
-                                                      size: 22,
+                                    if (searcher.labTestList.isNotEmpty) {
+                                      listOfData = searcher.labTestSearchResult;
+                                    } else {
+                                      listOfData = snapshot.data!.docs
+                                          .map((e) => LabtestModel.fromMap(
+                                              e.data() as Map<String, dynamic>))
+                                          .toList();
+                                    }
+                                    if (snapshot.hasData) {
+                                      return listOfData.isEmpty
+                                          ? const Center(
+                                              child: Text("No Lab Test"),
+                                            )
+                                          : ListView.builder(
+                                              itemCount: listOfData.length,
+                                              itemBuilder: (context, index) {
+                                                var data = listOfData[index];
+
+                                                return Column(
+                                                  children: [
+                                                    Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 10),
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 100,
+                                                              ),
+                                                              Text(
+                                                                data.productname,
+                                                                style: GoogleFonts
+                                                                    .inknutAntiqua(
+                                                                        fontSize:
+                                                                            18),
+                                                              ),
+                                                              IconButton(
+                                                                  onPressed: () =>
+                                                                      _showDeleteConfirmationDialog(
+                                                                          context,
+                                                                          listOfData[index]
+                                                                              .id),
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .delete,
+                                                                    size: 20,
+                                                                    color: Colors
+                                                                        .orange,
+                                                                  ))
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 10),
+                                                          child: Text(
+                                                            data.description,
+                                                            style: GoogleFonts
+                                                                .inknutAntiqua(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    fontSize:
+                                                                        15),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 30),
+                                                          child: Row(children: [
+                                                            const Icon(
+                                                              Icons
+                                                                  .currency_rupee,
+                                                              size: 22,
+                                                            ),
+                                                            Text(
+                                                              data.price,
+                                                              style: const TextStyle(
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Icon(
+                                                              Icons
+                                                                  .currency_rupee,
+                                                              size: 15,
+                                                              color: Colors
+                                                                  .grey[400],
+                                                            ),
+                                                            Text(
+                                                              data.mrp,
+                                                              style: TextStyle(
+                                                                  decorationColor:
+                                                                      Colors.grey[
+                                                                          400],
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .lineThrough,
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      400]),
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 20),
+                                                            Text(
+                                                              '${data.offer}%OFF',
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ]),
+                                                        ),
+                                                      ],
                                                     ),
-                                                    Text(
-                                                      data.price,
-                                                      style: const TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Icon(
-                                                      Icons.currency_rupee,
-                                                      size: 15,
-                                                      color: Colors.grey[400],
-                                                    ),
-                                                    Text(
-                                                      data.mrp,
-                                                      style: TextStyle(
-                                                          decorationColor:
-                                                              Colors.grey[400],
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .lineThrough,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color:
-                                                              Colors.grey[400]),
-                                                    ),
-                                                    const SizedBox(width: 20),
-                                                    Text(
-                                                      '${data.offer}%OFF',
-                                                      style: const TextStyle(
-                                                          color: Colors.red,
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ]),
-                                                ),
-                                              ],
-                                            ),
-                                            const Divider(color: Colors.black)
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  }else{
-                                    // ignore: prefer_const_constructors
-                                    return SizedBox();
-                                  }
-                                }))
+                                                    const Divider(
+                                                        color: Colors.black)
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                    } else {
+                                      // ignore: prefer_const_constructors
+                                      return SizedBox();
+                                    }
+                                  }));
+                        })
                       ],
                     ),
                   )
@@ -542,6 +646,9 @@ class _nelabtestState extends State<nelabtest> {
                             onPressed: () {
                               if (_formkey.currentState!.validate()) {
                                 LabtestModel _labtestmodel = LabtestModel(
+                                    storeId: Provider.of<DbController>(context,
+                                            listen: false)
+                                        .storeId!,
                                     category: _selectedCategory!,
                                     productname: __testnameController.text,
                                     description:

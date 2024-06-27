@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
+import 'package:stockit/data/model/store_model.dart';
 
 class supplyprofile extends StatefulWidget {
   const supplyprofile({super.key});
@@ -23,7 +24,7 @@ class _supplyprofileState extends State<supplyprofile> {
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
-              }, icon: Icon(Icons.arrow_back_ios_sharp)),
+              }, icon: const Icon(Icons.arrow_back_ios_sharp)),
            title: Text(
             'Profile',
             style: GoogleFonts.abrilFatface(fontSize: 20),
@@ -45,36 +46,38 @@ class _supplyprofileState extends State<supplyprofile> {
         ]),
               
                 ),
-                child: Stack(children: [Padding(
-                padding: const EdgeInsets.only(top: 250,left: 50),
-                child: Image(image: AssetImage('images/image 29.png'),),
+                child: Stack(children: [ Padding(
+                padding: EdgeInsets.only(top: 250,left: 50),
+                child: Image(image: NetworkImage(storeProfile!.imageUrl),),
               ),
               Padding(
                 padding: const EdgeInsets.only(top:50,left:5,right: 5,bottom: 20),
                 child: Column(
         children: [
-         SizedBox(height: 60,),
+         const SizedBox(height: 60,),
           Container(
             height:600,width: 400,
-            color: Color.fromARGB(170, 0, 0, 0),
+            color: const Color.fromARGB(170, 0, 0, 0),
             child: Column(
               children: [
                 
                 Padding(
                   padding: const EdgeInsets.only(top: 30),
                   child: Stack(
-                    children: [Container( height: 150,
+                    children: [
+                      
+                      Container( height: 150,
                                         width: 150,
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: Colors.white,
                                         ),),
                                         Padding(
                                           padding: const EdgeInsets.only(top: 75,left: 115),
                                           child: Container(height: 50,width: 50,
-                                          decoration: BoxDecoration(shape: BoxShape.circle,color: const Color.fromARGB(179, 0, 0, 0),
+                                          decoration: const BoxDecoration(shape: BoxShape.circle,color: Color.fromARGB(179, 0, 0, 0),
                                           ),
-                                          child: IconButton(onPressed: (){}, icon:Icon(Icons.camera_alt,color: Colors.blue,size: 30,)),),
+                                          child: IconButton(onPressed: (){}, icon:const Icon(Icons.camera_alt,color: Colors.blue,size: 30,)),),
                                         )
                                         ] 
                   ),

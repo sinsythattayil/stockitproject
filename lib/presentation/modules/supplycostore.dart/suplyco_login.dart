@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/presentation/modules/supplycostore.dart/packagesupplyco.dart';
 
@@ -72,7 +73,7 @@ class _SuplycoLoginState extends State<SuplycoLogin> {
                               borderRadius: BorderRadius.circular(10)),
                           hintText: ('Enter your store id'),
                           prefixIcon: const Icon(Icons.email),
-                          label: Text('Email ID',style: TextStyle(color: Colors.black))
+                          label: Text('StoreID',style: TextStyle(color: Colors.black))
                                         
                                         ),
                   ),),
@@ -118,11 +119,11 @@ class _SuplycoLoginState extends State<SuplycoLogin> {
                               MaterialStateProperty.all(Colors.black),
                           minimumSize: MaterialStateProperty.all(Size(20, 55))),
                       onPressed: () {
-                         DbController().checkStoreForLogin(
+                           Provider.of<DbController>(context,listen: false).checkStoreForLogin(
                             "Supplyco",
                             _emailController.text,
                             _passWordController.text,
-                            (indexnum:0),
+                            pacakagesupplyco(indexnum:0),
                             context);
                         // if (_formkey.currentState!.validate()) {
                         //   setState(() {

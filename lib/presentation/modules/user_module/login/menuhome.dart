@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stockit/data/helper/login_preference.dart';
+import 'package:stockit/presentation/common/profile.dart';
 import 'package:stockit/presentation/modules/user_module/login/user_login.dart';
 import 'package:stockit/presentation/modules/user_module/login/menuappinfo.dart';
 import 'package:stockit/presentation/modules/user_module/login/menuprofile.dart';
@@ -44,14 +45,14 @@ class _menuhomeState extends State<menuhome> {
               DocumentSnapshot data = snapshot.data!;
               return ListView(
                 children: [
-                  const Padding(
+                   Padding(
                     padding: EdgeInsets.only(right: 180, top: 20),
-                    child: const CircleAvatar(
+                    child:  CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white,
                       child: CircleAvatar(
                         radius: 45,
-                        backgroundImage: AssetImage('images/circleavathar.png'),
+                        backgroundImage:data["image"]=="" ?AssetImage('images/circleavathar.png') as ImageProvider:NetworkImage(data["image"]),
                       ),
                     ),
                   ),
@@ -71,7 +72,7 @@ class _menuhomeState extends State<menuhome> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => menuprofile(),
+                            builder: (context) => profile(),
                           ));
                     },
                     leading: Image.asset(

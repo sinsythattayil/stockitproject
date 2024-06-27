@@ -5,9 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/add_product_store.dart';
 import 'package:stockit/presentation/common/ordercmplt.dart';
+import 'package:stockit/presentation/common/ratio%20nmenu.dart';
+import 'package:stockit/presentation/modules/rationstore.dart/rationstoremenu.dart';
 
 class rspecial extends StatefulWidget {
   const rspecial({super.key});
@@ -20,6 +23,7 @@ class _rspecialState extends State<rspecial> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       drawer: const  rationstoremenu(),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
@@ -45,7 +49,7 @@ class _rspecialState extends State<rspecial> {
             children: [
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: DbController().getSpecialRationProducts(),
+                    stream: DbController().getSpecialRationProducts( Provider.of<DbController>(context,listen: false).storeId),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(

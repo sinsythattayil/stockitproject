@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/product_neethi_model.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/booking.dart';
@@ -69,14 +70,14 @@ Expanded(
   child: TabBarView(children: [
   
     StreamBuilder<QuerySnapshot>(
-      stream: DbController().getAllNeethiProducts(),
+      stream: DbController().getAllNeethiProducts( Provider.of<DbController>(context,listen: false).currentStoreid),
       builder: (context, snapshot) {
         if(snapshot.connectionState==ConnectionState.waiting){
           return Center(child: CircularProgressIndicator(),);
         }
         List<ProductNeethiModel>list=snapshot.data!.docs.map((e) => ProductNeethiModel.fromJson(e.data()as Map<String,dynamic>)).toList();
         if(snapshot.hasData){
-          return ListView.builder(
+          return list.isEmpty?Center(child: Text("No Product"),): ListView.builder(
                               itemCount: list.length,
                               itemBuilder: (context, index) {
                                 var data=list[index];

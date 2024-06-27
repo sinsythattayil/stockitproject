@@ -164,7 +164,7 @@ class MySheet {
                           SizedBox(
                             height: 65,
                             width: 150,
-                            child: TextFormField(
+                            child: TextFormField(maxLength: 4,
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               controller: priceController,

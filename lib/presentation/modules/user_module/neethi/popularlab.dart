@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/labtest_model.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/booking.dart';
@@ -40,67 +41,93 @@ class _popularlabState extends State<popularlab> {
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('images/pharmacy.png'), fit: BoxFit.cover)),
-          child: Column(
-            children: [
-              //SizedBox(height: 90,width: 50,),
-              Padding(
-                padding: const EdgeInsets.only(top: 100),
-                child: SizedBox(
-                  height: 50,
-                  width: 325,
-                  child: TextFormField(
-                    cursorColor: Colors.black,
-                    decoration: InputDecoration(
-                        focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black)),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        fillColor: const Color.fromARGB(186, 255, 255, 255),
-                        filled: true,
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          size: 35,
-                        ),
-                        hintText: ('Search for test and pakages')),
+          child: Consumer<DbController>(builder: (context, search, hild) {
+            return Column(
+              children: [
+                //SizedBox(height: 90,width: 50,),
+                Padding(
+                  padding: const EdgeInsets.only(top: 100),
+                  child: SizedBox(
+                    height: 50,
+                    width: 325,
+                    child: TextFormField(
+                      onTap: () {
+                        search.getAllLabTestForSearch(
+                            Provider.of<DbController>(context, listen: false)
+                                .currentStoreid);
+                      },
+                      onChanged: (value) {
+                        search.searchLabtest(value);
+                      },
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                          focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          fillColor: const Color.fromARGB(186, 255, 255, 255),
+                          filled: true,
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            size: 35,
+                          ),
+                          hintText: ('Search for test and pakages')),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 15, width: 30),
-              Container(
-                height: 565,
-                width: 325,
-                decoration: BoxDecoration(
-                    color: const Color.fromARGB(186, 255, 255, 255),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 1, color: Colors.black)),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Image.asset(
-                          'images/Lab.png',
-                          scale: 1.2,
-                        ),
-                        Text(
-                          'Popular Tests',
-                          style: GoogleFonts.inknutAntiqua(fontSize: 25),
-                        )
-                      ],
-                    ),
-                    Expanded(
-                        child: StreamBuilder<QuerySnapshot>(
-                          stream: DbController().getAllLapTest(),
-                          builder: (context, snapshot) {
-                            if(snapshot.connectionState==ConnectionState.waiting){
-                              return const Center(child: CircularProgressIndicator(),);
-                            }
-                            List<LabtestModel>listOflabtest=snapshot.data!.docs.map((e) => LabtestModel.fromMap(e.data() as Map<String,dynamic>)).toList();
+                const SizedBox(height: 15, width: 30),
+                Container(
+                  height: 565,
+                  width: 325,
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(186, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 1, color: Colors.black)),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(
+                            'images/Lab.png',
+                            scale: 1.2,
+                          ),
+                          Text(
+                            'Popular Tests',
+                            style: GoogleFonts.inknutAntiqua(fontSize: 25),
+                          )
+                        ],
+                      ),
+                      Expanded(
+                          child: StreamBuilder<QuerySnapshot>(
+                              stream: DbController().getSelectedStoreAllLapTest(
+                                  Provider.of<DbController>(context,
+                                          listen: false)
+                                      .currentStoreid),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                List<LabtestModel> listOflabtest = [];
+                                
+                        if(search.listOFLabTest.isNotEmpty){
+                          listOflabtest=search.resultOfLabtestsearch;
 
-                            if(snapshot.hasData){
-                              return ListView.builder(
-                                                  itemCount: listOflabtest.length,
-                                                  itemBuilder: (context, index) {
-                            return  Padding(
+                        }else{
+                           listOflabtest=       snapshot
+                                    .data!.docs
+                                    .map((e) => LabtestModel.fromMap(
+                                        e.data() as Map<String, dynamic>))
+                                    .toList();
+                        }
+
+                                if (snapshot.hasData) {
+                                  return listOflabtest.isEmpty?Center(child: Text("no test found"),): ListView.builder(
+                                    itemCount: listOflabtest.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
                                         padding: const EdgeInsets.only(
                                           top: 5,
                                           left: 20,
@@ -174,42 +201,44 @@ class _popularlabState extends State<popularlab> {
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
-                                                  
                                                 ]),
                                                 Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 20),
-                                                    child: ElevatedButton(
-                                                        style: const ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStatePropertyAll(
-                                                                    Color.fromARGB(
-                                                                        255,
-                                                                        173,
-                                                                        242,
-                                                                        240))),
-                                                        onPressed: () {
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        BookingDetaiPage(   type: "Lab Test",
-                                                                          productId:listOflabtest[index].id!,)),
-                                                          );
-                                                        },
-                                                        child: const Text(
-                                                          'Book',
-                                                          style: TextStyle(
-                                                              fontSize: 18,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        )),
-                                                  ),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 20),
+                                                  child: ElevatedButton(
+                                                      style: const ButtonStyle(
+                                                          backgroundColor:
+                                                              MaterialStatePropertyAll(
+                                                                  Color.fromARGB(
+                                                                      255,
+                                                                      173,
+                                                                      242,
+                                                                      240))),
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  BookingDetaiPage(
+                                                                    type:
+                                                                        "Lab Test",
+                                                                    productId:
+                                                                        listOflabtest[index]
+                                                                            .id!,
+                                                                  )),
+                                                        );
+                                                      },
+                                                      child: const Text(
+                                                        'Book',
+                                                        style: TextStyle(
+                                                            fontSize: 18,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      )),
+                                                ),
                                                 const Divider(
                                                     color: Colors.black),
                                                 Row(
@@ -237,20 +266,18 @@ class _popularlabState extends State<popularlab> {
                                               ],
                                             )),
                                       );
-                                                  },
-                                                );
-
-                            }else{
-                              return const SizedBox();
-                            }
-                            
-                          }
-                        ))
-                  ],
-                ),
-              )
-            ],
-          ),
+                                    },
+                                  );
+                                } else {
+                                  return const SizedBox();
+                                }
+                              }))
+                    ],
+                  ),
+                )
+              ],
+            );
+          }),
         ),
       ),
     );

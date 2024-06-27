@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/product_neethi_model.dart';
 import 'package:stockit/presentation/modules/neethi%20store/neallproducts.dart';
@@ -78,7 +79,7 @@ class _topsellindState extends State<topsellind> {
               height: 15,
             ),
             StreamBuilder<QuerySnapshot>(
-                stream: DbController().getAllNeethiProducts(),
+                stream: DbController().getAllNeethiProducts( Provider.of<DbController>(context,listen: false).currentStoreid),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(

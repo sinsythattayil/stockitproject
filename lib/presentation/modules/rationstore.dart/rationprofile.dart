@@ -57,16 +57,14 @@ class rationprofile extends StatelessWidget {
                     children: [Container( height: 150,
                                         width: 150,
                                         decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: NetworkImage(storeProfile!.imageUrl)),
                                           shape: BoxShape.circle,
                                           color: Colors.white,
+                                        
                                         ),),
-                                        Padding(
-                                          padding: const EdgeInsets.only(top: 75,left: 115),
-                                          child: Container(height: 50,width: 50,
-                                          decoration: BoxDecoration(shape: BoxShape.circle,color: const Color.fromARGB(179, 0, 0, 0),
-                                          ),
-                                          child: IconButton(onPressed: (){}, icon:Icon(Icons.camera_alt,color: Colors.blue,size: 30,)),),
-                                        )
+                                      
                                         ] 
                   ),
                 ),

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/labtest_model.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/booking.dart';
@@ -51,23 +52,23 @@ class _LabListPageState extends State<LabListPage> {
                   height: 20,
                   width: 30,
                 ),
-                SizedBox(
-                  height: 50,
-                  width: 350,
-                  child: TextField(
-                    cursorColor: Colors.black,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        fillColor: const Color.fromARGB(255, 237, 234, 234),
-                        filled: true,
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          size: 35,
-                        ),
-                        hintText: ('Search for test and pakages')),
-                  ),
-                ),
+                // SizedBox(
+                //   height: 50,
+                //   width: 350,
+                //   child: TextField(
+                //     cursorColor: Colors.black,
+                //     decoration: InputDecoration(
+                //         border: OutlineInputBorder(
+                //             borderRadius: BorderRadius.circular(10)),
+                //         fillColor: const Color.fromARGB(255, 237, 234, 234),
+                //         filled: true,
+                //         prefixIcon: const Icon(
+                //           Icons.search,
+                //           size: 35,
+                //         ),
+                //         hintText: ('Search for test and pakages')),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(right: 100, top: 10),
                   child: Text(
@@ -80,8 +81,8 @@ class _LabListPageState extends State<LabListPage> {
                 ),
                 Expanded(
                     child: StreamBuilder<QuerySnapshot>(
-                        stream: DbController().getNeethiProductByCategory(
-                            widget.selectedCategory),
+                        stream: DbController().getSelectedNeethiProductByCategory(
+                            widget.selectedCategory,Provider.of<DbController>(context,listen: false).currentStoreid!),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {

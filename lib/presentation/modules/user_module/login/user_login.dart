@@ -8,6 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stockit/data/firebase/authentication/auth_service.dart';
 import 'package:stockit/data/helper/login_preference.dart';
 import 'package:stockit/data/helper/service.dart';
+import 'package:stockit/presentation/modules/admin/adminlogin.dart';
+import 'package:stockit/presentation/modules/mavelistore%20module/maveli_login.dart';
+import 'package:stockit/presentation/modules/neethi%20store/neethi_login.dart';
+import 'package:stockit/presentation/modules/rationstore.dart/ration_login.dart';
+import 'package:stockit/presentation/modules/supplycostore.dart/suplyco_login.dart';
 import 'package:stockit/presentation/modules/user_module/home/home1.dart';
 import 'package:stockit/presentation/modules/user_module/login/sign_up.dart';
 // import 'package:stockit/forgot.dart';
@@ -60,6 +65,48 @@ class _UserLoginState extends State<UserLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const AdminLogin()));
+              },
+              icon: const Icon(Icons.motion_photos_auto_rounded)),
+
+          PopupMenuButton(
+              itemBuilder: (context) => [
+                    PopupMenuItem(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const RationLogin()));
+                        },
+                        child: const Text("Ration Store")),
+                    PopupMenuItem(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const MaveliLogin()));
+                        },
+                        child: const Text("Maveli Store")),
+                    PopupMenuItem(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const SuplycoLogin()));
+                        },
+                        child: const Text("Supplyco Store")),
+                    PopupMenuItem(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const NeethiLogin()));
+                        },
+                        child: const Text("Neethi Store"))
+                  ])
+          // IconButton(onPressed: () {
+
+          // }, icon: Icon(Icons.more_vert)),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Container(
             height: MediaQuery.of(context).size.height,
@@ -176,10 +223,10 @@ class _UserLoginState extends State<UserLogin> {
                   ),
                   ElevatedButton(
                       style: ButtonStyle(
-                          shape: MaterialStatePropertyAll(
+                          shape: MaterialStatePropertyAll(       
                               RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10))),
-                          foregroundColor:
+                   foregroundColor:
                               MaterialStateProperty.all(Colors.white),
                           backgroundColor:
                               MaterialStateProperty.all(Colors.black),
@@ -207,7 +254,7 @@ class _UserLoginState extends State<UserLogin> {
                                   context, "Login Successful!");
                               Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
-                                      builder: (context) => home1()),
+                                      builder: (context) => const home1()),
                                   (route) => false);
                             }
                           });

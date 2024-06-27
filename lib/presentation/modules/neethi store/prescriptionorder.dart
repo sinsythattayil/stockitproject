@@ -84,7 +84,7 @@ class _prescriptionorderState extends State<prescriptionorder> {
                                                         toID: data[index]
                                                             ["uid"],
                                                         message:
-                                                            "'Your prescription Medicines are available,Visit out store'"));
+                                                            "'Your prescription Medicines are  available,Visit our store'"));
                                           });
                                         },
                                         child: Text(

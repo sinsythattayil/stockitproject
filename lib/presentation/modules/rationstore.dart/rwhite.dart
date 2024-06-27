@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/add_product_store.dart';
 
@@ -15,7 +16,7 @@ class rwhite extends StatefulWidget {
 }
 
 class _rwhiteState extends State<rwhite> {
-   void _showDeleteConfirmationDialog(BuildContext context) {
+   void _showDeleteConfirmationDialog(BuildContext context,productId) {
     // Create an alert dialog
     AlertDialog alert = AlertDialog(
       title: Text("Confirm Delete"),
@@ -33,6 +34,7 @@ class _rwhiteState extends State<rwhite> {
             style: TextStyle(color: Colors.red),
           ),
           onPressed: () {
+            DbController().deleteProductOfCurrentStore("Ration Products", productId);
             // Perform deletion logic here
             //  e.g., remove item from list, call an API
             Navigator.of(context).pop(); // Close the dialog
@@ -65,7 +67,7 @@ class _rwhiteState extends State<rwhite> {
             children: [
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: DbController().getRationProduct(widget.cardType),
+                    stream: DbController().getRationProduct(widget.cardType,    Provider.of<DbController>(context,listen: false).storeId),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
@@ -78,7 +80,7 @@ class _rwhiteState extends State<rwhite> {
                               e.data() as Map<String, dynamic>))
                           .toList();
                       if (snapshot.hasData) {
-                        return ListView.builder(
+                        return list.isEmpty?Center(child: Text("No Product",style: TextStyle(color: Colors.white),),): ListView.builder(
                             itemCount: list.length,
                             itemBuilder: (context, index) => Column(
                                   children: [
@@ -144,7 +146,7 @@ class _rwhiteState extends State<rwhite> {
                                                   ),
                                                  Padding(
                                                    padding: const EdgeInsets.only(left: 150),
-                                                   child: IconButton(onPressed: ()=>_showDeleteConfirmationDialog(context), 
+                                                   child: IconButton(onPressed: ()=>_showDeleteConfirmationDialog(context,list[index].productId), 
                                                                                          icon: Icon(Icons.delete,size: 25,color: Colors.black,)),
                                                  )
                                                 ],

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/medicine_model.dart';
 import 'package:stockit/data/model/product_neethi_model.dart';
@@ -20,7 +21,7 @@ class _offermedicineState extends State<offermedicine> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: DbController().getAllMedicines(),
+        stream: DbController().getAllMedicines( Provider.of<DbController>(context,listen: false).currentStoreid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -32,7 +33,7 @@ class _offermedicineState extends State<offermedicine> {
                   MedicineModel.fromJson(e.data() as Map<String, dynamic>))
               .toList();
           if (snapshot.hasData) {
-            return ListView.builder(
+            return list.isEmpty?Center(child: Text("No Medicine"),): ListView.builder(
               itemCount: list.length,
               itemBuilder: (context, index) {
                 var data=list[index];

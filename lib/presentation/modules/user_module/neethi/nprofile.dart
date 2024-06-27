@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:stockit/presentation/common/menu.dart';
 import 'package:stockit/presentation/modules/user_module/login/menuprofile.dart';
 import 'package:stockit/presentation/modules/user_module/neethi/menunee.dart';
 

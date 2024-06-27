@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/add_product_store.dart';
 import 'package:stockit/presentation/modules/supplycostore.dart/smenu.dart';
@@ -13,6 +14,40 @@ class smspecial extends StatefulWidget {
 }
 
 class _smspecialState extends State<smspecial> {
+  void _showDeleteConfirmationDialog(BuildContext context) {
+    // Create an alert dialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm Delete"),
+      content: Text("Are you sure you want to delete?"),
+      actions: [
+        TextButton(
+          child: Text("Cancel"),
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+        TextButton(
+          child: Text(
+            "Delete",
+            style: TextStyle(color: Colors.red),
+          ),
+          onPressed: () {
+            // Perform deletion logic here
+            //  e.g., remove item from list, call an API
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+      ],
+    );
+
+    // Show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +84,7 @@ class _smspecialState extends State<smspecial> {
             children: [
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: DbController().getSpecialSupplycoProducts(),
+                    stream: DbController().getSpecialSupplycoProducts( Provider.of<DbController>(context,listen: false).storeId),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
@@ -127,7 +162,10 @@ class _smspecialState extends State<smspecial> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500),
-                                                          )
+                                                          ),   
+                                                          SizedBox(width: 60,),
+                                                          IconButton(onPressed: ()=>_showDeleteConfirmationDialog(context), 
+                                      icon: Icon(Icons.delete,size: 20,color: Colors.black,))
                                                         ],
                                                       ),
                                                       Padding(
@@ -135,13 +173,14 @@ class _smspecialState extends State<smspecial> {
                                                             EdgeInsets.only(
                                                                 left: 8),
                                                         child: Text(
-                                                            '${list[index].qty} Kg/Person',
+                                                            '${list[index].qty} Kg/Card',
                                                             style: TextStyle(
                                                                 fontSize: 18,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500)),
                                                       ),
+                                                     
                                                       // ElevatedButton(style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.black),foregroundColor: MaterialStatePropertyAll(Colors.white)),
                                                       // onPressed: (){}, child: const Text('Choose',style: TextStyle(fontSize: 15,),))
                                                     ],

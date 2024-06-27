@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/presentation/modules/mavelistore%20module/packagemaveli.dart';
 
@@ -114,7 +115,7 @@ class _MaveliLoginState extends State<MaveliLogin> {
                               MaterialStateProperty.all(Colors.black),
                           minimumSize: MaterialStateProperty.all(Size(20, 55))),
                       onPressed: () {
-                        DbController().checkStoreForLogin(
+                       Provider.of<DbController>(context,listen: false).checkStoreForLogin(
                             "Maveli",
                             _emailController.text,
                             _passWordController.text,

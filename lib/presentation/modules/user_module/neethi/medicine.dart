@@ -15,7 +15,7 @@ class medicine extends StatefulWidget {
 }
 
 class _medicineState extends State<medicine> {
- int _selectedindex=0;
+  int _selectedindex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,11 +23,10 @@ class _medicineState extends State<medicine> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-               Navigator.pop(context);
+              Navigator.pop(context);
             },
             icon: const Icon(
               Icons.arrow_back_ios_sharp,
-              
             )),
         title: Text(
           'Pharmecy',
@@ -76,15 +75,21 @@ class _medicineState extends State<medicine> {
                   width: 340,
                   child: TextFormField(
                     onTap: () {
-                       Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const medicinserch()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const medicinserch()));
                     },
                     cursorColor: Colors.black,
-                    decoration: InputDecoration(focusedBorder:OutlineInputBorder(borderSide: BorderSide(color: Colors.black)) ,
+                    decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)),
                         fillColor: Color.fromARGB(136, 255, 255, 255),
-                        filled: true,prefixIcon: Icon(Icons.search,size: 35,),
+                        filled: true,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          size: 35,
+                        ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.black))),
@@ -98,9 +103,8 @@ class _medicineState extends State<medicine> {
                 width: 340,
                 child: Column(
                   children: [
-                    
                     Padding(
-                      padding: const EdgeInsets.only(top: 10,right: 20),
+                      padding: const EdgeInsets.only(top: 10, right: 20),
                       child: Text(
                         'Quickly Order via Prescription.',
                         style: GoogleFonts.inknutAntiqua(fontSize: 17),
@@ -109,50 +113,74 @@ class _medicineState extends State<medicine> {
                     // Container(
                     //   height: 20,
                     // ),
-                    Consumer<Controller>(
-                      builder: (context,controler,child) {
-                        return Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10,top: 15),
-                                  child: Text(
-                                    'Upload the prescription photo',
-                                    style: GoogleFonts.inknutAntiqua(
-                                        fontSize: 14,
-                                        color: const Color.fromARGB(177, 0, 0, 0)),
-                                  ),
+                    Consumer<Controller>(builder: (context, controler, child) {
+                      return Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, top: 15),
+                                child: Text(
+                                  'Upload the prescription photo',
+                                  style: GoogleFonts.inknutAntiqua(
+                                      fontSize: 14,
+                                      color:
+                                          const Color.fromARGB(177, 0, 0, 0)),
                                 ),
-                                SizedBox(height: 15,),
-                                ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(const Color.fromARGB(205, 0, 0, 0))),
-                                    onPressed: () {
-                                      controler.pickeImageFromGallery().then((value) {
-                                        controler.storeImage(controler.fileImage!, "Prescription").then((url) {
-                                        DbController().uploadPrescription(url).then((value) {
-                                            Services.successMessage(context, "Prescription send to Neethi store!");
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(
+                                          const Color.fromARGB(205, 0, 0, 0))),
+                                  onPressed: () {
+                                    controler
+                                        .pickeImageFromGallery()
+                                        .then((value) {
+                                      controler
+                                          .storeImage(controler.fileImage!,
+                                              "Prescription")
+                                          .then((url) {
+                                        DbController()
+                                            .uploadPrescription(url)
+                                            .then((value) {
+                                          Services.successMessage(context,
+                                              "Prescription send to Neethi store!");
                                           Navigator.pop(context);
-                                          controler.fileImage=null; 
+                                          controler.fileImage = null;
                                         });
-                                        });
-                                        
-                                
                                       });
-                                      
-                                    }, child: Text('Upload',style: GoogleFonts.inknutAntiqua(fontSize:15,color:Colors.white),))
-                              ],
-                            ),
-                            // Image.asset(
-                            //   'images/Prescription.png',
-                            //   scale: 1.2,
-                            // )
-                            Container(height: 100,width: 80,color: Color.fromARGB(224, 191, 233, 226),
-                            child:controler.fileImage!=null?Image.file(controler.fileImage!): Image.asset('images/Prescription.png',fit: BoxFit.cover,),)
-                          ],
-                        );
-                      }
-                    ),
+                                    });
+                                  },
+                                  child: Text(
+                                    'Upload',
+                                    style: GoogleFonts.inknutAntiqua(
+                                        fontSize: 15, color: Colors.white),
+                                  ))
+                            ],
+                          ),
+                          // Image.asset(
+                          //   'images/Prescription.png',
+                          //   scale: 1.2,
+                          // )
+                          Container(
+                            height: 100,
+                            width: 80,
+                            color: Color.fromARGB(224, 191, 233, 226),
+                            child: controler.fileImage != null
+                                ? Image.file(controler.fileImage!)
+                                : Image.asset(
+                                    'images/Prescription.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                          )
+                        ],
+                      );
+                    }),
                     //ElevatedButton(onPressed: (){}, child: Text('Upload'))
                   ],
                 ),
@@ -172,33 +200,32 @@ class _medicineState extends State<medicine> {
       //             size: 35,
       //           ),
       //           label: ('Home')),
-           
+
       //       const BottomNavigationBarItem(
       //           icon: ImageIcon(
       //         AssetImage('images/Lab Items.png'),size: 30,
-              
+
       //       ),
       //       label: ('Lab Test')),
       //        const BottomNavigationBarItem(
       //           icon: ImageIcon(
       //         AssetImage('images/health.png'),size: 30,
-              
+
       //       ),
       //       label: ('Health Care')),
       //       const BottomNavigationBarItem(
       //           icon: ImageIcon(
       //         AssetImage('images/Discount.png'),size: 30,
-              
+
       //       ),
       //       label: ('Offer')),
       //       const BottomNavigationBarItem(
       //           icon: ImageIcon(
       //         AssetImage('images/Cart.png'),size: 30,
-              
+
       //       ),
       //       label: ('Cart')),
-             
-             
+
       //     ],
       //     currentIndex: _selectedindex,
       //     selectedItemColor: const Color.fromARGB(255, 196, 145, 6),

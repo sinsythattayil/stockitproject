@@ -6,10 +6,12 @@ class MedicineModel {
   double mrp;
   String offer;
   String imageUrl;
+  String storeID;
 
   MedicineModel(
       {required this.description,
       required this.imageUrl,
+      required this.storeID,
        this.medId,
       required this.medName,
       required this.mrp,
@@ -18,6 +20,7 @@ class MedicineModel {
 
   Map<String, dynamic> toJson(id) => {
         "medId":id   ,
+        "storeID":storeID,
         "medName": medName,
         "description": description,
         "price": price,
@@ -28,6 +31,7 @@ class MedicineModel {
 
   factory MedicineModel.fromJson(Map<String, dynamic> json) {
     return MedicineModel(
+      storeID:json["storeID"],
         description: json["description"],
         imageUrl: json["imageUrl"],
         medId: json["medId"],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/presentation/modules/neethi%20store/packageneemodule.dart';
 import 'package:stockit/presentation/modules/rationstore.dart/packageration.dart';
@@ -114,7 +115,7 @@ class _NeethiLoginState extends State<NeethiLogin> {
                               MaterialStateProperty.all(Colors.black),
                           minimumSize: MaterialStateProperty.all(Size(20, 55))),
                       onPressed: () {
-                         DbController().checkStoreForLogin(
+                    Provider.of<DbController>(context,listen: false).checkStoreForLogin(
                             "Neethi",
                             _emailController.text,
                             _passWordController.text,

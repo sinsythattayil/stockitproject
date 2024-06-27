@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
       final loginData = await LoginPreference.getPreference();
       if ( loginData == null) {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const InitialPage()),
+            MaterialPageRoute(builder: (context) => UserLogin()),
             (route) => false);
       } else if (loginData == Services.ADMIN_UID) {
         Navigator.of(context).pushAndRemoveUntil(

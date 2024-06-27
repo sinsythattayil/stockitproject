@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/store_model.dart';
+import 'package:stockit/data/provider/location_provider.dart';
 //import 'package:stockit/home/home2.dart';
 import 'package:stockit/presentation/modules/user_module/maveli/mavelistockspclitem.dart';
 import 'package:stockit/presentation/modules/user_module/maveli/maveli_stoc_view.dart';
@@ -50,31 +51,41 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                   image: DecorationImage(
                       image: AssetImage('images/image 5.png'),
                       fit: BoxFit.cover)),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 90),
-                    child: SizedBox(
-                      height: 60,
-                      width: 350,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black)),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            fillColor: const Color.fromARGB(255, 255, 255, 255),
-                            filled: true,
-                            prefixIcon: const Icon(
-                              Icons.search,
-                              size: 35,
-                            ),
-                            hintText: ('Search location')),
+              child:
+                  Consumer<DbController>(builder: (context, searcher, child) {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 90),
+                      child: SizedBox(
+                        height: 60,
+                        width: 350,
+                        child: TextFormField(
+                          onTap: () {
+                            searcher.getAllStoreForSearch("Maveli");
+                          },
+                          onChanged: (value) {
+                            searcher.searchStore(value);
+                          },
+                          decoration: InputDecoration(
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black)),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              fillColor:
+                                  const Color.fromARGB(255, 255, 255, 255),
+                              filled: true,
+                              prefixIcon: const Icon(
+                                Icons.search,
+                                size: 35,
+                              ),
+                              hintText: ('Search location')),
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                      child: StreamBuilder(
+                    Expanded(child: Consumer<LocationService>(
+                        builder: (context, services, child) {
+                      return StreamBuilder(
                           stream: DbController().getAllStore("Maveli"),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
@@ -83,9 +94,26 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                                 child: CircularProgressIndicator(),
                               );
                             }
-                            List<StoreModel> listOfData = snapshot.data!.docs
-                                .map((e) => StoreModel.fromjson(e.data()))
+
+                            List<StoreModel> listOfData = [];
+                            if (searcher.storeForSearch.isNotEmpty) {
+                              listOfData = searcher.storeSearchResult;
+                            } else {
+                              listOfData = snapshot.data!.docs
+                                  .map((e) => StoreModel.fromjson(e.data()))
+                                  .toList();
+                            }
+
+                            listOfData = listOfData
+                                .where((element) =>
+                                    element.latitude.toInt() ==
+                                        services.locationData!.latitude!
+                                            .toInt() &&
+                                    element.longitude.toInt() ==
+                                        services.locationData!.longitude!
+                                            .toInt())
                                 .toList();
+
                             if (snapshot.hasData) {
                               return listOfData.isEmpty
                                   ? const Center(
@@ -94,8 +122,7 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                                   : ListView.builder(
                                       itemCount: listOfData.length,
                                       itemBuilder: (context, index) {
-
-                                        final data=listOfData[index];
+                                        final data = listOfData[index];
                                         return Padding(
                                           padding: const EdgeInsets.only(
                                               top: 20, left: 20, right: 20),
@@ -115,7 +142,7 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                                                 Expanded(
                                                   child: SizedBox(
                                                       child: Text(
-'Maveli Store\n${data.branch}, Pin: ${data.pin}\nPh:${data.phoneNumber}',
+                                                    'Maveli Store\n${data.branch}, Pin: ${data.pin}\nPh:${data.phoneNumber}',
                                                     style: GoogleFonts
                                                         .abyssinicaSil(
                                                             fontSize: 15),
@@ -150,7 +177,10 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                                                               MaterialPageRoute(
                                                                   builder:
                                                                       (context) =>
-                                                                          mavelistocks(storeId: data.storeId,)));
+                                                                          mavelistocks(
+                                                                            storeId:
+                                                                                data.storeId,
+                                                                          )));
                                                         },
                                                         child: Text(
                                                           "select",
@@ -160,41 +190,61 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                                                                   color: Colors
                                                                       .black),
                                                         )),
-                                                    StreamBuilder<DocumentSnapshot>(
-                                                      stream: DbController().checkProductisLikedORNot(FirebaseAuth.instance.currentUser!.uid, data.storeId,),
-                                                      builder: (context, snapshot) {
-                                                        if(snapshot.connectionState==ConnectionState.waiting){
-                                                          return const SizedBox();
-                                                        }
-                                                      //  final snap=;
-                                                       if(snapshot.hasData){
-                                                        return IconButton(
-                                                            onPressed: () {
-                                                              // log(
+                                                    StreamBuilder<
+                                                            DocumentSnapshot>(
+                                                        stream: DbController()
+                                                            .checkProductisLikedORNot(
+                                                          FirebaseAuth.instance
+                                                              .currentUser!.uid,
+                                                          data.storeId,
+                                                        ),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          if (snapshot
+                                                                  .connectionState ==
+                                                              ConnectionState
+                                                                  .waiting) {
+                                                            return const SizedBox();
+                                                          }
+                                                          //  final snap=;
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            return IconButton(
+                                                                onPressed: () {
+                                                                  // log(
 
-                                                               DbController().likeMyProduct(FirebaseAuth.instance.currentUser!.uid, data.storeId, data);
-                                                            },
-                                                            icon: Icon(
-                                                              Icons.favorite,
-                                                              color: snapshot.data!.exists?const Color.fromARGB(
-                                                                  255,
-                                                                  242,
-                                                                  146,
-                                                                  37): const Color
-                                                                      .fromARGB(
+                                                                  DbController().likeMyProduct(
+                                                                      FirebaseAuth
+                                                                          .instance
+                                                                          .currentUser!
+                                                                          .uid,
+                                                                      data.storeId,
+                                                                      data);
+                                                                },
+                                                                icon: Icon(
+                                                                  Icons
+                                                                      .favorite,
+                                                                  color: snapshot
+                                                                          .data!
+                                                                          .exists
+                                                                      ? const Color
+                                                                          .fromARGB(
+                                                                          255,
+                                                                          242,
+                                                                          146,
+                                                                          37)
+                                                                      : const Color
+                                                                          .fromARGB(
                                                                           233,
                                                                           135,
                                                                           133,
                                                                           133),
-                                                              size: 25,
-                                                            ));
-
-                                                       }else{
-                                                        return const SizedBox();
-                                                       }
-                                                        
-                                                      }
-                                                    )
+                                                                  size: 25,
+                                                                ));
+                                                          } else {
+                                                            return const SizedBox();
+                                                          }
+                                                        })
                                                   ],
                                                 )
                                               ],
@@ -205,9 +255,11 @@ class _MavelistoreListViewState extends State<MavelistoreListView> {
                             } else {
                               return const SizedBox();
                             }
-                          }))
-                ],
-              ),
+                          });
+                    }))
+                  ],
+                );
+              }),
             ),
           ],
         ),

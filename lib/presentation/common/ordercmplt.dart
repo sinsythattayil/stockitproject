@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stockit/presentation/modules/user_module/home/grocery.dart';
+import 'package:stockit/presentation/modules/user_module/packagegrocery.dart';
 //import 'package:stockit/home/home2.dart';
 
 class ordercomplt extends StatefulWidget {
@@ -17,7 +18,7 @@ class _ordercompltState extends State<ordercomplt> {
     super.initState();
     Future.delayed(const Duration(seconds: 4), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => grocery()));
+          context, MaterialPageRoute(builder: (context) => packagesgro(indexnum: 0,)));
     });
   }
 

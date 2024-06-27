@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/booking_model.dart';
 import 'package:stockit/data/model/labtest_model.dart';
+import 'package:stockit/data/model/notificationFromNethioOrder.dart';
 
 class orderlabtest extends StatefulWidget {
   const orderlabtest({super.key});
@@ -37,7 +39,7 @@ class _orderlabtestState extends State<orderlabtest> {
                   .toList();
 
               if (snapshot.hasData) {
-                return ListView.builder(
+                return list.isEmpty?Center(child: Text("No Lab test"),): ListView.builder(
                   itemCount: list.length,
                   itemBuilder: (context, index) {
                     final data = list[index];
@@ -182,7 +184,24 @@ class _orderlabtestState extends State<orderlabtest> {
                                           backgroundColor:
                                               MaterialStatePropertyAll(
                                                   Color(0xff57C1AE))),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                         DbController()
+                                                .sendNotificationToUserbookingStatusOFUser(
+                                                    data.uid,
+                                                    NotificationModelForNethiOrder(
+                                                        from: Provider.of<
+                                                                    DbController>(
+                                                                context,
+                                                                listen: false)
+                                                            .storeId!,
+                                                        toID: data.uid,
+                                                        message:
+                                                            "'Your labtest is Confirmed '")).then((value){
+                                                              DbController()
+                                              .deleteBooking(
+                                            data.bookingId   );
+                                                            });
+                                      },
                                       child: Text(
                                         'Conform',
                                         style: GoogleFonts.abyssinicaSil(
@@ -196,7 +215,24 @@ class _orderlabtestState extends State<orderlabtest> {
                                           backgroundColor:
                                               MaterialStatePropertyAll(
                                                   Color(0xff57C1AE))),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                         DbController()
+                                                .sendNotificationToUserbookingStatusOFUser(
+                                                    data.uid,
+                                                    NotificationModelForNethiOrder(
+                                                        from: Provider.of<
+                                                                    DbController>(
+                                                                context,
+                                                                listen: false)
+                                                            .storeId!,
+                                                        toID: data.uid,
+                                                        message:
+                                                            "'Your labtest is Cancelled '")).then((value){
+                                                              DbController()
+                                              .deleteBooking(
+                                            data.bookingId   );
+                                                            });
+                                      },
                                       child: Text(
                                         'Cancell',
                                         style: GoogleFonts.abyssinicaSil(

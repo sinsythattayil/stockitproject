@@ -14,7 +14,7 @@ class ordergrocery extends StatefulWidget {
 }
 
 class _ordergroceryState extends State<ordergrocery> {
-    void _showDeleteConfirmationDialog(BuildContext context) {
+    void _showDeleteConfirmationDialog(BuildContext context,id) {
     // Create an alert dialog
     AlertDialog alert = AlertDialog(
       title: Text("Confirm Delete"),
@@ -32,6 +32,7 @@ class _ordergroceryState extends State<ordergrocery> {
             style: TextStyle(color: Colors.red),
           ),
           onPressed: () {
+            DbController().deleteMyOrder(id);
             // Perform deletion logic here
             //  e.g., remove item from list, call an API
             Navigator.of(context).pop(); // Close the dialog
@@ -190,23 +191,37 @@ class _ordergroceryState extends State<ordergrocery> {
                                                                 return const SizedBox();
                                                               }
                                                                StoreModel storeModel;
-                                                               storeModel=StoreModel.fromjson(snapshot.data!.data() as Map<String,dynamic>);
-                                                               return Padding(
+                                                               if(snapshot.data!.exists){
+                                                                 storeModel=StoreModel.fromjson(snapshot.data!.data() as Map<String,dynamic>);
+                                                                    return Padding(
                                                                 padding:
                                                                     const EdgeInsets.only(
                                                                         left: 8),
-                                                                child: Text(storeModel.name,
+                                                                child: Text(storeModel.branch,
                                                                     style: const TextStyle(
                                                                         fontSize: 18,
                                                                         fontWeight:
                                                                             FontWeight
                                                                                 .w500)),
                                                                                                                      );
+                                                       
+                                                               }else{
+                                                                return Text("Store not Exist",
+                                                                    style: const TextStyle(
+                                                                        fontSize: 18,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500));
+                                                       
+                                                               }
+                                                              
+                                                            
                                                              }
                                                            ),
-                                                           SizedBox(width: 50,),
-                                                           IconButton(onPressed: ()=>_showDeleteConfirmationDialog(context), 
-                                      icon: Icon(Icons.delete,size: 20,color: const Color.fromARGB(255, 139, 12, 12),))
+                                                          //  Spacer(),
+                                                           SizedBox(width: 5),
+                                                           IconButton(onPressed: ()=>_showDeleteConfirmationDialog(context,list[index].orderId), 
+                                                                                             icon: Icon(Icons.delete,size: 20,color: const Color.fromARGB(255, 139, 12, 12),))
                                                          ],
                                                        ),
                                                     ],

@@ -19,14 +19,14 @@ class _adminmenuState extends State<adminmenu> {
        backgroundColor: Colors.black,
       child: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 50,right: 130),
-            child: CircleAvatar(radius: 65,backgroundColor:Colors.grey,),
-          ),
-         Padding(
-           padding: const EdgeInsets.only(left: 60),
-           child: Text('Name',style: GoogleFonts.abrilFatface(fontSize:20,color:Colors.white),),
-         ),
+        //   Padding(
+        //     padding: const EdgeInsets.only(top: 50,right: 130),
+        //     child: CircleAvatar(radius: 65,backgroundColor:Colors.grey,),
+        //   ),
+        //  Padding(
+        //    padding: const EdgeInsets.only(left: 60),
+        //    child: Text('Name',style: GoogleFonts.abrilFatface(fontSize:20,color:Colors.white),),
+        //  ),
          SizedBox(height: 50,),
         
          ListTile(

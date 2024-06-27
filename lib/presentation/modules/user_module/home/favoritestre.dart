@@ -94,7 +94,7 @@ class _favoritestoreState extends State<favoritestore> {
                                             Expanded(
                                               child: SizedBox(
                                                   child: Text(
-                                                '${data.name} Store\n${data.branch}, Pin: ${data.pin}\nPh:${data.phoneNumber}',
+                                                '${data.branch}(${data.storeType})\nPin: ${data.pin}\nPh:${data.phoneNumber}',
                                                 style:
                                                     GoogleFonts.abyssinicaSil(
                                                         fontSize: 15),

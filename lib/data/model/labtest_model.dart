@@ -6,8 +6,10 @@ class LabtestModel {
   String price;
   String category;
   String? id;
+  String storeId;
 
   LabtestModel({
+    required this.storeId,
     required this.category,
     required this.productname,
     required this.description,
@@ -21,6 +23,7 @@ class LabtestModel {
 
   Map<String, dynamic> toMap(ids) => {
     "category":category,
+    "storeId":storeId,
         "productname": productname,
         "description": description,
         "id": ids,
@@ -32,6 +35,7 @@ class LabtestModel {
 
   factory LabtestModel.fromMap(Map<String, dynamic> data) {
     return LabtestModel(
+      storeId:data["storeId"],
       category:data["category"],
       productname: data["productname"],
       description: data["description"],

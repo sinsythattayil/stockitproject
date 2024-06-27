@@ -7,6 +7,7 @@ import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/add_product_store.dart';
 import 'package:stockit/data/model/order_model.dart';
 import 'package:stockit/presentation/modules/rationstore.dart/rationorderview.dart';
+import 'package:stockit/presentation/modules/rationstore.dart/rationstoremenu.dart';
 
 class rorder extends StatefulWidget {
   const rorder({super.key});
@@ -19,6 +20,7 @@ class _rorderState extends State<rorder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: rationstoremenu(),
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {},
@@ -51,7 +53,7 @@ class _rorderState extends State<rorder> {
                       OrderModel.fromJosn(e.data() as Map<String, dynamic>))
                   .toList();
               if (snapshot.hasData) {
-                return ordeList.isEmpty?const Center(child: const Text("No Orders"),): ListView.builder(
+                return ordeList.isEmpty?const Center(child: const Text("No Orders",style: TextStyle(fontSize: 15),),): ListView.builder(
                   itemCount: ordeList.length,
                   itemBuilder: (context, index) {
                     return Padding(

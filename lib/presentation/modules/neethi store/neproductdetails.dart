@@ -13,7 +13,42 @@ class neproductdetails extends StatefulWidget {
 }
 
 class _neproductdetailsState extends State<neproductdetails> {
+  void _showDeleteConfirmationDialog(BuildContext context) {
+    // Create an alert dialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm Delete"),
+      content: Text("Are you sure you want to delete?"),
+      actions: [
+        TextButton(
+          child: Text("Cancel"),
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+        TextButton(
+          child: Text(
+            "Delete",
+            style: TextStyle(color: Colors.red),
+          ),
+          onPressed: () {
+            // Perform deletion logic here
+            //  e.g., remove item from list, call an API
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+      ],
+    );
+
+    // Show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -91,7 +126,7 @@ class _neproductdetailsState extends State<neproductdetails> {
                           color: Colors.grey),
                     ),
                     SizedBox(
-                      width: 8,
+                      width: 60,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 25),
@@ -108,7 +143,7 @@ class _neproductdetailsState extends State<neproductdetails> {
                 Row(
                   children: [
                     SizedBox(
-                      width: 60,
+                      width: 90,
                     ),
                     Icon(
                       Icons.currency_rupee,
@@ -125,10 +160,12 @@ class _neproductdetailsState extends State<neproductdetails> {
                    
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                
+                SizedBox(height: 50,),
+                 Padding(
+                   padding: const EdgeInsets.only(left: 250),
+                   child: IconButton(onPressed: ()=>_showDeleteConfirmationDialog(context), 
+                                        icon: Icon(Icons.delete,size: 30,color: Colors.orange,)),
+                 )
               ],
             ),
           ),

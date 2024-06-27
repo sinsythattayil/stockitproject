@@ -108,7 +108,12 @@ class _labtestState extends State<labtest> {
                             width: 10,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LabListPage(selectedCategory: DbController.labTest[9],))),
+                            onTap: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => LabListPage(
+                                          selectedCategory:
+                                              DbController.labTest[9],
+                                        ))),
                             child: Container(
                               height: 85,
                               width: 80,
@@ -133,7 +138,12 @@ class _labtestState extends State<labtest> {
                             width: 10,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LabListPage(selectedCategory: DbController.labTest[8],))),
+                            onTap: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => LabListPage(
+                                          selectedCategory:
+                                              DbController.labTest[8],
+                                        ))),
                             child: Container(
                               height: 85,
                               width: 80,
@@ -157,7 +167,12 @@ class _labtestState extends State<labtest> {
                             width: 10,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LabListPage(selectedCategory: DbController.labTest[7],))),
+                            onTap: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => LabListPage(
+                                          selectedCategory:
+                                              DbController.labTest[7],
+                                        ))),
                             child: Container(
                               height: 85,
                               width: 80,
@@ -181,7 +196,12 @@ class _labtestState extends State<labtest> {
                             width: 10,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LabListPage(selectedCategory: DbController.labTest[6],))),
+                            onTap: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => LabListPage(
+                                          selectedCategory:
+                                              DbController.labTest[6],
+                                        ))),
                             child: Container(
                               height: 85,
                               width: 80,
@@ -216,8 +236,11 @@ class _labtestState extends State<labtest> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LabListPage(selectedCategory: DbController.labTest[5],)));
-                              
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => LabListPage(
+                                        selectedCategory:
+                                            DbController.labTest[5],
+                                      )));
                             },
                             child: Container(
                               height: 85,
@@ -233,7 +256,8 @@ class _labtestState extends State<labtest> {
                                 child: Text(
                                   'Full body checkup',
                                   style: TextStyle(
-                                      fontSize: 11, fontWeight: FontWeight.bold),
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -243,7 +267,11 @@ class _labtestState extends State<labtest> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LabListPage(selectedCategory: DbController.labTest[4],)));
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => LabListPage(
+                                        selectedCategory:
+                                            DbController.labTest[4],
+                                      )));
                             },
                             child: Container(
                               height: 85,
@@ -258,7 +286,8 @@ class _labtestState extends State<labtest> {
                                 child: Text(
                                   'Joint Pain',
                                   style: TextStyle(
-                                      fontSize: 11, fontWeight: FontWeight.bold),
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -267,7 +296,12 @@ class _labtestState extends State<labtest> {
                             width: 10,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LabListPage(selectedCategory: DbController.labTest[10],))),
+                            onTap: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => LabListPage(
+                                          selectedCategory:
+                                              DbController.labTest[10],
+                                        ))),
                             child: Container(
                               height: 85,
                               width: 80,
@@ -291,7 +325,12 @@ class _labtestState extends State<labtest> {
                             width: 10,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LabListPage(selectedCategory: DbController.labTest[11],))),
+                            onTap: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => LabListPage(
+                                          selectedCategory:
+                                              DbController.labTest[11],
+                                        ))),
                             child: Container(
                               height: 85,
                               width: 80,
@@ -344,7 +383,12 @@ class _labtestState extends State<labtest> {
                               width: 10,
                             ),
                             GestureDetector(
-                              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LabListPage(selectedCategory: DbController.labTest[3],))),
+                              onTap: () =>
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => LabListPage(
+                                            selectedCategory:
+                                                DbController.labTest[3],
+                                          ))),
                               child: Container(
                                 height: 85,
                                 width: 80,
@@ -369,7 +413,12 @@ class _labtestState extends State<labtest> {
                               width: 10,
                             ),
                             GestureDetector(
-                              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LabListPage(selectedCategory: DbController.labTest[2],))),
+                              onTap: () =>
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => LabListPage(
+                                            selectedCategory:
+                                                DbController.labTest[2],
+                                          ))),
                               child: Container(
                                 height: 85,
                                 width: 80,
@@ -393,7 +442,12 @@ class _labtestState extends State<labtest> {
                               width: 10,
                             ),
                             GestureDetector(
-                              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LabListPage(selectedCategory: DbController.labTest[1],))),
+                              onTap: () =>
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => LabListPage(
+                                            selectedCategory:
+                                                DbController.labTest[1],
+                                          ))),
                               child: Container(
                                 height: 85,
                                 width: 80,
@@ -418,7 +472,12 @@ class _labtestState extends State<labtest> {
                               width: 10,
                             ),
                             GestureDetector(
-                              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LabListPage(selectedCategory: DbController.labTest[0],))),
+                              onTap: () =>
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => LabListPage(
+                                            selectedCategory:
+                                                DbController.labTest[0],
+                                          ))),
                               child: Container(
                                 height: 85,
                                 width: 80,

@@ -10,9 +10,11 @@ class BookingModel {
   String date;
   String time;
   String status;
+  String storeId;
 
   BookingModel(
       {required this.age,
+      required this.storeId,
       required this.date,
        this.bookingId,
        required this.status,
@@ -26,6 +28,7 @@ class BookingModel {
 
   Map<String, dynamic> toJosn(id) => {
         "uid": uid,
+        "storeId":storeId,
         "bookingId":id,
         "status":status,
         "productId":productId,
@@ -41,6 +44,7 @@ class BookingModel {
 
   factory BookingModel.fromjosn(Map<String, dynamic> json) {
     return BookingModel(
+      storeId:json["storeId"],
       status:json["status"],
       productId: json["productId"],
       bookingId: json["bookingId"],

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/labtest_model.dart';
 import 'package:stockit/data/model/product_neethi_model.dart';
@@ -22,14 +23,14 @@ class _offerlabState extends State<offerlab> {
   @override
   Widget build(BuildContext context) {
     return  StreamBuilder<QuerySnapshot>(
-      stream: DbController().getAllLapTest(),
+      stream: DbController().getSelectedStoreAllLapTest( Provider.of<DbController>(context,listen: false).currentStoreid),
       builder: (context, snapshot) {
         if(snapshot.connectionState==ConnectionState.waiting){
           return Center(child: CircularProgressIndicator(),);
         }
         List<LabtestModel>list=snapshot.data!.docs.map((e) => LabtestModel.fromMap(e.data()as Map<String,dynamic>)).toList();
         if(snapshot.hasData){
-        return ListView.builder(
+        return list.isEmpty?Center(child: Text("No Lab Test"),) :ListView.builder(
           itemCount: list.length,
           itemBuilder: (context, index) {
             return Padding(

@@ -42,7 +42,7 @@ class _orderallState extends State<orderall> {
                   .toList();
 
               if (snapshot.hasData) {
-                return ListView.builder(
+                return list.isEmpty?Center(child: Text("No product"),): ListView.builder(
                   itemCount: list.length,
                   itemBuilder: (context, index) {
                     final data = list[index];
@@ -205,24 +205,22 @@ class _orderallState extends State<orderall> {
                                               MaterialStatePropertyAll(
                                                   Color(0xff57C1AE))),
                                       onPressed: () {
-                                        //  DbController()
-                                        //         .sendNotificationToUserbookingStatusOFUser(
-                                        //             data.uid,
-                                        //             NotificationModelForNethiOrder(
-                                        //                 from: Provider.of<
-                                        //                             DbController>(
-                                        //                         context,
-                                        //                         listen: false)
-                                        //                     .storeId!,
-                                        //                 toID: data.uid,
-                                        //                 message:
-                                        //                     "'Your Order is Confiremed '")).then((value){
-                                        //                       DbController()
-                                        //       .deletePrescription(
-                                        //              data.typeOfOrder == "Product"
-                                        //     ? dataas.prodName
-                                        //     : dataas.medName,);
-                                        //                     });
+                                         DbController()
+                                                .sendNotificationToUserbookingStatusOFUser(
+                                                    data.uid,
+                                                    NotificationModelForNethiOrder(
+                                                        from: Provider.of<
+                                                                    DbController>(
+                                                                context,
+                                                                listen: false)
+                                                            .storeId!,
+                                                        toID: data.uid,
+                                                        message:
+                                                            "'Your Order is Confiremed '")).then((value){
+                                                              DbController()
+                                              .deleteBooking(
+                                            data.bookingId   );
+                                                            });
                                       },
                                       child: Text(
                                         'Conform',
@@ -237,7 +235,24 @@ class _orderallState extends State<orderall> {
                                           backgroundColor:
                                               MaterialStatePropertyAll(
                                                   Color(0xff57C1AE))),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                         DbController()
+                                                .sendNotificationToUserbookingStatusOFUser(
+                                                    data.uid,
+                                                    NotificationModelForNethiOrder(
+                                                        from: Provider.of<
+                                                                    DbController>(
+                                                                context,
+                                                                listen: false)
+                                                            .storeId!,
+                                                        toID: data.uid,
+                                                        message:
+                                                            "'Your Order is Cancelled '")).then((value){
+                                                              DbController()
+                                              .deleteBooking(
+                                            data.bookingId   );
+                                                            });
+                                      },
                                       child: Text(
                                         'Cancell',
                                         style: GoogleFonts.abyssinicaSil(

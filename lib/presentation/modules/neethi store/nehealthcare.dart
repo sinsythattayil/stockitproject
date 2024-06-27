@@ -65,7 +65,7 @@ class _nehealthcareState extends State<nehealthcare> {
             image: DecorationImage(
                 image: AssetImage('images/pharmacy.png'), fit: BoxFit.cover)),
         child: StreamBuilder<QuerySnapshot>(
-            stream: DbController().getAllNeethiProducts(),
+            stream: DbController().getSelectedNeethiProducts(Provider.of<DbController>(context,listen: false).storeId!),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -727,6 +727,7 @@ class _nehealthcareState extends State<nehealthcare> {
                                       .then((url) {
                                     DbController()
                                         .addProduct(ProductNeethiModel(
+                                          storeId:Provider.of<DbController>(context,listen: false).storeId!,
                                       prodName: __nameController.text,
                                       description: _descriptioncontroller.text,
                                       imageUrl: url,

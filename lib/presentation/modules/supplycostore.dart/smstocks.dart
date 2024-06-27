@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/add_product_store.dart';
 import 'package:stockit/presentation/modules/supplycostore.dart/smenu.dart';
@@ -19,6 +20,42 @@ class smstocks extends StatefulWidget {
 
 class _smstocksState extends State<smstocks> {
   File? selectedImage;
+  void _showDeleteConfirmationDialog(BuildContext context,storeproductCollection,productId) {
+    // Create an alert dialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Confirm Delete"),
+      content: const Text("Are you sure you want to delete?"),
+      actions: [
+        TextButton(
+          child: const Text("Cancel"),
+          onPressed: () {
+
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+        TextButton(
+          child: const Text(
+            "Delete",
+            style: TextStyle(color: Colors.red),
+          ),
+          onPressed: () {
+            DbController().deleteProductOfCurrentStore(storeproductCollection,productId);
+            // Perform deletion logic here
+            //  e.g., remove item from list, call an API
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+      ],
+    );
+
+    // Show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final __nameController = TextEditingController();
@@ -37,7 +74,7 @@ class _smstocksState extends State<smstocks> {
     }
 
     return Scaffold(
-      drawer: smenu(),
+      drawer: const smenu(),
       appBar: AppBar(
         leading: Builder(
           builder: (context) {
@@ -45,7 +82,7 @@ class _smstocksState extends State<smstocks> {
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.menu,
                   color: Colors.black,
                 ));
@@ -69,10 +106,10 @@ class _smstocksState extends State<smstocks> {
             children: [
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: DbController().getSupplycoProduct(),
+                    stream: DbController().getSupplycoProduct( Provider.of<DbController>(context,listen: false).storeId),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
@@ -84,7 +121,7 @@ class _smstocksState extends State<smstocks> {
 
                       if (snapshot.hasData) {
                         return list.isEmpty
-                            ? Center(
+                            ? const Center(
                                 child: Text(
                                   "No Products",
                                   style: TextStyle(color: Colors.white),
@@ -101,7 +138,7 @@ class _smstocksState extends State<smstocks> {
                                                 border: Border.all(
                                                     width: 1,
                                                     color: Colors.black),
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     206, 255, 255, 255)),
                                             child: Row(
                                               children: [
@@ -137,11 +174,11 @@ class _smstocksState extends State<smstocks> {
                                                                       20)),
                                                       Row(
                                                         children: [
-                                                          Icon(Icons
+                                                          const Icon(Icons
                                                               .currency_rupee_sharp),
                                                           Text(
                                                             '${list[index].price}/Kg',
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                                 fontSize: 18,
                                                                 fontWeight:
                                                                     FontWeight
@@ -151,11 +188,11 @@ class _smstocksState extends State<smstocks> {
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            EdgeInsets.only(
+                                                            const EdgeInsets.only(
                                                                 left: 8),
                                                         child: Text(
                                                             '${list[index].qty} Kg/Person',
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                                 fontSize: 18,
                                                                 fontWeight:
                                                                     FontWeight
@@ -165,16 +202,19 @@ class _smstocksState extends State<smstocks> {
                                                       // onPressed: (){}, child: const Text('Choose',style: TextStyle(fontSize: 15,),))
                                                     ],
                                                   ),
-                                                )
+                                                ),
+                                                  IconButton(onPressed: ()=>_showDeleteConfirmationDialog(context,"Supplyco Products",list[index].productId), 
+                                      icon: const Icon(Icons.delete,size: 20,color: Colors.black,))
                                               ],
                                             )),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
-                                        )
+                                        ),
+                                       
                                       ],
                                     ));
                       } else {
-                        return SizedBox();
+                        return const SizedBox();
                       }
                     }),
               ),
@@ -198,7 +238,7 @@ class _smstocksState extends State<smstocks> {
               qntyController: _quantityController,
               selectedImage: selectedImage);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

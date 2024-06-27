@@ -220,7 +220,7 @@ class _productrationState extends State<productration> {
                                   SizedBox(
                                     width: Services.w(context) * .4,
                                     child: RadioListTile(
-                                      title: Text("Genaral"),
+                                      title: const Text("Genaral"),
                                         value: "Genaral",
                                         groupValue: controller.radioValue,
                                         onChanged: controller.chanegeRadioButtonvalues),
@@ -228,7 +228,7 @@ class _productrationState extends State<productration> {
                                   SizedBox(
                                       width: Services.w(context) * .4,
                                       child: RadioListTile(
-                                                                        title: Text("Special"),
+                                                                        title: const Text("Special"),
                               
                                           value: "Special",
                                           groupValue: controller.radioValue,
@@ -343,7 +343,7 @@ class _productrationState extends State<productration> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Category',
                                     style: TextStyle(fontWeight: FontWeight.bold),
                                   ),

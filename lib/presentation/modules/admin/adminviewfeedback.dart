@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stockit/data/firebase/database/db_controller.dart';
+import 'package:stockit/data/model/feedback_model.dart';
 
 class adminfeedback extends StatefulWidget {
   const adminfeedback({super.key});
@@ -12,75 +15,92 @@ class _adminfeedbackState extends State<adminfeedback> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       
-      appBar: AppBar(backgroundColor: Color.fromARGB(136, 255, 255, 255),
-      leading: IconButton(onPressed: (){
-         Navigator.pop(context);
-      }, icon: Icon(Icons.arrow_back_ios_sharp)),
-      title: Text('Feedbacks',style: GoogleFonts.abrilFatface(fontSize:23),),
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(136, 255, 255, 255),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios_sharp)),
+        title: Text(
+          'Feedbacks',
+          style: GoogleFonts.abrilFatface(fontSize: 23),
+        ),
       ),
-     body: SingleChildScrollView(
-       child: Column(
-        children: [
-              Container(
-                 height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-            gradient: LinearGradient(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
               begin: Alignment.topCenter,
-               end: Alignment.bottomCenter,
+              end: Alignment.bottomCenter,
               colors: [
-       
-              Color.fromARGB(255, 73, 49, 38),
-              Color.fromARGB(255, 244, 119, 2)
-            ]),
-            ),
-            child: Stack(
-               children: [
-                Expanded(child: ListView.builder(itemCount: 7,itemBuilder:(context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 10,left: 10,right: 10),
-                    child: Container(
-                    
-                      height: 245,width: 250,
-                      decoration: BoxDecoration(color: Colors.black,borderRadius: BorderRadius.circular(20)),
-                      child: Row(
-                        children: [
-                    
-                        
-                            SizedBox(width: 20,),
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 230,top: 20),
-                                  child: Text('User Name',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),),
-                                ),
-                                 Padding(
-                                   padding: const EdgeInsets.only(right: 250,),
-                                   child: Text('Email Id',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),),
-                                 ),
-                               
-                                
-                                
-                                Container(height: 150,width: 340,decoration: BoxDecoration(color:Color.fromARGB(94, 255, 255, 255),
-                                      borderRadius: BorderRadius.circular(10)),)
-                                      
-                              ],
-                            )
-                            
-                        ],
-                      ),
-                    ),
-                  );
-                },)),
-               ] 
-              
-            ),
-              )
-       
-        ],
-       ),
-     ),
+                Color.fromARGB(255, 73, 49, 38),
+                Color.fromARGB(255, 244, 119, 2)
+              ]),
+        ),
+        child: StreamBuilder<QuerySnapshot>(
+            stream: DbController().getAllFeddback(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              List<FeedbackModel> listOFFeedback = snapshot.data!.docs
+                  .map((e) =>
+                      FeedbackModel.fromJosn(e.data() as Map<String, dynamic>))
+                  .toList();
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: listOFFeedback.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(20),
+                      // height: 245,
+                      // width: 250,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                            children: [
+                               Text(
+                                 listOFFeedback[index].email,
+                                 style: TextStyle(
+                                     fontSize: 16,
+                                     fontWeight: FontWeight.bold,
+                                     color: Colors.white),
+                               ),
+                              // Text(
+                              //   'Email Id',
+                              //   style: TextStyle(
+                              //       fontSize: 16,
+                              //       fontWeight: FontWeight.bold,
+                              //       color: Colors.white),
+                              // ),
+                              Container(
+
+                                // height: 150,
+                                width: double.infinity,
+                                padding: EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                    color: const Color.fromARGB(
+                                        94, 255, 255, 255),
+                                    borderRadius: BorderRadius.circular(10)),
+                                    child: Text(listOFFeedback[index].suggestions),
+                              )
+                            ],
+                          )
+                    );
+                  },
+                );
+              } else {
+                return const SizedBox();
+              }
+            }),
+      ),
     );
   }
 }

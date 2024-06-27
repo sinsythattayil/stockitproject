@@ -26,14 +26,14 @@ class _booksuccssState extends State<booksuccss> {
 
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios_sharp,
+        // leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.pop(context);
+        //     },
+        //     icon: const Icon(
+        //       Icons.arrow_back_ios_sharp,
               
-            )),
+        //     )),
             title: Text('StockIt',style: GoogleFonts.inknutAntiqua(fontSize: 30),),
         backgroundColor: const Color.fromARGB(136, 255, 255, 255),
       ),

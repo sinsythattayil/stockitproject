@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/presentation/modules/rationstore.dart/packageration.dart';
@@ -146,7 +147,7 @@ class _RationLoginState extends State<RationLogin> {
                               MaterialStateProperty.all(Colors.black),
                           minimumSize: MaterialStateProperty.all(Size(20, 55))),
                       onPressed: () {
-                        DbController().checkStoreForLogin(
+                          Provider.of<DbController>(context,listen: false).checkStoreForLogin(
                             "Ration",
                             _emailController.text,
                             _passWordController.text,

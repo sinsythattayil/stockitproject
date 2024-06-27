@@ -556,7 +556,7 @@ class _adminhomeState extends State<adminhome> {
                                             storeType: storeType!)).then((value) => Navigator.pop(context));
                           
                                         });
-                          
+                          Navigator.of(context).pop();
                                       
                                       } else {
                                         Services.errorMessage(

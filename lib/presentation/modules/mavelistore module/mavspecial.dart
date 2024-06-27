@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/add_product_store.dart';
 
@@ -12,6 +13,40 @@ class mavmodulespecial extends StatefulWidget {
 }
 
 class _mavmodulespecialState extends State<mavmodulespecial> {
+   void _showDeleteConfirmationDialog(BuildContext context) {
+    // Create an alert dialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm Delete"),
+      content: Text("Are you sure you want to delete?"),
+      actions: [
+        TextButton(
+          child: Text("Cancel"),
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+        TextButton(
+          child: Text(
+            "Delete",
+            style: TextStyle(color: Colors.red),
+          ),
+          onPressed: () {
+            // Perform deletion logic here
+            //  e.g., remove item from list, call an API
+            Navigator.of(context).pop(); // Close the dialog
+          },
+        ),
+      ],
+    );
+
+    // Show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +75,7 @@ class _mavmodulespecialState extends State<mavmodulespecial> {
             children: [
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: DbController().getSpecialMaveliProducts(),
+                    stream: DbController().getSpecialMaveliProducts(    Provider.of<DbController>(context,listen: false).storeId),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
@@ -122,17 +157,23 @@ class _mavmodulespecialState extends State<mavmodulespecial> {
                                                           )
                                                         ],
                                                       ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 8),
-                                                        child: Text(
-                                                            '${list[index].qty} Kg/Person',
-                                                            style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500)),
+                                                      Row(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 8),
+                                                            child: Text(
+                                                                '${list[index].qty} Kg/Person',
+                                                                style: TextStyle(
+                                                                    fontSize: 18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500)),
+                                                          ),
+                                                           IconButton(onPressed: ()=>_showDeleteConfirmationDialog(context), 
+                                      icon: Icon(Icons.delete,size: 20,color: Colors.amber,))
+                                                        ],
                                                       ),
                                                       // ElevatedButton(style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.black),foregroundColor: MaterialStatePropertyAll(Colors.white)),
                                                       // onPressed: (){}, child: const Text('Choose',style: TextStyle(fontSize: 15,),))
