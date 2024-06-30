@@ -23,7 +23,7 @@ class _prescriptionorderState extends State<prescriptionorder> {
             image: DecorationImage(
                 image: AssetImage('images/pharmacy.png'), fit: BoxFit.cover)),
         child: StreamBuilder<QuerySnapshot>(
-            stream: DbController().fetchAllPrescrion(),
+            stream: DbController().fetchAllPrescrion(Provider.of<DbController>(context,listen: false).storeId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(

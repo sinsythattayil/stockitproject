@@ -25,7 +25,7 @@ class _orderlabtestState extends State<orderlabtest> {
             image: DecorationImage(
                 image: AssetImage('images/pharmacy.png'), fit: BoxFit.cover)),
         child: StreamBuilder<QuerySnapshot>(
-            stream: DbController().getLabTestFornethiModule(),
+            stream: DbController().getLabTestFornethiModule(Provider.of<DbController>(context,listen: false).storeId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(

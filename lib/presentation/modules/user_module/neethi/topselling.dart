@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +81,9 @@ class _topsellindState extends State<topsellind> {
               height: 15,
             ),
             StreamBuilder<QuerySnapshot>(
-                stream: DbController().getAllNeethiProducts( Provider.of<DbController>(context,listen: false).currentStoreid),
+                stream: DbController().getAllNeethiProducts(
+                    Provider.of<DbController>(context, listen: false)
+                        .currentStoreid),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -91,7 +95,7 @@ class _topsellindState extends State<topsellind> {
                       .map((e) => ProductNeethiModel.fromJson(
                           e.data() as Map<String, dynamic>))
                       .toList();
-
+                  log(listOfNeethiProducts.length.toString());
                   if (snapshot.hasData) {
                     return listOfNeethiProducts.isEmpty
                         ? const Center(

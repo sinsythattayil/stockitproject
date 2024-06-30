@@ -146,7 +146,7 @@ class _medicineState extends State<medicine> {
                                               "Prescription")
                                           .then((url) {
                                         DbController()
-                                            .uploadPrescription(url)
+                                            .uploadPrescription(url,Provider.of<DbController>(context,listen: false).currentStoreid)
                                             .then((value) {
                                           Services.successMessage(context,
                                               "Prescription send to Neethi store!");

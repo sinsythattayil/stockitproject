@@ -14,7 +14,14 @@ class RationStockViewPage extends StatefulWidget {
   int number;
   String card;
   String storeId;
-   RationStockViewPage({super.key,required this.card,required this.storeId,required this.cardColor,required this.cardNumber,required this.name,required this.number});
+  RationStockViewPage(
+      {super.key,
+      required this.card,
+      required this.storeId,
+      required this.cardColor,
+      required this.cardNumber,
+      required this.name,
+      required this.number});
 
   @override
   State<RationStockViewPage> createState() => _RationStockViewPageState();
@@ -28,15 +35,25 @@ class _RationStockViewPageState extends State<RationStockViewPage> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
- bottom: TabBar(indicatorColor: Colors.black,labelColor: Colors.black,tabs:[
-            
-            Tab(child: Text('Stocks',style: TextStyle(fontSize: 20),),),
-            Tab(child: Text('Special Item',style: TextStyle(fontSize: 20),)),
-            
-          ] ),
+          bottom: TabBar(
+              indicatorColor: Colors.black,
+              labelColor: Colors.black,
+              tabs: [
+                Tab(
+                  child: Text(
+                    'Stocks',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                Tab(
+                    child: Text(
+                  'Special Item',
+                  style: TextStyle(fontSize: 20),
+                )),
+              ]),
           leading: IconButton(
               onPressed: () {
-                 Navigator.pop(context);
+                Navigator.pop(context);
               },
               icon: const Icon(
                 Icons.arrow_back_ios_sharp,
@@ -46,15 +63,25 @@ class _RationStockViewPageState extends State<RationStockViewPage> {
             '${widget.card} card',
             style: GoogleFonts.inknutAntiqua(fontSize: 25),
           ),
-          
           backgroundColor: const Color.fromARGB(136, 255, 255, 255),
         ),
-         body: TabBarView(children: [
-        RationStock(selectedCard:widget.card ,storeID: widget.storeId,cardNumber: widget.cardNumber,name: widget.name,numberOfMembers: widget.cardNumber,),
-        RationSpecialStock(card: widget.card,storeId: widget.storeId,cardNumber: widget.cardNumber,name: widget.name,numberOfMembers: widget.cardNumber),
-        
-          
-        ],),
+        body: TabBarView(
+          children: [
+            RationStock(
+              selectedCard: widget.card,
+              storeID: widget.storeId,
+              cardNumber: widget.cardNumber,
+              name: widget.name,
+              numberOfMembers: widget.number.toString(),
+            ),
+            RationSpecialStock(
+                card: widget.card,
+                storeId: widget.storeId,
+                cardNumber: widget.cardNumber,
+                name: widget.name,
+                numberOfMembers: widget.number.toString()),
+          ],
+        ),
       ),
     );
   }

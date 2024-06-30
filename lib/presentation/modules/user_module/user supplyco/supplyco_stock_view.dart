@@ -189,7 +189,7 @@ class _SupplycoStockViewState extends State<SupplycoStockView> {
                                     .choosedList,
                                 uid: FirebaseAuth.instance.currentUser!.uid))
                             .then((value) {
-                          //  Provider.of<Controller>(context,listen: false).clearList();
+                           Provider.of<Controller>(context,listen: false).clearList();
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

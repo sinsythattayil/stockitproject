@@ -328,7 +328,7 @@ class DbController with ChangeNotifier {
     return db
         .collection("Orders")
         .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-        .where("orderStatus", isEqualTo: "Confirmed")
+        // .where("orderStatus", isEqualTo: "Confirmed")
         .snapshots();
   }
 
@@ -359,21 +359,21 @@ class DbController with ChangeNotifier {
       List<StoreProductModel> list = [];
       list = orderModel.storeProductModel as List<StoreProductModel>;
 
-      if (list.isEmpty) {
-        log("1");
-        db.collection("Orders").doc(orderId).delete();
-      } else if (list.length > 1) {
-        log("5");
-        list.remove(storeProductModel);
-        log("j");
-        log(list.length.toString());
-        db.collection("Orders").doc(orderId).update({
-          "storeProductModel": list.map((e) => e.tojson(e.productId)).toList()
-        });
-      } else {
-        log("3");
-        db.collection("Orders").doc(orderId).delete();
-      }
+      // if (list.isEmpty) {
+      //   log("1");
+      //   db.collection("Orders").doc(orderId).delete();
+      // } else if (list.length > 1) {
+      //   log("5");
+      //   list.remove(storeProductModel);
+      //   log("j");
+      //   log(list.length.toString());
+      //   db.collection("Orders").doc(orderId).update({
+      //     "storeProductModel": list.map((e) => e.tojson(e.productId)).toList()
+      //   });
+      // } else {
+      log("3");
+      db.collection("Orders").doc(orderId).delete();
+      // }
     }
   }
 
@@ -408,9 +408,10 @@ class DbController with ChangeNotifier {
   }
 
   Stream<QuerySnapshot> getAllMedicines(id) {
+    // log(id.toString());
     return db
         .collection("Medicine")
-        .where("storeid", isEqualTo: id)
+        .where("storeID", isEqualTo: id)
         .snapshots();
   }
 
@@ -538,9 +539,10 @@ class DbController with ChangeNotifier {
   }
 
   Stream<QuerySnapshot> getAllNeethiProducts(id) {
+    // log(id);
     return db
         .collection("Neethi Products")
-        .where("storeid", isEqualTo: id)
+        .where("storeId", isEqualTo: id)
         .snapshots();
   }
 
@@ -548,7 +550,7 @@ class DbController with ChangeNotifier {
   getNeethiProducForSearch(id) async {
     final snapshot = await db
         .collection("Neethi Products")
-        .where("storeid", isEqualTo: id)
+        .where("storeId", isEqualTo: id)
         .get();
     listOFneethoiProductForSeach = snapshot.docs
         .map((e) => ProductNeethiModel.fromJson(e.data()))
@@ -604,9 +606,13 @@ class DbController with ChangeNotifier {
   }
 
   List<MedicineModel> listofMEdiceForSearch = [];
-  getAllMedicineOFSellectedNeethiForSearch(storeids)async {
-  final snapshot=await  db.collection("Medicine").where("storeID", isEqualTo: storeids).get();
-    listofMEdiceForSearch=snapshot.docs.map((e) =>MedicineModel.fromJson(e.data()) ).toList();
+  getAllMedicineOFSellectedNeethiForSearch(storeids) async {
+    final snapshot = await db
+        .collection("Medicine")
+        .where("storeID", isEqualTo: storeids)
+        .get();
+    listofMEdiceForSearch =
+        snapshot.docs.map((e) => MedicineModel.fromJson(e.data())).toList();
   }
 
   List<MedicineModel> resultOfMedicn = [];
@@ -616,7 +622,7 @@ class DbController with ChangeNotifier {
         .where((element) =>
             element.medName.toLowerCase().contains(key.toLowerCase()))
         .toList();
-        notifyListeners();
+    notifyListeners();
   }
 
   //==========================================================
@@ -655,16 +661,18 @@ class DbController with ChangeNotifier {
         .snapshots();
   }
 
-  Stream<QuerySnapshot> getMedAndProdctOrderFornethiModule() {
+  Stream<QuerySnapshot> getMedAndProdctOrderFornethiModule(id) {
     return db
         .collection("Booking")
+        .where("storeId", isEqualTo: id)
         .where("typeOfOrder", isNotEqualTo: "Lab Test")
         .snapshots();
   }
 
-  Stream<QuerySnapshot> getLabTestFornethiModule() {
+  Stream<QuerySnapshot> getLabTestFornethiModule(storeId) {
     return db
         .collection("Booking")
+        .where("storeId", isEqualTo: storeId)
         .where("typeOfOrder", isEqualTo: "Lab Test")
         .snapshots();
   }
@@ -675,26 +683,29 @@ class DbController with ChangeNotifier {
 
   //----------------ploadPrescription
 
-  Future uploadPrescription(url) async {
+  Future uploadPrescription(url, storeIdd) async {
     final data = db.collection("Prescription").doc();
     data.set({
       "id": data.id,
       "uid": FirebaseAuth.instance.currentUser!.uid,
-      "prescription": url
+      "prescription": url,
+      "storeId": storeIdd
     });
   }
 
-  Stream<QuerySnapshot> fetchAllPrescrion() {
-    return db.collection("Prescription").snapshots();
+  Stream<QuerySnapshot> fetchAllPrescrion(id) {
+    return db
+        .collection("Prescription")
+        .where("storeId", isEqualTo: id)
+        .snapshots();
   }
 
   Future deletePrescription(id) async {
     db.collection("Prescription").doc(id).delete();
   }
 
-  deleteBooking(id){
+  deleteBooking(id) {
     db.collection("Booking").doc(id).delete();
-
   }
 
   Future deleteSelectedProductByOrderConfirmation(collection, id) async {

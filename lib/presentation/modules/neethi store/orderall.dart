@@ -28,7 +28,7 @@ class _orderallState extends State<orderall> {
             image: DecorationImage(
                 image: AssetImage('images/pharmacy.png'), fit: BoxFit.cover)),
         child: StreamBuilder<QuerySnapshot>(
-            stream: DbController().getMedAndProdctOrderFornethiModule(),
+            stream: DbController().getMedAndProdctOrderFornethiModule(Provider.of<DbController>(context,listen: false).storeId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(

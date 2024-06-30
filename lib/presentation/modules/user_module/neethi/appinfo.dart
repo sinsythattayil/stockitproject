@@ -13,18 +13,18 @@ class _appinfoneethiState extends State<appinfoneethi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-       appBar: AppBar(backgroundColor: Color.fromARGB(136, 255, 255, 255),
+       extendBodyBehindAppBar: true,
+       appBar: AppBar(backgroundColor: const Color.fromARGB(136, 255, 255, 255),
        leading: IconButton(onPressed: (){
          Navigator.pop(context);
-       }, icon:Icon(Icons.arrow_back_ios_sharp,)),),
+       }, icon:const Icon(Icons.arrow_back_ios_sharp,)),),
        body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(image: DecorationImage(image: AssetImage('images/pharmacy.png'),fit: BoxFit.cover)),
+        decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('images/pharmacy.png'),fit: BoxFit.cover)),
         child: Padding(
           padding: const EdgeInsets.only(top: 100,left: 5,right: 5,bottom: 20),
-          child: Container(decoration: BoxDecoration(color: Color.fromARGB(232, 14, 14, 14),borderRadius: BorderRadius.circular(10)),
+          child: Container(decoration: BoxDecoration(color: const Color.fromARGB(232, 14, 14, 14),borderRadius: BorderRadius.circular(10)),
             
             child:SingleChildScrollView(
               child: Column(children: [
@@ -35,8 +35,8 @@ class _appinfoneethiState extends State<appinfoneethi> {
                         Padding(
               padding: const EdgeInsets.only(top: 20),
               child: SizedBox(height: 130,width: 130,
-                child: Container(color: Color.fromARGB(255, 200, 102, 4),
-                  child: Image(image: AssetImage('images/image 29.png'))),
+                child: Container(color: const Color.fromARGB(255, 200, 102, 4),
+                  child: const Image(image: AssetImage('images/image 29.png'))),
               ),
                         ),
                         Padding(

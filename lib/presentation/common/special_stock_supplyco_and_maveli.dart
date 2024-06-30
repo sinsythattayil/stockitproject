@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:stockit/data/firebase/database/db_controller.dart';
 import 'package:stockit/data/model/add_product_store.dart';
 import 'package:stockit/data/model/order_model.dart';
+import 'package:stockit/data/provider/controller.dart';
 import 'package:stockit/presentation/common/ordercmplt.dart';
 
 class SpecialStockOFMaveliAndSupplyco extends StatefulWidget {
@@ -134,7 +136,7 @@ class _SpecialStockOFMaveliAndSupplycoState extends State<SpecialStockOFMaveliAn
                           storeId: widget.storeId,
                           storeProductModel:[list[index]],
                           uid: FirebaseAuth.instance.currentUser!.uid)).then((value) {
-                            //  Provider.of<Controller>(context,listen: false).clearList();
+                             Provider.of<Controller>(context,listen: false).clearList();
                              Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

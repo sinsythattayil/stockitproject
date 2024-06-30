@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:stockit/data/provider/controller.dart';
 import 'package:stockit/presentation/common/order.dart';
 import 'package:stockit/presentation/common/ordercmplt.dart';
 
@@ -83,6 +85,8 @@ class _blueState extends State<blue> {
                       width: 130,
                       child: ElevatedButton(style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 227, 131, 52)),foregroundColor: MaterialStatePropertyAll(Colors.black)),
                         onPressed: (){
+                                                     Provider.of<Controller>(context,listen: false).clearList();
+
                            Navigator.push(
                           context,
                           MaterialPageRoute(

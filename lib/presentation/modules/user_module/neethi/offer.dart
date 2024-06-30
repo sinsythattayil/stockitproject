@@ -52,173 +52,213 @@ class _offerallState extends State<offerall> {
               length: 3,
               child: Column(
                 children: [
-              
                   const TabBar(
-                    
-                    // labelColor: Color.fromARGB(
-                    //                       189, 130, 240, 221),
-                    tabs: [
-                    Tab(text: "All",),
-                     
-                       Tab(text: "Medicine",)
-                      
-                  ,    Tab(text: "Lab Test",)
-                  ]),
 
-
-Expanded(
-  child: TabBarView(children: [
-  
-    StreamBuilder<QuerySnapshot>(
-      stream: DbController().getAllNeethiProducts( Provider.of<DbController>(context,listen: false).currentStoreid),
-      builder: (context, snapshot) {
-        if(snapshot.connectionState==ConnectionState.waiting){
-          return Center(child: CircularProgressIndicator(),);
-        }
-        List<ProductNeethiModel>list=snapshot.data!.docs.map((e) => ProductNeethiModel.fromJson(e.data()as Map<String,dynamic>)).toList();
-        if(snapshot.hasData){
-          return list.isEmpty?Center(child: Text("No Product"),): ListView.builder(
-                              itemCount: list.length,
-                              itemBuilder: (context, index) {
-                                var data=list[index];
-        return Padding(
-          padding: const EdgeInsets.only(
-              left: 20, right: 20, bottom: 10),
-          child: Container(
-              height: 130,
-              width: 350,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  border:
-                      Border.all(width: 1, color: Colors.black)),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 60),
-                    child: Text(
-                      data.prodName,
-                      style: GoogleFonts.inknutAntiqua(
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.currency_rupee,
-                        size: 19,
-                      ),
-                       Text(
-                        data.price,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Icon(
-                        Icons.currency_rupee,
-                        size: 15,
-                        color: Colors.grey[400],
-                      ),
-                      Text(
-                        data.mrp,
-                        style: TextStyle(
-                            decorationColor: Colors.grey[400],
-                            decoration: TextDecoration.lineThrough,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey[400]),
-                      ),
-                      const SizedBox(width: 20),
-                       Text(
-                        '${data.offer}%OFF',
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 45,
-                        width: 73,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: ElevatedButton(
-                              style: const ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStatePropertyAll(
-                                          Color.fromARGB(
-                                              189, 130, 240, 221))),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                           BookingDetaiPage(   type: "Product",
-                                                                          productId:list[index].prodictid!,)),
-                                );
-                              },
-                              child: const Text('Book',
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.black,
-                                      fontWeight:
-                                          FontWeight.w600))),
+                      // labelColor: Color.fromARGB(
+                      //                       189, 130, 240, 221),
+                      tabs: [
+                        Tab(
+                          text: "All",
                         ),
-                      ),
-                    ],
-                  ),
-                  const Divider(color: Colors.black),
-                  Row(
-                    children: [
-                      Image.asset(
-                        'images/Document.png',
-                        scale: 1.5,
-                      ),
-                      const Text('Reports in 10Hrs',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500)),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 100),
-                        child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.favorite,
-                              size: 20,
-                              color: Colors.amber[600],
-                            )),
-                      )
-                    ],
+                        Tab(
+                          text: "Medicine",
+                        ),
+                        Tab(
+                          text: "Lab Test",
+                        )
+                      ]),
+
+                  Expanded(
+                    child: TabBarView(children: [
+                      StreamBuilder<QuerySnapshot>(
+                          stream: DbController().getAllNeethiProducts(
+                              Provider.of<DbController>(context, listen: false)
+                                  .currentStoreid),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            List<ProductNeethiModel> list = snapshot.data!.docs
+                                .map((e) => ProductNeethiModel.fromJson(
+                                    e.data() as Map<String, dynamic>))
+                                .toList();
+                            if (snapshot.hasData) {
+                              return list.isEmpty
+                                  ? Center(
+                                      child: Text("No Product"),
+                                    )
+                                  : ListView.builder(
+                                      itemCount: list.length,
+                                      itemBuilder: (context, index) {
+                                        var data = list[index];
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20, right: 20, bottom: 10),
+                                          child: Container(
+                                              height: 130,
+                                              width: 350,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: Colors.black)),
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 60),
+                                                    child: Text(
+                                                      data.prodName,
+                                                      style: GoogleFonts
+                                                          .inknutAntiqua(
+                                                        fontSize: 12,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      const Icon(
+                                                        Icons.currency_rupee,
+                                                        size: 19,
+                                                      ),
+                                                      Text(
+                                                        data.price,
+                                                        style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Icon(
+                                                        Icons.currency_rupee,
+                                                        size: 15,
+                                                        color: Colors.grey[400],
+                                                      ),
+                                                      Text(
+                                                        data.mrp,
+                                                        style: TextStyle(
+                                                            decorationColor:
+                                                                Colors
+                                                                    .grey[400],
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors
+                                                                .grey[400]),
+                                                      ),
+                                                      const SizedBox(width: 20),
+                                                      Text(
+                                                        '${data.offer}%OFF',
+                                                        style: TextStyle(
+                                                            color: Colors.red,
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 45,
+                                                        width: 73,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  top: 20),
+                                                          child: ElevatedButton(
+                                                              style: const ButtonStyle(
+                                                                  backgroundColor:
+                                                                      MaterialStatePropertyAll(Color.fromARGB(
+                                                                          189,
+                                                                          130,
+                                                                          240,
+                                                                          221))),
+                                                              onPressed: () {
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              BookingDetaiPage(
+                                                                                type: "Product",
+                                                                                productId: list[index].prodictid!,
+                                                                              )),
+                                                                );
+                                                              },
+                                                              child: const Text(
+                                                                  'Book',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          10,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600))),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const Divider(
+                                                      color: Colors.black),
+                                                  Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        'images/Document.png',
+                                                        scale: 1.5,
+                                                      ),
+                                                      const Text(
+                                                          'Reports in 10Hrs',
+                                                          style: TextStyle(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500)),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 100),
+                                                        child: IconButton(
+                                                            onPressed: () {},
+                                                            icon: Icon(
+                                                              Icons.favorite,
+                                                              size: 20,
+                                                              color: Colors
+                                                                  .amber[600],
+                                                            )),
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              )),
+                                        );
+                                      });
+                            } else {
+                              return SizedBox();
+                            }
+                          }),
+                      const offermedicine(),
+                      const offerlab()
+                    ]),
                   )
-                ],
-              )),
-        );
-                              });
-          
-        }else{
-          return SizedBox();
-        }
-        
-      }
-    )
-  ,
-  const offermedicine(),
-  const offerlab()
-
-  
-  
-  ]),
-)
-
 
                   // Padding(
                   //   padding: const EdgeInsets.only(top: 10, left: 10),
                   //   child: Row(
                   //     children: [
-                       
+
                   //     ],
                   //   ),
                   // ),

@@ -43,65 +43,73 @@ class _notificationState extends State<notification> {
               child: Column(
                 children: [
                   StreamBuilder<QuerySnapshot>(
-                    stream: DbController().getCurrentUserNotification(),
-                    builder: (context, snapshot) {
-                      if(snapshot.connectionState==ConnectionState.waiting){
-                        return Center(child: CircularProgressIndicator(),);
-                      }
-                      List<NotificationModel>listOfNotification=[];
-                      listOfNotification=snapshot.data!.docs.map((e) => NotificationModel.fromjson(e.data() as Map<String ,dynamic>)).toList();
-                      if(snapshot.hasData){
-                        return Expanded(
-                          child: ListView.builder(
-                              itemCount:listOfNotification.length ,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 20, left: 30, right: 30),
-                                  child: Container(
-                                    height: 100,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                        color: Colors.black,
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            width: 1, color: Colors.white)),
-                                    child: Column(
-                                      children: [
-                                        Column(
+                      stream: DbController().getCurrentUserNotification(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        List<NotificationModel> listOfNotification = [];
+                        listOfNotification = snapshot.data!.docs
+                            .map((e) => NotificationModel.fromjson(
+                                e.data() as Map<String, dynamic>))
+                            .toList();
+                        if (snapshot.hasData) {
+                          return Expanded(
+                              child: ListView.builder(
+                                  itemCount: listOfNotification.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 20, left: 30, right: 30),
+                                      child: Container(
+                                        height: 100,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            border: Border.all(
+                                                width: 1, color: Colors.white)),
+                                        child: Column(
                                           children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 280, top: 5),
-                                              child: Icon(
-                                                Icons.notifications_active,
-                                                color: Colors.yellow[800],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10, left: 30),
-                                              child: Text(
-                                                'Your order ${listOfNotification[index].message},Please order again.',
-                                                style: GoogleFonts.abyssinicaSil(
-                                                    fontSize: 18,
-                                                    color: Colors.white),
-                                              ),
+                                            Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 280, top: 5),
+                                                  child: Icon(
+                                                    Icons.notifications_active,
+                                                    color: Colors.yellow[800],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 10, left: 30),
+                                                  child: Text(
+                                                    'Your order ${listOfNotification[index].message}',
+                                                    style: GoogleFonts
+                                                        .abyssinicaSil(
+                                                            fontSize: 18,
+                                                            color:
+                                                                Colors.white),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }));
-                        
-                      }else{
-                        return SizedBox();
-                      }
-                      
-                    }
-                  )
+                                      ),
+                                    );
+                                  }));
+                        } else {
+                          return SizedBox();
+                        }
+                      })
                 ],
               )),
         ),
